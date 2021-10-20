@@ -10,7 +10,9 @@ import NewDetail from "./pages/newDetail/NewDetail";
 
 
 const App = () => {
-  return <NewDetail/>;
+
+  return <MovieDetail/>;
+
 };
 
 export default App;
