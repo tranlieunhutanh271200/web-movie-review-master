@@ -35,7 +35,8 @@ export default function DetailMovie() {
                 <span className="items-item">Productions Companies</span>
                 <span className="company">Marvel Studio</span>
             </div>
-            </div>   
+            </div>
+            
         </div>
     )
 }

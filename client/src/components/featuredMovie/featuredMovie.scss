@@ -59,17 +59,6 @@
         .year{
           padding-left: 10px;
         }
-        .rating{
-          padding-left: 10px;
-        }
-        .rating-score{
-          padding-left: 20px;
-          font-size: 20px;
-          font-weight: bold;
-        }
-        .rating-percent{
-          padding-left: 5px;
-        }
         // .time-detail{
         //   padding-left: 240px;
           
@@ -136,16 +125,6 @@
             }
           }
   
-          &.rate{
-            background-color: white;
-            color: black;
-            &:hover{
-              background-color:rgb(134, 134, 134);
-              color: gold;
-              transition: all 0.75s ease;
-            }
-            
-          }
           span {
             margin-left: 5px;
           }
