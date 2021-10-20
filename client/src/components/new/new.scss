@@ -1,0 +1,53 @@
+.new{
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    padding-top: 10px !important;
+    float: left;
+    
+    .Image{
+        box-sizing: border-box;
+        width: 100%;
+    }
+
+    .bodyNEW{
+        
+        .title{
+            color: #f7eeee;
+            font-size: 18px;
+            font-weight: 500;
+            line-height: 1.2;
+             margin: 0 !important;
+             padding: 0;
+        }
+
+        .time{
+        color: #a59e9e;
+        font-family: "Franklin Gothic FS";
+        font-size: 15px;
+         line-height: 20px;
+         font-weight: 500;
+         margin: 0 !important;
+         padding: 0;
+        }
+
+    }
+
+   
+}
+@media (min-width: 768px)
+{
+    .new{
+        width: 350px;
+    }
+}
+
+@media (min-width: 768px)
+{
+.Image img {
+    max-height: 150px;
+    vertical-align: middle;
+    border: 0;
+}
+}
+
+

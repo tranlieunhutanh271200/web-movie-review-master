@@ -2,12 +2,12 @@
     background-color: var(--main-color);
     overflow: hidden;
     
+    
     .sort-cast-relate{
         display: table;
         content: "";
         clear: both;
         width: 100%;
-        //opacity: 0.5;
         .sort-cast-deatil{
             float: left;
             width: 69%;
@@ -17,10 +17,11 @@
             width: 31%;
         }
     }
-    @media screen and (max-width: 100%) {
-        .sort-cast-deatil, .sort-relate-votelist { 
-          width: 100%;
-          padding: 0;
-        }
-    }
+
 }
+@media screen and (max-width: 100%) {
+    .sort-cast-deatil, .sort-relate-votelist { 
+      width: 100%;
+      padding: 0;
+    }
+  }
