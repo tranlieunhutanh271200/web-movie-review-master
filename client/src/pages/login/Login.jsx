@@ -1,3 +1,4 @@
+import {Facebook} from "@material-ui/icons";
 import "./login.scss";
 
 export default function Login() {
@@ -19,11 +20,17 @@ export default function Login() {
           <input type="password" placeholder="Password" />
           <button className="loginButton">Sign In</button>
           <span>
-            New to Netflix? <b>Sign up now.</b>
+            New to Netflix? <b className="signup-btn">Sign up now.</b>
           </span>
+          <hr className="line"/>
+          <button className="loginFBButton"> 
+            <span className="facebook-logo"></span>
+            <span className="facebook-text">Log in with Facebook</span> 
+          </button>
+          <button className="loginGGButton"> Log in with Google</button>
           <small>
             This page is protected by Google reCAPTCHA to ensure you're not a
-            bot. <b>Learn more</b>.
+            bot. <b style={{cursor: "pointer"}}>Learn more </b>.
           </small>
         </form>
       </div>

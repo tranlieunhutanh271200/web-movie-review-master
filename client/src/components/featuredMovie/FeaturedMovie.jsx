@@ -1,9 +1,13 @@
-import { Check, PlayArrow } from "@material-ui/icons"
+import { Check, PlayArrow, Star } from "@material-ui/icons"
 import { useState } from "react"
+import { FaStar } from "react-icons/fa"
+// import ModalNotiRating from "../modal/modalNotiRating/ModalNotiRating"
+import ModalRating from "../modal/modalRating/ModalRating"
 import { WatchTrailer } from "../watchTrailer/WatchTrailer"
 import "./featuredMovie.scss"
 
 export default function FeaturedMovie({type}) {
+    const [openModal, setOpenModal] = useState(false);
     return (
         <div className="featuredMovie">
             {type && (
@@ -22,6 +26,8 @@ export default function FeaturedMovie({type}) {
                     <span className="match">98% Match</span>
                     <span className="limit">+16</span>
                     <span className="year">2021</span>
+                    <span className="rating-score">9.8</span>
+                    <span className="rating-percent">/10</span>
                     {/* <span className="time-detail">1 hour 14 mins</span> */}
                 </div>
                 <div className="time">
@@ -37,11 +43,18 @@ export default function FeaturedMovie({type}) {
                         <PlayArrow/>
                         <span>Trailer</span>    
                     </button>
+                    <button className="rate"
+                    onClick={() => {setOpenModal (true)}}>
+                        <FaStar className="star"/>
+                        <span className="rate">Rate</span>
+                    </button>
                     
                     <button className="more">
                         <Check/>
                         <span>Watch List</span>
                     </button>
+                    {openModal && <ModalRating closeModal={setOpenModal}/>}
+                                  
                 </div>
             </div>           
         </div>
