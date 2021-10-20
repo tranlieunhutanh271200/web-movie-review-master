@@ -6,7 +6,7 @@ import Register from "./pages/register/Register";
 import Watch from "./pages/watch/Watch";
 
 const App = () => {
-  return <Home/>;
+  return <MovieDetail/>;
 };
 
 export default App;
