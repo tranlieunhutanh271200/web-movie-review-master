@@ -5,7 +5,7 @@ import "./related.scss"
 
 export default function Related() {
     const [isHovered, setIsHovered] = useState(false);
-    const trailer ="https://imdb-video.media-imdb.com/vi1533394969/1434659607842-pgv4ql-1627914013495.mp4?Expires=1633759239&Signature=bESLBLvlyxE5h6ja4iahOal6f-cJFSFwbb9sP6EwJ13XrtZL~agAOlsfJYDP4sGzxXzw0GAno8U4gTGXNYocDPrLO~kDC5DSfIsKBXvAdxAr5R18FUP7zClxSu8RlL43dU5hjWLDgGhc46qnPQv9JnFxDiYgxnswjNXiHz4W~pWM0UAHEhEwsNbBcStCvPLy~S3YdaB4-uDkjfplU7RV4~96mmXex75-MSnsqi1vzgZBkHVEP4d9NBSe-Zr4~c7Qtl1mGlP~xWkO9RTHVZjOvf8fCO4yVHPYJEOAURZp52cys4PryRrSD~ITJIbZYtqI0NHq0K5dKTn4hETpeOH~9g__&Key-Pair-Id=APKAIFLZBVQZ24NQH3KA"
+    const trailer ="https://imdb-video.media-imdb.com/vi1533394969/1434659607842-pgv4ql-1627914013495.mp4?Expires=1633537205&Signature=pCx3hw6tJE13NmOM~i0U0Tzo5GFY~4nydCXI-QKnb03FXI5O124MYMw6mOe1qNCSnqciEn1BF9pFL~c5k1NwGtE-aEr8k9fSVe0oQqsBKNWBn3c04QpEljM-hre-~7gVbKqcfljGWpMqxk9qnzCP8~ufUOiNmNiUgnEblKF7TEyG8AodrCxDTxvCUbXrlSufAk3jjX3t2xplPi2iefLutmu~ZFbhA6MuRiRkCFTjnjh3uZ1-OFBDCroNT28LbbsPvDaGN0B03WtYvQTDi10auPsQnFsx4QSWVqeg0686AQKzwSKKet4rFmh2kvUpHQuKoRBa0jm7NDF9O6lWeIgK~w__&Key-Pair-Id=APKAIFLZBVQZ24NQH3KA"
     return (
             <div className="related-video">
                 <DehazeOutlined className="icons-title"/>

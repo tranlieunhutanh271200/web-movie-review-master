@@ -1,7 +1,7 @@
 import { Check, PlayArrow, Star } from "@material-ui/icons"
 import { useState } from "react"
 import { FaStar } from "react-icons/fa"
-import ModalNotiRating from "../modal/modalNotiRating/ModalNotiRating"
+// import ModalNotiRating from "../modal/modalNotiRating/ModalNotiRating"
 import ModalRating from "../modal/modalRating/ModalRating"
 import { WatchTrailer } from "../watchTrailer/WatchTrailer"
 import "./featuredMovie.scss"
