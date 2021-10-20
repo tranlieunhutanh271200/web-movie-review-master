@@ -1,0 +1,172 @@
+.featuredMovie {
+    height: 100vh;
+    background: linear-gradient(
+        to left,
+        rgba(0, 0, 0, 0) 0%,
+        rgba(0, 0, 0, 1) 85%,
+    ),
+      url("https://variety.com/wp-content/uploads/2021/08/Spider-Man.jpg");
+    background-size: cover;
+    position: relative;
+  
+    .category {
+      position: absolute;
+      top: 80px;
+      left: 50px;
+      font-size: 30px;
+      font-weight: 500;
+      color: white;
+      display: flex;
+      align-items: center;
+  
+      select {
+        cursor: pointer;
+        background-color: var(--main-color);
+        border: 1px solid white;
+        color: white;
+        margin-left: 20px;
+        padding: 5px;
+      }
+    }
+  
+    // img {
+    //   width: 100%;
+    //   height: 111%;
+    //   object-fit: cover;
+    // }
+    
+    .info {
+      width: 35%;
+      position: absolute;
+      left: 50px;
+      bottom: 130px;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      .watchTrailer{
+        position: relative;
+      }
+      .generinfo{
+        .match{
+          color:lawngreen;
+          padding-right: 10px;
+        }
+        .limit{
+          border: 1px solid gray;
+          padding: 3px 3px;
+          margin: 0 10px;
+        }
+        .year{
+          padding-left: 10px;
+        }
+        .rating{
+          padding-left: 10px;
+        }
+        .rating-score{
+          padding-left: 20px;
+          font-size: 20px;
+          font-weight: bold;
+        }
+        .rating-percent{
+          padding-left: 5px;
+        }
+        // .time-detail{
+        //   padding-left: 240px;
+          
+        // }
+      }
+      //.time{
+        // width: 100%;
+        // max-width: 500px;
+        // height: 6px;
+        // background: #e1e4e8;
+        // border-radius: 3px;
+        // overflow: hidden;
+        // .progress-bar{
+        //   display: block;
+        //   height: 100%;
+        //   background: linear-gradient(90deg,#fa0303,#f71212 17%,#f73a3a 34%,#f86161 51%,#fd6e6e 68%,#f34747 85%,#fa1a1a);
+        //   background-size: 300% 100%;
+        //   animation: progress-animation 2s linear infinite;
+        // } 
+      //}
+      
+      
+      img {
+        width: 400px;
+      }
+  
+      .description {
+        margin: 20px 0px;
+      }
+  
+      .buttons {
+        display: flex;
+  
+        button {
+          padding: 10px 20px;
+          border: none;
+          border-radius: 5px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 18px;
+          font-weight: 500;
+          margin-right: 10px;
+          cursor: pointer;
+          margin-top: 15px;
+  
+          &.play {
+            background-color: white;
+            color: black;
+            &:hover{
+              background-color:rgb(163, 163, 163);
+              color: rgb(58, 58, 58);
+              transition: all 0.75s ease;
+            }
+          }
+  
+          &.more {
+            background-color: gray;
+            color: white;
+            &:hover{
+              background-color:white;
+              color: black;
+              transition: all 0.75s ease;
+            }
+          }
+  
+          &.rate{
+            background-color: white;
+            color: black;
+            &:hover{
+              background-color:rgb(134, 134, 134);
+              color: gold;
+              transition: all 0.75s ease;
+            }
+            
+          }
+          span {
+            margin-left: 5px;
+          }
+        }
+      }
+    }
+  }
+  @-webkit-keyframes progress-animation {
+    0% {
+      background-position: 100%;
+    }
+    100% {
+      background-position: 0;
+    }
+  }
+  
+  @keyframes progress-animation {
+    0% {
+      background-position: 100%;
+    }
+    100% {
+      background-position: 0;
+    }
+  }

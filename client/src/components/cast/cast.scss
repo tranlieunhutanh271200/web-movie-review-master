@@ -1,0 +1,34 @@
+.cast{
+    margin-top: 20px;
+    width: 150px;
+    height: 200px;
+    overflow: hidden;
+    margin-right: 70px;
+    cursor: pointer;
+
+    img{
+        height: 150px;
+        width: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        &:hover{
+            opacity: 0.8;
+        }
+    }
+    .name-cast{
+        color: white;
+        font-size: 20px;
+        font-weight: bold;
+        text-align: center;
+        transition: 0.8s;
+        &:hover{
+            color: gray;
+            
+        }
+    }
+    .name-charac{
+        color: lightgrey;
+        text-align: center;
+    }
+    
+}

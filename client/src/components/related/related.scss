@@ -1,0 +1,66 @@
+.related-video{
+    margin-top: 10px;
+    margin-right: 50px;
+    width: 400px;
+    height: 350px;
+    .icons-title{
+        color: rgb(255, 0, 0);
+    }
+    .castTitle{
+        font-size: 32px;
+        font-weight: bold;
+        color: white;
+        margin-left: 7px;
+    }
+    .gerne-related{
+        cursor: pointer;
+        .img-vid-related{
+            width: 400px;
+            height: 230px;
+            margin-top: 20px;
+            -webkit-box-shadow: 0px 0px 15px 0px rgba(255, 255, 255, 0.07);
+            box-shadow: 0px 0px 15px 0px rgba(255, 255, 255, 0.07);
+            border-radius: 7px;
+            color: white;
+            
+            .play-related{
+                color: white;
+                position: absolute;
+                font-size: 40px;
+                margin-top: 190px;
+                z-index: 9;
+            }
+            img{
+                
+                height: 100%;
+                width: 100%;
+                margin-right: 50px;
+                opacity: 0.8;
+                border-radius: 7px;
+                &:hover{
+                    opacity: 1;
+                }
+            }
+            video{
+                width: 400px;
+                height: 230px;
+                object-fit: cover;
+                position: absolute;
+                border-radius: 7px;
+                
+            }
+            
+        }
+        .related-name{
+            color: white;
+            margin-top: 10px;
+            font-size: 18px;
+            transition: 0.8s;
+            &:hover{
+                color: grey;
+            }
+        }
+    }
+    
+    
+}

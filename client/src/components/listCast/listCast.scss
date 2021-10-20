@@ -1,0 +1,51 @@
+.listCast{
+    margin-left: 50px;
+    margin-top: 10px;
+    width: 1000px;
+    height: 100%;
+    overflow: hidden;
+    
+    .icons-title{
+        color: rgb(255, 0, 0);
+    }
+    .castTitle{
+        font-size: 32px;
+        font-weight: bold;
+        color: white;
+        margin-left: 7px;
+    }
+    .cast-container{
+        // display: flex;
+        display: grid;
+        width: max-content;
+        grid-template-columns: repeat(4, 200px);
+    }
+    .writter-director{
+        font-size: 20px;
+        color: white;
+        .director{
+            margin-top: 20px;
+
+            .director-name{
+                color: gray;
+                margin-left: 20px;
+                cursor: pointer;
+                &:hover{
+                    color: lightgrey;
+                }
+            }
+        }
+        .writer{
+            margin-top: 10px;
+            .writer-name{
+                color: gray;
+                margin-left: 26px;
+                cursor: pointer;
+                &:hover{
+                    color: lightgrey;
+                }
+            }  
+        }
+        
+    }
+}
