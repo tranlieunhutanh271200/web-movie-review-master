@@ -8,7 +8,6 @@ import CastDT from "./pages/castDt/CastDt";
 import News from "./pages/news/News";
 import NewDetail from "./pages/newDetail/NewDetail";
 
-
 const App = () => {
   return <MovieDetail/>;
 };
