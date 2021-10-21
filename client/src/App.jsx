@@ -9,7 +9,9 @@ import News from "./pages/news/News";
 import NewDetail from "./pages/newDetail/NewDetail";
 
 const App = () => {
+
   return <MovieDetail/>;
+
 };
 
 export default App;
