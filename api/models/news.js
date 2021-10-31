@@ -16,6 +16,7 @@ const NewsSchema = new mongoose.Schema({
   },
   cover_url: {
       type: String,
+      default: "",
       trim: true,
   }
 });

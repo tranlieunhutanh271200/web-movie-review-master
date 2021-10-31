@@ -13,11 +13,11 @@ const MovieSchema = new mongoose.Schema({
   },
   image_namefilm: {
     type: String,
-    required: true,
+    default: "",
   },
   image_coverfilm: {
     type: String,
-    required: true,
+    default: "",
   },
   rating: {
     type: Number,
@@ -33,7 +33,7 @@ const MovieSchema = new mongoose.Schema({
   },
   trailer_url: {
     type: String,
-    required: true,
+    default: "",
   },
   status: {
     type: String,

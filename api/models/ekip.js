@@ -20,7 +20,8 @@ const EkipSchema = new mongoose.Schema({
     required: true
   },
   image: {
-    type: String
+    type: String,
+    default: "",
   },
   bio: {
     type: String
