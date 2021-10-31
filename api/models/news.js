@@ -18,7 +18,10 @@ const NewsSchema = new mongoose.Schema({
       type: String,
       default: "",
       trim: true,
-  }
+  },
+  date_upload: {
+      type: Date,
+  },
 });
 
 const Country = module.exports = mongoose.model('Country', CountrySchema);
