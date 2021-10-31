@@ -12,7 +12,7 @@ const EkipSchema = new mongoose.Schema({
     trim: true,
   },
   dob: {
-    type: String,
+    type: Date,
     required: true
   },
   gender: {

@@ -21,6 +21,9 @@ const MovieCommentSchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
+  date_comment: {
+      type: Date,
+  }
 });
 
 const MovieComment = module.exports = mongoose.model('MovieComment', MovieCommentSchema);
