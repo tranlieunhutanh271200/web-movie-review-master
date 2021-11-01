@@ -5,6 +5,7 @@ const CryptoJS = require("crypto-js");
 const userService = require("../services/userService");
 
 exports.registration = async (req, res) => {
+  
   const newUser = {
     firstname: req.body.firstname,
     lastname: req.body.lastname,
@@ -16,6 +17,23 @@ exports.registration = async (req, res) => {
     ).toString(),
   }
   try {
+    if (!req.body.firstname || !req.body.lastname || !req.body.email || !req.body.dob || !req.body.password) {
+      res
+        .status(401)
+        .send({ success: false, msg: "Please fillup required field." });
+    } else if (req.body.password.length < 6) {
+      return res.status(401).send({
+        success: false,
+        msg: "Password must be at least 6 characters.",
+      });
+    }else {
+      const userExists = await userService.checkEmailExist(req.body.email);
+      if (userExists) {
+        return res
+          .status(400)
+          .send({ success: false, msg: "Email already exists" });
+      }
+    }
     const user = await userService.registration(newUser);
     //const user = await newUser.save();
     res.status(201).json(user);
