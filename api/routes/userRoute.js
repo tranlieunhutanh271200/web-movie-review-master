@@ -11,5 +11,7 @@ router.post("/register", userController.registration);
 router.post("/login", userController.login);
 //UPDATE
 router.put("/update/:id", verifyToken, userController.update);
+//DELETE
+router.put("/delete/:id", verifyToken, userController.delete);
 
 module.exports = router;

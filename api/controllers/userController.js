@@ -45,6 +45,7 @@ exports.registration = async (req, res) => {
   }
 }
 
+//LOGIN
 exports.login = async (req, res) => {
   if (!req.body.password) {
     return res.json({
@@ -84,7 +85,8 @@ exports.login = async (req, res) => {
   }
 }
 
-exports.update = async (req, res, next) => {
+//UPDATE
+exports.update = async (req, res) => {
   if(req.userExists.id === req.params.id || req.userExists.isAdmin){
     if(req.body.password){
       req.body.password = CryptoJS.AES.encrypt(
@@ -103,5 +105,24 @@ exports.update = async (req, res, next) => {
   }
   else{
     res.status(403).json("You can update only your account!")
+  }
+}
+
+//DELETE
+exports.delete = async (req, res) => {
+  if(req.userExists.id === req.params.id || req.userExists.isAdmin){
+    console.log(req.userExists.isAdmin)
+    try {
+      const deletedUser = await userService.deleteUser(req.params.id);
+      if(!deletedUser){
+        res.status(403).json("User not found!")
+      }
+      res.status(200).json("User has been deleted...");
+    }catch(err){
+      res.status(500).json(err);
+    }
+  }
+  else{
+    res.status(403).json("You can delete only your account!")
   }
 }
