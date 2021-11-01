@@ -95,7 +95,7 @@ exports.update = async (req, res, next) => {
     //console.log(req.params.id, req.body);
 
     try {
-      const updatedUser = await userService.updateUser(req.params.id, req.body, {returnOriginal:false});  
+      const updatedUser = await userService.updateUser(req.params.id, req.body, {new: true});  
       res.status(200).json(updatedUser);
     }catch(err){
       res.status(500).json(err);
