@@ -2,8 +2,10 @@
 
 const CryptoJS = require("crypto-js");
 //const User = require("../models/User");
+const jwt = require("jsonwebtoken");
 const userService = require("../services/userService");
 
+//REGISTER
 exports.registration = async (req, res) => {
   
   const newUser = {
@@ -39,5 +41,44 @@ exports.registration = async (req, res) => {
     res.status(201).json(user);
   } catch (err) {
     res.status(500).json(err);
+  }
+}
+
+exports.login = async (req, res) => {
+  if (!req.body.password) {
+    return res.json({
+      success: false,
+      msg: "Please enter your password.",
+    });
+  }
+  else if (!req.body.email) {
+    return res.json({
+      success: false,
+      msg: "Please enter your email.",
+    });
+  }
+  else try{
+    
+    const userExists = await userService.checkEmailExist(req.body.email);
+    
+    if (!userExists){
+      res.status(401).json("Wrong password or username!");
+    } 
+    const bytes = CryptoJS.AES.decrypt(userExists.password, process.env.SECRET_KEY);
+    const originalPassword = bytes.toString(CryptoJS.enc.Utf8);
+
+    if (originalPassword !== req.body.password) {
+      res.status(401).json("Wrong password or username");
+    }
+
+    const accessToken = jwt.sign(
+      { id: userExists._id, isAdmin: userExists.isAdmin },
+      process.env.SECRET_KEY,
+      { expiresIn: "5d" }
+    );
+    const { password, ...info } = userExists._doc;
+    res.status(200).json({ ...info, accessToken });
+  }catch(err){
+    res.status(500).json(err)
   }
 }
