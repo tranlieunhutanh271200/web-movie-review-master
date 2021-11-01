@@ -16,5 +16,9 @@ class userService {
     static async checkEmailExist(email) {
         return await User.findOne({ email });
     }
+    static async updateUser(id, data) {
+      console.log(id, data);
+      return await User.findByIdAndUpdate(id, { $set: data });
+    }
 }
 module.exports = userService;

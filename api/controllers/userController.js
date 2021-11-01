@@ -3,6 +3,7 @@
 const CryptoJS = require("crypto-js");
 //const User = require("../models/User");
 const jwt = require("jsonwebtoken");
+const { updateUser } = require("../services/userService");
 const userService = require("../services/userService");
 
 //REGISTER
@@ -58,7 +59,7 @@ exports.login = async (req, res) => {
     });
   }
   else try{
-    
+
     const userExists = await userService.checkEmailExist(req.body.email);
     
     if (!userExists){
@@ -80,5 +81,27 @@ exports.login = async (req, res) => {
     res.status(200).json({ ...info, accessToken });
   }catch(err){
     res.status(500).json(err)
+  }
+}
+
+exports.update = async (req, res, next) => {
+  if(req.userExists.id === req.params.id || req.userExists.isAdmin){
+    if(req.body.password){
+      req.body.password = CryptoJS.AES.encrypt(
+        req.body.password,
+        process.env.SECRET_KEY
+      ).toString();
+    }
+    //console.log(req.params.id, req.body);
+
+    try {
+      const updatedUser = await userService.updateUser(req.params.id, req.body, {returnOriginal:false});  
+      res.status(200).json(updatedUser);
+    }catch(err){
+      res.status(500).json(err);
+    }
+  }
+  else{
+    res.status(403).json("You can update only your account!")
   }
 }
