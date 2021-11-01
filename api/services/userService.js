@@ -18,7 +18,7 @@ class userService {
     }
     static async updateUser(id, data) {
       console.log(id, data);
-      return await User.findByIdAndUpdate(id, { $set: data });
+      return await User.findByIdAndUpdate(id, { $set: data }, {new: true});
     }
 }
 module.exports = userService;
