@@ -23,6 +23,9 @@ class userService {
     static async deleteUser(id) {
       console.log(id);
       return await User.findByIdAndDelete(id);
-  }
+    }
+    static async getById(id) {
+      return await User.findById(id);
+    }
 }
 module.exports = userService;

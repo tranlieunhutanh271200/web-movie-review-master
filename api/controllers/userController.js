@@ -126,3 +126,23 @@ exports.delete = async (req, res) => {
     res.status(403).json("You can delete only your account!")
   }
 }
+
+//FIND
+exports.find = async (req, res) => {
+  if(req.userExists.id === req.params.id || req.userExists.isAdmin){
+    //console.log(req.userExists.isAdmin)
+    try {
+      const findUser = await userService.getById(req.params.id);
+      if(!findUser){
+        res.status(403).json("User not found!")
+      }
+      const { password, ...info } = findUser._doc;
+      res.status(200).json(info);
+    }catch(err){
+      res.status(500).json(err);
+    }
+  }
+  else{
+    res.status(403).json("Only admin can find users")
+  }
+}
