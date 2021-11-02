@@ -27,5 +27,11 @@ class userService {
     static async getById(id) {
       return await User.findById(id);
     }
+    static async getAll() {
+      return await User.find({});
+    }
+    static async getAlllimit2() {
+      return await User.find({}).limit(2);
+    }
 }
 module.exports = userService;
