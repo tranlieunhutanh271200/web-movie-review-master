@@ -13,5 +13,6 @@ router.post("/login", userController.login);
 router.put("/update/:id", verifyToken, userController.update);
 //DELETE
 router.put("/delete/:id", verifyToken, userController.delete);
-
+//GET
+router.put("/find/:id", verifyToken, userController.find);
 module.exports = router;
