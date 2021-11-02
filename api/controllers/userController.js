@@ -3,8 +3,9 @@
 const CryptoJS = require("crypto-js");
 //const User = require("../models/User");
 const jwt = require("jsonwebtoken");
-const { updateUser } = require("../services/userService");
+//const { updateUser } = require("../services/userService");
 const userService = require("../services/userService");
+const User = require("../models/user")
 
 //REGISTER
 exports.registration = async (req, res) => {
@@ -165,5 +166,19 @@ exports.getall = async (req, res) => {
   }
   else{
     res.status(403).json("You are not allowed to see all users!")
+  }
+}
+
+//GET USER STATS
+exports.stats = async (req, res) => {
+  const today = new Date();
+  const lastYear = today.setFullYear(today.setFullYear() -1 );
+
+  try {
+    const data = await User.aggregate([{ $project: { month: { $month: "$createdAt" },},}
+    ,{ $group: { _id: "$month", total: { $sum: 1 },},},]);
+    res.status(200).json(data)
+  } catch (err) {
+    res.status(500).json(err);
   }
 }

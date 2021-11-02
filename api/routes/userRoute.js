@@ -17,4 +17,7 @@ router.delete("/delete/:id", verifyToken, userController.delete);
 router.get("/find/:id", verifyToken, userController.find);
 //GET ALL
 router.get("/", verifyToken, userController.getall);
+//GET USER STATS
+router.get("/stats", verifyToken, userController.stats);
+
 module.exports = router;
