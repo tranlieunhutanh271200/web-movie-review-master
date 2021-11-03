@@ -12,6 +12,9 @@ class countryService{
     static async checkExistCountry(name){
         return await Country.findOne( { name });
     }
+    static async getById(id){
+        return await Country.findById( id );
+    }
 }
 
 module.exports = countryService;
