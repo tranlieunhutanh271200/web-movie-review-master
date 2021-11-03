@@ -33,5 +33,9 @@ class userService {
     static async getAlllimit2() {
       return await User.find({}).limit(2);
     }
+    static async aggregate(){
+      return await User.aggregate ([{ $project: { month: { $month: "$createdAt" },},}
+      ,{ $group: { _id: "$month", total: { $sum: 1 },},},]);
+    }
 }
 module.exports = userService;
