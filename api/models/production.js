@@ -1,17 +1,26 @@
 const mongoose = require("mongoose");
 
+const Country = new mongoose.Schema({
+  name: String
+})
+
 const ProductionSchema = new mongoose.Schema({
         name: { type: String, required: true, unique: true },
         founder: {type: String, required: true},
         foundingdate: {type: Date, required: true},
-        country:  [
-            {
-              name: {
-                type: String,
-                required: true,
-                unique: true
-              },
-            }
+        country:  [ Country
+            //{
+              // _id: {
+              //   type: mongoose.Schema.Types.ObjectId,
+              //   ref: "Country",
+              //   required: true,
+              // },
+              // name: {
+              //   type: String,
+              //   required: true,
+              //   unique: true
+              // },
+            //}
         ]
     }  
 );
