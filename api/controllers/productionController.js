@@ -1,6 +1,9 @@
 "use strict";
 
+
+const mongoose = require('mongoose');
 const productionService = require("../services/productionService");
+const Country = mongoose.model('Country');
 
 //ADD
 exports.addProduction = async (req, res) => {
@@ -8,9 +11,13 @@ exports.addProduction = async (req, res) => {
         name: req.body.name,
         founder: req.body.founder,
         foundingdate: req.body.foundingdate,
-        country: req.body.country
+        country: [ Country(
+             {
+                _id: new mongoose.Types.ObjectId(),
+                name: req.body.country
+             })
+        ]
     }
-
     try{
         if (!req.body.name || !req.body.founder  || !req.body.foundingdate || !req.body.country ) {
             res
@@ -25,6 +32,7 @@ exports.addProduction = async (req, res) => {
                 .send({ success: false, msg: "Production already exists" });
             }
         }
+
         const production = await productionService.addProduction(newProduction);
         res.status(201).json(production);
     }catch(err){
