@@ -29,6 +29,15 @@ class productionService{
         console.log(id);
         return await Production.findByIdAndDelete(id);
     }
+    static async getById(id) {
+        return await Production.findById(id);
+      }
+    static async getAll() {
+        return await Production.find({});
+      }
+    static async getAlllimit2() {
+        return await Production.find({}).limit(2);
+      }
 }
 
 module.exports = productionService;

@@ -80,3 +80,43 @@ exports.delete = async (req, res) => {
       res.status(403).json("Only admin can delete production!")
     }
   }
+//FIND
+exports.find = async (req, res) => {
+    if(req.userExists.isAdmin){
+      //console.log(req.userExists.isAdmin)
+      try {
+        const findProduction = await productionService.getById(req.params.id);
+        if(!findProduction){
+          res.status(403).json("Production not found!")
+        }
+        //const { password, ...info } = findUser._doc;
+        res.status(200).json(findProduction);
+      }catch(err){
+        res.status(500).json(err);
+      }
+    }
+    else{
+      res.status(403).json("Only admin can find users")
+    }
+  }
+  
+  //GET ALL USER
+  exports.getall = async (req, res) => {
+    const query = req.query.new;
+    if(req.userExists.isAdmin){
+      //console.log(req.userExists.isAdmin)
+      try {
+        const findAllProduction = query ? await productionService.getAlllimit2() : await productionService.getAll();
+        if(!findAllProduction){
+          res.status(403).json("Sorry! We don't have any production here!")
+        }
+        //const { password, ...info } = findAllUser._doc;
+        res.status(200).json(findAllProduction);
+      }catch(err){
+        res.status(500).json(err);
+      }
+    }
+    else{
+      res.status(403).json("You are not allowed to see all users!")
+    }
+  }
