@@ -62,3 +62,21 @@ exports.update = async (req, res) => {
       res.status(403).json("Only admin can change Production")
     }
   }
+//DELETE
+exports.delete = async (req, res) => {
+    if(req.userExists.isAdmin){
+      console.log(req.userExists.isAdmin)
+      try {
+        const deletedProduction = await productionService.deleteProduction(req.params.id);
+        if(!deletedProduction){
+          res.status(403).json("Production not found!")
+        }
+        res.status(200).json("Production has been deleted...");
+      }catch(err){
+        res.status(500).json(err);
+      }
+    }
+    else{
+      res.status(403).json("Only admin can delete production!")
+    }
+  }

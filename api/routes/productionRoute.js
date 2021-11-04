@@ -7,5 +7,7 @@ const productionController = require("../controllers/productionController");
 router.post("/add", verifyToken, productionController.addProduction);
 //UPDATE
 router.put("/update/:id", verifyToken, productionController.update);
+//DELETE
+router.delete("/delete/:id", verifyToken, productionController.delete);
 
 module.exports = router;

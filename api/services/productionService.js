@@ -24,7 +24,11 @@ class productionService{
     static async updateProduction(id, data) {
         console.log(id, data);
         return await Production.findByIdAndUpdate(id, { $set: data }, {new: true});
-      }
+    }
+    static async deleteProduction(id) {
+        console.log(id);
+        return await Production.findByIdAndDelete(id);
+    }
 }
 
 module.exports = productionService;
