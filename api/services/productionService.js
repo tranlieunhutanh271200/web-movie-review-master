@@ -21,6 +21,10 @@ class productionService{
     static async checkExistProduction(name){
         return await Production.findOne( { name });
     }
+    static async updateProduction(id, data) {
+        console.log(id, data);
+        return await Production.findByIdAndUpdate(id, { $set: data }, {new: true});
+      }
 }
 
 module.exports = productionService;

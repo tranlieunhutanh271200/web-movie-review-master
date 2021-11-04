@@ -1,25 +1,24 @@
 "use strict";
 
-
-const mongoose = require('mongoose');
+//const mongoose = require('mongoose');
 const productionService = require("../services/productionService");
-const Country = mongoose.model('Country');
+//const Country = mongoose.model('Country');
 
 //ADD
 exports.addProduction = async (req, res) => {
+    if(req.userExists.isAdmin){
     const newProduction = {
         name: req.body.name,
         founder: req.body.founder,
         foundingdate: req.body.foundingdate,
-        country: [ Country(
-             {
-                _id: new mongoose.Types.ObjectId(),
-                name: req.body.country
-             })
-        ]
+        // country: 
+        //      {
+        //         _id: new mongoose.Types.ObjectId(),
+        //         name: req.body.country
+        //      }
     }
     try{
-        if (!req.body.name || !req.body.founder  || !req.body.foundingdate || !req.body.country ) {
+        if (!req.body.name || !req.body.founder  || !req.body.foundingdate) {
             res
               .status(401)
               .send({ success: false, msg: "Please fillup required field." });
@@ -38,4 +37,28 @@ exports.addProduction = async (req, res) => {
     }catch(err){
         res.status(500).json(err);
     }
+}else{
+    res.status(403).json("Only admin can change Production")
 }
+}
+exports.update = async (req, res) => {
+    if(req.userExists.isAdmin){
+      if(req.body.password){
+        req.body.password = CryptoJS.AES.encrypt(
+          req.body.password,
+          process.env.SECRET_KEY
+        ).toString();
+      }
+      //console.log(req.params.id, req.body);
+  
+      try {
+        const updatedProduction = await productionService.updateProduction(req.params.id, req.body, {new: true});  
+        res.status(200).json(updatedProduction);
+      }catch(err){
+        res.status(500).json(err);
+      }
+    }
+    else{
+      res.status(403).json("Only admin can change Production")
+    }
+  }
