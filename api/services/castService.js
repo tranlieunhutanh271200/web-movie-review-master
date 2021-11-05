@@ -1,6 +1,6 @@
 "use strict"
 
-const Cast = require("../models/cast");
+const {Cast, CastSchema} = require("../models/cast");
 
 class castService{
     static async addCast(data) {

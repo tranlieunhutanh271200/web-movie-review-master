@@ -6,4 +6,6 @@ const CountrySchema = new mongoose.Schema(
     }  
 );
 
-module.exports = mongoose.model("Country", CountrySchema);
+const Country = mongoose.model("Country", CountrySchema);
+
+module.exports = {Country, CountrySchema};

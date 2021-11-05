@@ -1,5 +1,5 @@
 "use strict";
-const User = require("../models/user");
+const {User, UserSchema} = require("../models/user");
 
 class userService {
     static async registration(data) {

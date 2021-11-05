@@ -1,6 +1,6 @@
 "use strict"
 
-const Category = require("../models/category");
+const {Category, CategorySchema} = require("../models/category");
 
 class categoryService{
     static async addCategory(data) {
