@@ -3,6 +3,8 @@
 //const mongoose = require('mongoose');
 const movieService = require("../services/movieService");
 const productionService = require("../services/productionService");
+const categoryService = require("../services/categoryService");
+const countryService = require("../services/countryService");
 // const Production = mongoose.model('Production');
 // const Student = mongoose.model('Category');
 // const Student = mongoose.model('Country');
@@ -11,15 +13,29 @@ const productionService = require("../services/productionService");
 exports.addMovie = async (req, res) => {
     //const { name, founder, foundingdate } = req.body
     if (req.userExists.isAdmin) {
-    const existProduct = await productionService.checkExistProduction(req.body.name);
-    let product;
+    const existProduct = await productionService.checkExistProduction(req.body.nameprod);
+    const existCategory = await categoryService.checkExistCategory(req.body.namecate);
+    const existCountry = await countryService.checkExistCountry(req.body.namecount);
+    let product, cate, coun;
 
     if(existProduct){
         product = existProduct
     }
     else{
-        product = {name: req.body.name, founder:req.body.founder, foundingdate:req.body.foundingdate};
+        product = {name: req.body.nameprod, founder:req.body.founder, foundingdate:req.body.foundingdate};
         await productionService.addProduction(product);
+        product = existProduct;
+    }
+    if(existCategory){
+        cate = existCategory;
+    }
+    else{
+        cate = {name: req.body.namecate};
+    }
+    if(existCountry){
+        coun = existCountry;
+    }else{
+        coun = {name: req.body.namecount};
     }
     //const newProduction = await productionService.addProduction({product});   
         const newMovie = {
@@ -33,13 +49,9 @@ exports.addMovie = async (req, res) => {
             desc: req.body.desc,
             limit: req.body.limit,
             site: req.body.site,
-            production: product
-            // category: [{
-            //     name: req.body.category,
-            // }],
-            // country: [{
-            //     name: req.body.country,
-            // }]
+            production: product,
+            category: cate,
+            country: coun
         }
         console.log(newMovie);
         try {
