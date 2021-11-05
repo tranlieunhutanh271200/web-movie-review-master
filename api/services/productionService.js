@@ -1,42 +1,30 @@
 "use strict"
 
-const Production = require("../models/production");
+const {production, ProductionSchema}  = require("../models/production");
 
 class productionService{
     static async addProduction(data) {
-        // const productionData = new Production({
-        //     name: data.name,
-        //     founder: data.founder,
-        //     foundingdate: data.foundingdate,
-        //     country: [
-        //         {
-        //         _id: new mongoose.Types.ObjectId(),
-        //         name: data.country
-        //         }
-        //         ]
-        // });
-        //console.log(data);
-        return await Production(data).save();
+        return await production(data).save();
     }
     static async checkExistProduction(name){
-        return await Production.findOne( { name });
+        return await production.findOne({name});
     }
     static async updateProduction(id, data) {
         console.log(id, data);
-        return await Production.findByIdAndUpdate(id, { $set: data }, {new: true});
+        return await production.findByIdAndUpdate(id, { $set: data }, {new: true});
     }
     static async deleteProduction(id) {
         console.log(id);
-        return await Production.findByIdAndDelete(id);
+        return await production.findByIdAndDelete(id);
     }
     static async getById(id) {
-        return await Production.findById(id);
+        return await production.findById(id);
       }
     static async getAll() {
-        return await Production.find({});
+        return await production.find({});
       }
     static async getAlllimit2() {
-        return await Production.find({}).limit(2);
+        return await production.find({}).limit(2);
       }
 }
 

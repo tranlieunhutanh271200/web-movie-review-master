@@ -1,6 +1,6 @@
 "use strict"
 
-const Country = require("../models/country");
+const {Country, CountrySchema} = require("../models/country");
 
 class countryService{
     static async addCountry(data) {

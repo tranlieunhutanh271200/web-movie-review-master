@@ -2,29 +2,60 @@
 
 //const mongoose = require('mongoose');
 const movieService = require("../services/movieService");
-//const Country = mongoose.model('Country');
+const productionService = require("../services/productionService");
+// const Production = mongoose.model('Production');
+// const Student = mongoose.model('Category');
+// const Student = mongoose.model('Country');
 
 //ADD
 exports.addMovie = async (req, res) => {
-    if(req.userExists.isAdmin){
-    const newMovie = {
-        name: req.body.name,
-        bio: req.body.bio,
-        dob: req.body.dob,
-        castPic: req.body.castPic
+    //const { name, founder, foundingdate } = req.body
+    if (req.userExists.isAdmin) {
+    const existProduct = await productionService.checkExistProduction(req.body.name);
+    let product;
+
+    if(existProduct){
+        product = existProduct
     }
-    try{
-        if (!req.body.name) {
-            res
-              .status(401)
-              .send({ success: false, msg: "Please fillup required field." });
+    else{
+        product = {name: req.body.name, founder:req.body.founder, foundingdate:req.body.foundingdate};
+        await productionService.addProduction(product);
+    }
+    //const newProduction = await productionService.addProduction({product});   
+        const newMovie = {
+            title: req.body.title,
+            releaseDate: req.body.releaseDate,
+            namePic: req.body.namePic,
+            coverPic: req.body.coverPic,
+            rating: req.body.rating,
+            img: req.body.img,
+            trailer: req.body.trailer,
+            desc: req.body.desc,
+            limit: req.body.limit,
+            site: req.body.site,
+            production: product
+            // category: [{
+            //     name: req.body.category,
+            // }],
+            // country: [{
+            //     name: req.body.country,
+            // }]
         }
-        const cast = await castService.addCast(newCast);
-        res.status(201).json(cast);
-    }catch(err){
-        res.status(500).json(err);
+        console.log(newMovie);
+        try {
+            if (!req.body.title || !req.body.releaseDate || !req.body.desc || !req.body.limit ||
+                !req.body.site) {
+                res
+                    .status(401)
+                    .send({ success: false, msg: "Please fillup required field." });
+            }
+            //await productionService.addProduction(product);
+            const movie = await movieService.addMovie(newMovie);
+            res.status(201).json(movie);
+        } catch (err) {
+            res.status(500).json(err);
+        }
+    } else {
+        res.status(403).json("Only admin can add Cast")
     }
-}else{
-    res.status(403).json("Only admin can add Cast")
-}
 }
