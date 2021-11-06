@@ -74,8 +74,6 @@ exports.addMovie = async (req, res) => {
 }
 //FIND
 exports.find = async (req, res) => {
-    if(req.userExists.isAdmin){
-      //console.log(req.userExists.isAdmin)
       try {
         const findMovie = await movieService.getById(req.params.id);
         if(!findMovie){
@@ -86,15 +84,10 @@ exports.find = async (req, res) => {
       }catch(err){
         res.status(500).json(err);
       }
-    }
-    else{
-      res.status(403).json("Only admin can find movies")
-    }
-  }
+}
 //GET ALL CATEGORY
 exports.getall = async (req, res) => {
     const query = req.query.new;
-    if(req.userExists.isAdmin){
       //console.log(req.userExists.isAdmin)
       try {
         const findAllMovie = query ? await movieService.getAlllimit2() : await movieService.getAll();
@@ -107,10 +100,6 @@ exports.getall = async (req, res) => {
       }catch(err){
         res.status(500).json(err);
       }
-    }
-    else{
-      res.status(403).json("You are not allowed to see all movies!")
-    }
   }
 exports.update = async (req, res) => {
     if(req.userExists.isAdmin){
