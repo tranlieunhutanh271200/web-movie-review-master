@@ -10,8 +10,8 @@ router.put("/update/:id", verifyToken, movieController.update);
 //DELETE
 router.delete("/delete/:id", verifyToken, movieController.delete);
 //GET
-router.get("/find/:id", verifyToken, movieController.find);
+router.get("/find/:id", movieController.find);
 //GET ALL
-router.get("/", verifyToken, movieController.getall);
+router.get("/", movieController.getall);
 
 module.exports = router;
