@@ -5,8 +5,9 @@ const CountrySchema = new mongoose.Schema(
     name: { type: String,
         time: true,
         unique: true,
-        index: true,}
-    }  
+        index: true,},
+        status: {type: Boolean, default: true}
+    } 
 );
 
 const Country = mongoose.model("Country", CountrySchema);

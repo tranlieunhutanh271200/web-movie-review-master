@@ -8,6 +8,7 @@ const productionRoute = require("./routes/productionRoute");
 const categoryRoute = require("./routes/categoryRoute");
 const castRoute = require("./routes/castRoute");
 const movieRoute = require("./routes/movieRoute");
+const characterRoute = require("./routes/characterRoute");
 
 dotenv.config();
 
@@ -30,6 +31,7 @@ app.use("/api/productions", productionRoute);
 app.use("/api/categories", categoryRoute);
 app.use("/api/casts", castRoute);
 app.use("/api/movies", movieRoute);
+app.use("/api/characters", characterRoute);
 
 app.listen(8800, () => {
   console.log("Backend server is running!");

@@ -6,8 +6,8 @@ const {CountrySchema} = require("./country");
 
 const MovieSchema = new mongoose.Schema(
   {
-    title: { type: String, required: true },
-    releaseDate: { type: Date, required: true },
+    title: { type: String},
+    releaseDate: { type: Date},
     namePic: { type: String, default:""},
     coverPic: { type: String, default:""},
     rating: { type: Number, min:0, max:10, default:0 },
@@ -18,7 +18,8 @@ const MovieSchema = new mongoose.Schema(
     site: {type: String},
     production: [ProductionSchema],
     category: [CategorySchema],
-    country: [CountrySchema]
+    country: [CountrySchema],
+    status: {type: Boolean, default: true}
   },
   { timestamps: true }
 );

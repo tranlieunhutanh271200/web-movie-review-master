@@ -8,7 +8,7 @@ router.post("/add", verifyToken, castController.addCast);
 //UPDATE
 router.put("/update/:id", verifyToken, castController.update);
 //DELETE
-router.delete("/delete/:id", verifyToken, castController.delete);
+router.put("/delete/:id", verifyToken, castController.delete);
 //GET
 router.get("/find/:id", verifyToken, castController.find);
 //GET ALL

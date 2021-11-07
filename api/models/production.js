@@ -4,6 +4,7 @@ const ProductionSchema = new mongoose.Schema({
         name: { type: String},
         founder: {type: String},
         foundingdate: {type: Date},
+        status: {type: Boolean, default: true}
     },
     {
       timestamps: true
