@@ -8,7 +8,7 @@ router.post("/add", verifyToken, movieController.addMovie);
 //UPDATE
 router.put("/update/:id", verifyToken, movieController.update);
 //DELETE
-router.delete("/delete/:id", verifyToken, movieController.delete);
+router.put("/delete/:id", verifyToken, movieController.delete);
 //GET
 router.get("/find/:id", movieController.find);
 //GET ALL

@@ -8,7 +8,7 @@ router.post("/add", verifyToken, productionController.addProduction);
 //UPDATE
 router.put("/update/:id", verifyToken, productionController.update);
 //DELETE
-router.delete("/delete/:id", verifyToken, productionController.delete);
+router.put("/delete/:id", verifyToken, productionController.delete);
 //GET
 router.get("/find/:id", verifyToken, productionController.find);
 //GET ALL
