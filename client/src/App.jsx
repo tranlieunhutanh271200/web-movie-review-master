@@ -11,7 +11,7 @@ import NewDetail from "./pages/newDetail/NewDetail";
 
 const App = () => {
 
-  return <MovieDetail/>;
+  return <Watch/>;
 
 };
 

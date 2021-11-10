@@ -85,7 +85,7 @@ exports.find = async (req, res) => {
     res.status(500).json(err);
   }
 }
-//GET ALL CATEGORY
+//GET ALL MOVIE
 exports.getall = async (req, res) => {
   const query = req.query.new;
   //console.log(req.userExists.isAdmin)
@@ -99,31 +99,58 @@ exports.getall = async (req, res) => {
     res.status(200).json(findAllMovie);
   } catch (err) {
     res.status(500).json(err);
-  }
+  }S
 }
+//UPDATE
 exports.update = async (req, res) => {
   if (req.userExists.isAdmin) {
     try {
-      const { nameprod, ...restMovie } = req.body;
+      const { nameprod, namecount, namecate, ...restMovie } = req.body;
+      console.log(nameprod, namecount, namecate)
 
       const movie = await movieService.findMovie(req.params.id);
-      const { production, ...rest } = movie;
+      const { production, category, country, ...rest } = movie;
 
       const productionCheck = await productionService.checkExistProduction(nameprod);
-
+      const countryCheck = await countryService.checkExistCountry(namecount);
+      const categoryCheck = await categoryService.checkExistCategory(namecate);
+      console.log(categoryCheck);
       if (!productionCheck) {
         const newProduction = { name: nameprod, founder: '', foundingdate: Date.now() };
         await productionService.addProduction(newProduction);
+        productionCheck = await productionService.checkExistProduction(nameprod);
+      }
+      if(!countryCheck){
+        const newCountry = {name: namecount};
+        await countryService.addCountry(newCountry);
+        countryCheck = await countryService.checkExistCountry(namecount);
+      }
+      if(!categoryCheck){
+        const newCategory = {name: namecate};
+        await categoryService.addCategory(newCategory);
+        categoryCheck = await categoryService.checkExistCategory(namecate);
       }
 
+      //console.log(productionCheck);
       const newProduction = production.map(item => {
-        item.name = nameprod;
+        item._id = productionCheck._id;
+        item.name = productionCheck.name;
         return item;
       })
+      const newCategory = category.map(item => {
+        item._id = categoryCheck._id;
+        item.name = categoryCheck.name;
+        return item;
+      })
+      const newCountry = country.map(item => {
+        item._id = countryCheck._id;
+        item.name = countryCheck.name;
+        return item;
+      })
+      //console.log(newProduction);
+      const updateAll = { ...restMovie, production: newProduction}
 
-      const updateProduction = { ...restMovie, production: newProduction }
-
-      await movieService.updateMovie(req.params.id, updateProduction);
+      await movieService.updateMovie(req.params.id, updateAll , {new: true});
       res.status(200).json(movie);
     } catch (err) {
       res.status(500).json(err);

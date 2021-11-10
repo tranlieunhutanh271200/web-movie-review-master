@@ -13,7 +13,7 @@ class movieService{
         return await Movie.findOne( { title });
     }
     static async updateMovie(id, data) {
-        console.log(id, data);
+        //console.log(id, data);
         return await Movie.findByIdAndUpdate(id, { $set: data }, {new: true});
     }
     static async deleteMovie(id) {
