@@ -29,7 +29,7 @@ const Navbar = () => {
                     <Search className="icon"/>
                     <span>Phuc Phan</span>
                     <Notifications className="icon"/>
-                    <img src="https://scontent.fsgn5-4.fna.fbcdn.net/v/t1.6435-9/127871159_1685719574939446_539238990743755217_n.jpg?_nc_cat=102&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=dctNsm00r9gAX_MoSH7&_nc_ht=scontent.fsgn5-4.fna&oh=9c42aa9bec00f635fc377d5631d40efe&oe=617C75B6" 
+                    <img src="https://scontent.fsgn2-5.fna.fbcdn.net/v/t1.6435-9/127871159_1685719574939446_539238990743755217_n.jpg?_nc_cat=102&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=GkyY54EVj34AX_7MkXp&_nc_ht=scontent.fsgn2-5.fna&oh=50cc97bcfc61a2c2bec2b5f735df9477&oe=61AFE036" 
                     alt=""/>
                     <div className="profile">
                         <ArrowDropDown className="icon"/>
