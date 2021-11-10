@@ -148,7 +148,7 @@ exports.update = async (req, res) => {
         return item;
       })
       //console.log(newProduction);
-      const updateAll = { ...restMovie, production: newProduction}
+      const updateAll = { ...restMovie, production: newProduction, category: newCategory, country: newCountry}
 
       await movieService.updateMovie(req.params.id, updateAll , {new: true});
       res.status(200).json(movie);
