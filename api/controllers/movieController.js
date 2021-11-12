@@ -99,7 +99,7 @@ exports.getall = async (req, res) => {
     res.status(200).json(findAllMovie);
   } catch (err) {
     res.status(500).json(err);
-  }S
+  }
 }
 //UPDATE
 exports.update = async (req, res) => {
