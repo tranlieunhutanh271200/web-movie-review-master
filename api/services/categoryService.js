@@ -27,16 +27,16 @@ class categoryService{
     }
     static async deleteCategory(id) {
         console.log(id);
-        return await Category.findByIdAndDelete(id);
+        return await Category.findByIdAndUpdate(id, { $set: {"status": false} }, {new: true});
     }
     static async getById(id) {
         return await Category.findById(id);
       }
     static async getAll() {
-        return await Category.find({});
+        return await Category.find({"status": true});
       }
     static async getAlllimit2() {
-        return await Category.find({}).limit(2);
+        return await Category.find({"status": true}).limit(2);
       }
 }
 

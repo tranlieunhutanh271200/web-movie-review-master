@@ -1,6 +1,8 @@
 "use strict"
 
+//var mongoose = require('mongoose');
 const {production, ProductionSchema}  = require("../models/production");
+//var productionId = mongoose.Schema.Types.ObjectId(id);
 
 class productionService{
     static async addProduction(data) {
@@ -15,16 +17,16 @@ class productionService{
     }
     static async deleteProduction(id) {
         console.log(id);
-        return await production.findByIdAndDelete(id);
+        return await production.findByIdAndUpdate(id, { $set: {"status": false} }, {new: true});
     }
     static async getById(id) {
         return await production.findById(id);
       }
     static async getAll() {
-        return await production.find({});
+        return await production.find({"status": true});
       }
     static async getAlllimit2() {
-        return await production.find({}).limit(2);
+        return await production.find({"status": true}).limit(2);
       }
 }
 

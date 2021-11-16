@@ -7,8 +7,9 @@ export default function Cast(index) {
     return (
             <div 
             className="cast">
-                <img src="https://genk.mediacdn.vn/139269124445442048/2020/8/15/5-1597479363549333900869.jpeg" alt="" />
-                <div className="name-cast">Tom Hardy</div>
+
+                <img src="https://ss-images.saostar.vn/2019/06/14/5410259/tomholland-gettyimages-982644220-920x584.jpg" alt="" />
+                <div className="name-cast">Tom Holland</div>
                 <div className="name-charac">Peter Parker</div> 
             </div>
     )

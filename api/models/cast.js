@@ -4,11 +4,11 @@ const mongoose = require("mongoose");
 const CastSchema = new mongoose.Schema({
     name: {
       type: String,
-      required: true,
     },
-    bio: {type: String, required: true},
+    bio: {type: String},
     dob: {type: Date},
-    castPic: {type: String, default: ""}
+    castPic: {type: String, default: ""},
+    status: {type: Boolean, default: true}
   },
   { timestamps: true }
 );

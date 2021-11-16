@@ -12,7 +12,7 @@ router.post("/login", userController.login);
 //UPDATE
 router.put("/update/:id", verifyToken, userController.update);
 //DELETE
-router.delete("/delete/:id", verifyToken, userController.delete);
+router.put("/delete/:id", verifyToken, userController.delete);
 //GET
 router.get("/find/:id", verifyToken, userController.find);
 //GET ALL

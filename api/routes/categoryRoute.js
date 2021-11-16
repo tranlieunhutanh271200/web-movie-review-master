@@ -8,7 +8,7 @@ router.post("/add", verifyToken, categoryController.addCategory);
 //UPDATE
 router.put("/update/:id", verifyToken, categoryController.update);
 //DELETE
-router.delete("/delete/:id", verifyToken, categoryController.delete);
+router.put("/delete/:id", verifyToken, categoryController.delete);
 //GET
 router.get("/find/:id", verifyToken, categoryController.find);
 //GET ALL

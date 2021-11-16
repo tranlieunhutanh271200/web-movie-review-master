@@ -6,12 +6,12 @@ const movieController = require("../controllers/movieController");
 //ADD
 router.post("/add", verifyToken, movieController.addMovie);
 //UPDATE
-// router.put("/update/:id", verifyToken, categoryController.update);
+router.put("/update/:id", verifyToken, movieController.update);
 //DELETE
-// router.delete("/delete/:id", verifyToken, categoryController.delete);
+router.put("/delete/:id", verifyToken, movieController.delete);
 //GET
-// router.get("/find/:id", verifyToken, categoryController.find);
+router.get("/find/:id", movieController.find);
 //GET ALL
-// router.get("/", verifyToken, categoryController.getall);
+router.get("/", movieController.getall);
 
 module.exports = router;

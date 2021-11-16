@@ -12,14 +12,13 @@ import Navbar from "./components/navbar/Navbar";
 import HomeAdmin from "./pages/admin/adminHome/AdminHome"
 
 
+
 function App () {
   return  (
     // <Routes>
     //    <Route exact path="/" element ={<Home/>}/>
          
     //   <Route  path="/HomeAdmin" element ={<HomeAdmin/>}/>
-
-     
       
     // </Routes>
     <HomeAdmin/>
