@@ -1,0 +1,45 @@
+.bar {
+    flex: 1 0 0 0;
+    height: calc(100vh - 50px);
+    background-color: rgb(251, 251, 255);
+    position: sticky;
+    top: 50px;
+  }
+  
+  .SideWrapper {
+    padding: 20px;
+    color: #555;
+   
+  }
+  
+  .Menu {
+    margin-bottom: 10px;
+  }
+  
+  .Title {
+    font-size: 13px;
+    color: rgb(187, 186, 186);
+  }
+  
+  .List {
+    list-style: none;
+    padding: 5px;
+  }
+  
+  .ListItem {
+    padding: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+  }
+  
+  .ListItem.active,
+  .ListItem:hover {
+    background-color: rgb(240, 240, 255);
+  }
+  
+  .Icon{
+      margin-right: 5px;
+      font-size: 20px !important;
+  }

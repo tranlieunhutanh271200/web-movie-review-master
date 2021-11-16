@@ -1,4 +1,8 @@
 .castdetail{
+    background-color: var(--main-color);
+
+ 
+
     .name-cast{
         color: white;
         display: flex;
@@ -17,19 +21,41 @@
         img{
             flex: 2;
             display : block;
-            width :10%;
+            height: 300px;
+            width: 300px;
             padding: 0 4%;
+            padding-left: 150px;
             }
             .content{
                 color: white;
-                flex: 8;
+                
+                line-height: 1.6rem;
+               
                 .item{
                     margin-bottom: .25em;
                 }
-                .summary{
-                    margin: .5em 0 0 ;
-                }
+               
             }
     }
+    .summary{
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        
+        padding-right: 100px;
+        white-space: normal;
+        margin: 0 auto;
+
+        max-height: initial!important;
+        height: fit-content;
+        
+       
+    }
+    
+     
+    
+
+
+   
     
 }
+

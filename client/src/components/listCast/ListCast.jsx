@@ -2,13 +2,14 @@ import { DehazeOutlined } from "@material-ui/icons"
 import Cast from "../cast/Cast"
 import "./listCast.scss"
 
+
 export default function ListCast() {
     return (
         <div className="listCast">
             <DehazeOutlined className="icons-title"/>
             <span className="castTitle">Top cast</span>
             <div className="cast-container">
-                <Cast index={0}/>
+             <Cast index={0}/> 
                 <Cast index={0}/>
                 <Cast index={0}/>
                 <Cast index={0}/>
