@@ -10,6 +10,15 @@
   &.scrolled{
     background-color: var(--main-color);
   }
+  .link{
+    color: white;
+    text-decoration:none ;
+
+  }
+  .link:hover{
+    text-decoration:none ;
+    color:red;
+  }
 
   .container {
     padding: 0px 50px;

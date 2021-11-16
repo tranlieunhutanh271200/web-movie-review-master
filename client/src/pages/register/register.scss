@@ -9,7 +9,15 @@
     url("https://assets.nflxext.com/ffe/siteui/vlv3/45e6f443-8eff-4c7b-ba24-fbdc84c37718/92228060-c198-46ea-ad27-857697719f7e/VN-en-20210927-popsignuptwoweeks-perspective_alpha_website_large.jpg");
   background-size: cover;
   position: relative;
+  .link{
+    color: white;
+    text-decoration:none ;
 
+  }
+  .link:hover{
+    text-decoration:none ;
+    color:red;
+  }
   .top {
     .wrapper {
       padding: 20px 50px;
