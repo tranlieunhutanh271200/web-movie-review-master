@@ -77,7 +77,7 @@ exports.login = async (req, res) => {
     const accessToken = jwt.sign(
       { id: userExists._id, isAdmin: userExists.isAdmin },
       process.env.SECRET_KEY,
-      { expiresIn: "5d" }
+      { expiresIn: "10h" }
     );
     const { password, ...info } = userExists._doc;
     res.status(200).json({ ...info, accessToken });
