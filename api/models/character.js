@@ -7,10 +7,8 @@ const CharacterSchema = new mongoose.Schema(
     {
         name: { type: String},
         movie: {
-            _id: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: "Movie",
-            },
         },
         cast: [CastSchema],
         status: {type: Boolean, default: true}

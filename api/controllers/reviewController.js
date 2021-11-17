@@ -1,0 +1,142 @@
+"use strict";
+
+const mongoose = require('mongoose');
+const reviewService = require("../services/reviewService");
+//const { Character } = require('../models/character');
+//const {Movie, MovieSchema} = require("../models/movie");
+//const Country = mongoose.model('Country');
+const { Review, ReviewSchema } = require("../models/Review");
+
+//ADD
+exports.addReview = async (req, res) => {
+  const reviews = await reviewService.checkExistMovie(req.body.movie)
+  //console.log(req.body.reviewItems.rating);
+  if (reviews) {
+    const isReviewed = reviews.reviewItems.find(c => c.user == req.userExists.id);
+    const isUser = req.userExists.id
+    console.log(isReviewed)
+    if(isReviewed){
+      try {
+        const review = await reviewService.checkExistMovieUserandUpdate(req.body.movie, isUser, {
+          user: req.userExists.id,
+          rating: req.body.reviewItems.rating,
+          text: req.body.reviewItems.text,
+        }
+          , { new: true });
+        //console.log(review)
+        res.status(201).json(review);
+      } catch (err) {
+        res.status(500).json(err);
+      }
+    }else{
+      try {
+        const review = await reviewService.checkExistMovieandUpdate(req.body.movie, {
+          "reviewItems": [
+            {
+              user: req.userExists.id,
+              rating: req.body.reviewItems.rating,
+              text: req.body.reviewItems.text,
+            }
+          ]
+        }
+          , { new: true });
+        //console.log(review)
+        res.status(201).json(review);
+      } catch (err) {
+        res.status(500).json(err);
+      }
+    }
+    //res.status(200).json({ message: reviews });
+  } else {
+    const newReview = {
+      movie: req.body.movie,
+      reviewItems: [
+        {
+          user: req.userExists.id,
+          rating: req.body.reviewItems.rating,
+          text: req.body.reviewItems.text,
+        }
+      ],
+    }
+    //console.log(newReview)
+    try {
+      const review = await reviewService.addReview(newReview);
+      res.status(201).json(review);
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  }
+}
+//UPDATE
+exports.update = async (req, res) => {
+  const reviews = await reviewService.checkExistMovie(req.body.movie)
+  const isUser = req.userExists.id
+  const isReviewed = reviews.reviewItems.find(c => c.user == req.userExists.id)
+  //console.log(isReviewed)
+  if (isReviewed) {
+    try {
+      const review = await reviewService.checkExistMovieUserandUpdate(req.body.movie, isUser, {
+        user: req.userExists.id,
+        rating: req.body.reviewItems.rating,
+        text: req.body.reviewItems.text,
+      }
+        , { new: true });
+      //console.log(review)
+      res.status(201).json(review);
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  }
+}
+//DELETE
+exports.delete = async (req, res) => {
+  try {
+      const test = await Review.findOneAndUpdate(
+        { movie: req.body.movie }
+        ,{
+          $pull: {
+            reviewItems: {
+              user: req.userExists.id,
+            }
+          }
+        }
+      );
+      res.status(200).json(test);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+}
+//GET
+exports.find = async (req, res) => {
+  //console.log(req.userExists.isAdmin)
+  try {
+    const findReview = await reviewService.getReviewbyMovie(req.params.id);
+    console.log(findReview);
+    if (!findReview) {
+      res.status(403).json("Review not found!")
+    }
+    res.status(200).json(findReview);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+}
+//GET ALL USER
+exports.getall = async (req, res) => {
+  const query = req.query.new;
+  if(req.userExists.isAdmin){
+    //console.log(req.userExists.isAdmin)
+    try {
+      const findAllReview = query ? await reviewService.getAlllimit2() : await reviewService.getAll();
+      if(!findAllReview){
+        res.status(403).json("Sorry! We don't have any review here!")
+      }
+      //const { password, ...info } = findAllUser._doc;
+      res.status(200).json(findAllReview);
+    }catch(err){
+      res.status(500).json(err);
+    }
+  }
+  else{
+    res.status(403).json("You are not allowed to see all review!")
+  }
+}
