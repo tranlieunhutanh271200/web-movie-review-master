@@ -109,13 +109,48 @@ exports.delete = async (req, res) => {
 //GET
 exports.find = async (req, res) => {
   //console.log(req.userExists.isAdmin)
+  // Review.findOne({ movie: req.params.id })
+  // .populate("reviewItems.user",  "_id firstname lastname profilePic")
+  // .exec((error, review) => {
+  //   if (error) return res.status(400).json({ error });
+  //   if (review) {
+  //     console.log(review)
+  //     let reviewItems ={};
+  //     review.reviewItems.forEach((item, index) => {
+  //       reviewItems[item.user._id.toString()]={
+  //         _id: item.user._id.toString(),
+  //         firstname: item.user.firstname,
+  //         lastname: item.user.lastname,
+  //         profilePic: item.user.profilePic,
+  //         rating: item.rating,
+  //         text: item.text
+  //       }
+  //     });
+  //     res.status(200).json({reviewItems});
+  //   }
+  // });
   try {
     const findReview = await reviewService.getReviewbyMovie(req.params.id);
-    console.log(findReview);
+    //console.log(findReview);
+
     if (!findReview) {
       res.status(403).json("Review not found!")
     }
-    res.status(200).json(findReview);
+    if(findReview){
+      let reviewItems ={};
+      findReview.reviewItems.forEach((item, index) => {
+        reviewItems[item.user._id.toString()]={
+          _id: item.user._id.toString(),
+          firstname: item.user.firstname,
+          lastname: item.user.lastname,
+          profilePic: item.user.profilePic,
+          rating: item.rating,
+          text: item.text
+        }
+      });
+      res.status(200).json({reviewItems});
+    }
+    
   } catch (err) {
     res.status(500).json(err);
   }

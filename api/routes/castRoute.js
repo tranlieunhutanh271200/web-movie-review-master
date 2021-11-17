@@ -2,7 +2,7 @@
 const router = require("express").Router();
 const verifyToken = require("../middlewares/verifyToken");
 const castController = require("../controllers/castController");
-const { default: Cast } = require("../../client/src/components/cast/Cast");
+//const { default: Cast } = require("../../client/src/components/cast/Cast");
 
 //ADD
 router.post("/add", verifyToken, castController.addCast);

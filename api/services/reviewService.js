@@ -30,7 +30,8 @@ class reviewService{
     }
     static async getReviewbyMovie(movie) {
         //console.log(movie)
-        return await Review.find({ movie });
+        return await Review.findOne({ movie })
+            .populate("reviewItems.user", "_id firstname lastname profilePic");
       }
     static async getAll() {
         return await Review.find({});
