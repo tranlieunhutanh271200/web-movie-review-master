@@ -148,7 +148,7 @@ exports.find = async (req, res) => {
           text: item.text
         }
       });
-      res.status(200).json({reviewItems});
+      res.status(200).json(findReview);
     }
     
   } catch (err) {

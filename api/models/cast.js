@@ -5,8 +5,8 @@ const CastSchema = new mongoose.Schema({
     name: {
       type: String,
     },
-    bio: {type: String},
-    dob: {type: Date},
+    bio: {type: String, default: ""},
+    dob: {type: Date, default: Date.now()},
     castPic: {type: String, default: ""},
     status: {type: Boolean, default: true}
   },

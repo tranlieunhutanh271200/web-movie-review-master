@@ -19,7 +19,7 @@ class castService{
         return await Cast(data).save();
     }
     static async checkExistCast(name){
-        console.log(name)
+        //console.log(name)
         return await Cast.findOne( { name });
     }
     static async updateCast(id, data) {

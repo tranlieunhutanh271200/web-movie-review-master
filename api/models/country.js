@@ -2,10 +2,7 @@ const mongoose = require("mongoose");
 
 const CountrySchema = new mongoose.Schema(
     {
-    name: { type: String,
-        time: true,
-        unique: true,
-        index: true,},
+    name: { type: String},
         status: {type: Boolean, default: true}
     } 
 );
