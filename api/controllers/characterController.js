@@ -12,9 +12,8 @@ const { Character } = require('../models/character');
 exports.addCharacter = async (req, res) => {
     if(req.userExists.isAdmin){
         const existCast = await castService.checkExistCast(req.body.namecast);
-        const existMovie = await movieService.checkExistMovie(req.body.title);
         //console.log(existMovie);
-        let cast, movie;
+        let cast;
         if(existCast){
             cast = existCast;
         }
@@ -24,21 +23,8 @@ exports.addCharacter = async (req, res) => {
             cast = await castService.checkExistCast(req.body.namecast);
             console.log(cast);
         }
-        if(existMovie){
-            movie = existMovie;
-        }
-        else{
-            movie = {title: req.body.title};
-            await movieService.addMovie(movie);
-            movie = await movieService.checkExistMovie(req.body.title);
-           
-        }
-        console.log(movie);
     const newCharacter = {
         name: req.body.name,
-        movie: {
-            _id: movie._id,
-        },
         cast: cast,
     }
     try{

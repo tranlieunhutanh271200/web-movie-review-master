@@ -35,6 +35,9 @@ class characterService{
         //console.log(id, data);
         return await Character.findByIdAndUpdate(id, { $set: data }, {new: true});
     }
+    static async checkExistCharacter(name){
+        return await Character.findOne({name});
+    }
 }
 
 module.exports = characterService;

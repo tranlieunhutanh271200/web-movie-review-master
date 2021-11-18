@@ -13,5 +13,7 @@ router.put("/delete/:id", verifyToken, movieController.delete);
 router.get("/find/:id", movieController.find);
 //GET ALL
 router.get("/", movieController.getall);
+//DELETE ITEM
+router.put("/deleteItem/:id", verifyToken, movieController.deleteItem);
 
 module.exports = router;
