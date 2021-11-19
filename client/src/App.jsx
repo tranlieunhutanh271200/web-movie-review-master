@@ -9,7 +9,6 @@ import CastDT from "./pages/castDt/CastDt";
 import News from "./pages/news/News";
 import NewDetail from "./pages/newDetail/NewDetail";
 import Navbar from "./components/navbar/Navbar";
-import HomeAdmin from "./pages/admin/adminHome/AdminHome"
 
 
 
@@ -21,7 +20,7 @@ function App () {
     //   <Route  path="/HomeAdmin" element ={<HomeAdmin/>}/>
       
     // </Routes>
-    <HomeAdmin/>
+    <MovieDetail/>
   )
 };
 
