@@ -3,20 +3,18 @@ const mongoose = require("mongoose");
 const { UserSchema } = require("./user");
 const { MovieSchema } = require("./movie");
 
-const ReviewSchema = new mongoose.Schema(
+const FavoriteSchema = new mongoose.Schema(
     {
-        movie: {
+        user: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "Movie",
+            ref: "User",
         },
-        reviewItems: [
+        favoriteItems: [
             {
-                user: {
+                movie: {
                     type: mongoose.Schema.Types.ObjectId,
-                    ref: "User",
+                    ref: "Movie",
                 },
-                rating: { type: Number, min: 0, max: 10, default: 0 },
-                text: { type: String },
                 status: { type: Boolean, default: true },
             }
         ]
@@ -25,6 +23,6 @@ const ReviewSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
-const Review = mongoose.model("Review", ReviewSchema);
+const Favorite = mongoose.model("Favorite", FavoriteSchema);
 
-module.exports = { Review, ReviewSchema };
+module.exports = { Favorite, FavoriteSchema };
