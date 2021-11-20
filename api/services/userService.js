@@ -37,5 +37,8 @@ class userService {
       return await User.aggregate ([{ $project: { month: { $month: "$createdAt" },},}
       ,{ $group: { _id: "$month", total: { $sum: 1 },},},]);
     }
+    static async count(){
+      return await User.find({}).count();
+    }
 }
 module.exports = userService;
