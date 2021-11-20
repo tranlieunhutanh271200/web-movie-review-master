@@ -1,15 +1,18 @@
 "use strict";
 
 const CryptoJS = require("crypto-js");
-//const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 //const { updateUser } = require("../services/userService");
 const userService = require("../services/userService");
-const User = require("../models/user")
+const activationToken = require("../middlewares/activationToken");
+const refreshToken = require("../middlewares/refreshToken");
+const accessToken = require("../middlewares/accessToken");
+const sendEmail = require("../utils/sendMail");
 
+const { CLIENT_URL } = process.env
 //REGISTER
 exports.registration = async (req, res) => {
-  
+
   const newUser = {
     firstname: req.body.firstname,
     lastname: req.body.lastname,
@@ -30,22 +33,48 @@ exports.registration = async (req, res) => {
         success: false,
         msg: "Password must be at least 6 characters.",
       });
-    }else {
+    } else if (!validateEmail(req.body.email)) {
+      res.status(400).json({ msg: "Invalid email!" })
+    } else {
       const userExists = await userService.checkEmailExist(req.body.email);
       if (userExists) {
         return res
           .status(400)
           .send({ success: false, msg: "Email already exists" });
       }
+      else {
+        //const user = await userService.registration(newUser);
+        //const user = await newUser.save();
+        //res.status(201).json(user);
+        const tokenActivation = activationToken(newUser);
+        console.log(tokenActivation);
+
+        const url = `${CLIENT_URL}/user/activation/${tokenActivation}`;
+        sendEmail(req.body.email, req.body.firstname, req.body.lastname, url)
+        res.status(201).json("Your email has been sent. Please check your email");
+      }
     }
-    const user = await userService.registration(newUser);
-    //const user = await newUser.save();
-    res.status(201).json(user);
   } catch (err) {
     res.status(500).json(err);
   }
 }
 
+//ACTIVE EMAIL
+exports.activeEmail = async (req, res) => {
+  try{
+    const {tokenActivation} = req.body
+    const user = jwt.verify(tokenActivation, process.env.ACTIVATION_TOKEN_ACTION);
+    console.log(user);
+    const {firstname, lastname, email, dob, password} = user;
+
+    const newUser = {firstname, lastname, email, dob, password}
+
+    const check = await userService.registration(newUser);
+    res.status(201).json("Activation Successfully!");
+  }catch (err){
+    res.status(500).json(err);
+  }
+}
 //LOGIN
 exports.login = async (req, res) => {
   if (!req.body.password) {
@@ -60,13 +89,13 @@ exports.login = async (req, res) => {
       msg: "Please enter your email.",
     });
   }
-  else try{
+  else try {
 
     const userExists = await userService.checkEmailExist(req.body.email);
-    
-    if (!userExists){
+
+    if (!userExists) {
       res.status(401).json("Wrong password or username!");
-    } 
+    }
     const bytes = CryptoJS.AES.decrypt(userExists.password, process.env.SECRET_KEY);
     const originalPassword = bytes.toString(CryptoJS.enc.Utf8);
 
@@ -81,15 +110,15 @@ exports.login = async (req, res) => {
     );
     const { password, ...info } = userExists._doc;
     res.status(200).json({ ...info, accessToken });
-  }catch(err){
+  } catch (err) {
     res.status(500).json(err)
   }
 }
 
 //UPDATE
 exports.update = async (req, res) => {
-  if(req.userExists.id === req.params.id || req.userExists.isAdmin){
-    if(req.body.password){
+  if (req.userExists.id === req.params.id || req.userExists.isAdmin) {
+    if (req.body.password) {
       req.body.password = CryptoJS.AES.encrypt(
         req.body.password,
         process.env.SECRET_KEY
@@ -98,52 +127,52 @@ exports.update = async (req, res) => {
     //console.log(req.params.id, req.body);
 
     try {
-      const updatedUser = await userService.updateUser(req.params.id, req.body, {new: true});  
+      const updatedUser = await userService.updateUser(req.params.id, req.body, { new: true });
       res.status(200).json(updatedUser);
-    }catch(err){
+    } catch (err) {
       res.status(500).json(err);
     }
   }
-  else{
+  else {
     res.status(403).json("You can update only your account!")
   }
 }
 
 //DELETE
 exports.delete = async (req, res) => {
-  if(req.userExists.id === req.params.id || req.userExists.isAdmin){
+  if (req.userExists.id === req.params.id || req.userExists.isAdmin) {
     console.log(req.userExists.isAdmin)
     try {
       const deletedUser = await userService.deleteUser(req.params.id);
-      if(!deletedUser){
+      if (!deletedUser) {
         res.status(403).json("User not found!")
       }
       res.status(200).json("User has been deleted...");
-    }catch(err){
+    } catch (err) {
       res.status(500).json(err);
     }
   }
-  else{
+  else {
     res.status(403).json("You can delete only your account!")
   }
 }
 
 //FIND
 exports.find = async (req, res) => {
-  if(req.userExists.id === req.params.id || req.userExists.isAdmin){
+  if (req.userExists.id === req.params.id || req.userExists.isAdmin) {
     //console.log(req.userExists.isAdmin)
     try {
       const findUser = await userService.getById(req.params.id);
-      if(!findUser){
+      if (!findUser) {
         res.status(403).json("User not found!")
       }
       const { password, ...info } = findUser._doc;
       res.status(200).json(info);
-    }catch(err){
+    } catch (err) {
       res.status(500).json(err);
     }
   }
-  else{
+  else {
     res.status(403).json("Only admin can find users")
   }
 }
@@ -151,20 +180,20 @@ exports.find = async (req, res) => {
 //GET ALL USER
 exports.getall = async (req, res) => {
   const query = req.query.new;
-  if(req.userExists.isAdmin){
+  if (req.userExists.isAdmin) {
     //console.log(req.userExists.isAdmin)
     try {
       const findAllUser = query ? await userService.getAlllimit2() : await userService.getAll();
-      if(!findAllUser){
+      if (!findAllUser) {
         res.status(403).json("Sorry! We don't have any users here!")
       }
       //const { password, ...info } = findAllUser._doc;
       res.status(200).json(findAllUser);
-    }catch(err){
+    } catch (err) {
       res.status(500).json(err);
     }
   }
-  else{
+  else {
     res.status(403).json("You are not allowed to see all users!")
   }
 }
@@ -172,7 +201,7 @@ exports.getall = async (req, res) => {
 //GET USER STATS
 exports.stats = async (req, res) => {
   const today = new Date();
-  const lastYear = today.setFullYear(today.setFullYear() -1 );
+  const lastYear = today.setFullYear(today.setFullYear() - 1);
 
   try {
     const data = await userService.aggregate();
@@ -181,3 +210,26 @@ exports.stats = async (req, res) => {
     res.status(500).json(err);
   }
 }
+
+function validateEmail(email) {
+  const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(email);
+}
+
+// const createrefreshToken = async (payload) => {
+//   return await jwt.sign(payload, process.env.REFRESH_TOKEN_ACTION, {
+//     expiresIn: "7d",
+//   });
+// };
+
+// const createaccessToken = async (payload) => {
+//   return await jwt.sign(payload, process.env.ACCESS_TOKEN_ACTION, {
+//     expiresIn: "15m",
+//   });
+// };
+
+// const createactivationToken = (payload) => {
+//   return jwt.sign(payload, process.env.ACTIVATION_TOKEN_ACTION, {
+//     expiresIn: "5m",
+//   });
+// };
