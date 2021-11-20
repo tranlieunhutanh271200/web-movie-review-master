@@ -1,0 +1,16 @@
+
+
+@import "./styles/Helper/function";
+@import "./styles/Helper/variables";
+@import "./styles/Helper/mixin";
+:root {
+    --main-color: #0b0b0b;
+  }
+ 
+
+.loader {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

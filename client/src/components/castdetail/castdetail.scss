@@ -1,0 +1,48 @@
+@import "../connect";
+.castdetail{
+    @include responsive_mobile {
+        @include Text($fs-1 - 1, $fw-regular);
+      }
+      @include responsive_tablet {
+        @include Text($fs-1 - 1, $fw-regular);
+      }
+      @include responsive_laptop--mini {
+        @include Text($fs-1 - 1, $fw-regular);
+      }
+      @include responsive_laptop--medium {
+        @include Text($fs-2 - 5, $fw-regular);
+      }
+    .name-cast{
+        color: white;
+        display: flex;
+        -webkit-box-pack: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        align-items: center;
+        height: 6rem;
+        font-size: 4rem;
+        font-weight: 900;
+        padding: 0px 6%;
+        text-align: center;
+    }
+    .info{
+        display: flex;
+        img{
+            flex: 2;
+            display : block;
+            width :10%;
+            padding: 0 4%;
+            }
+            .content{
+                color: white;
+                flex: 8;
+                .item{
+                    margin-bottom: .25em;
+                }
+                .summary{
+                    margin: .5em 0 0 ;
+                }
+            }
+    }
+    
+}

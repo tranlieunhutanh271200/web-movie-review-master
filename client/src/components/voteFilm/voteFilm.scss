@@ -1,0 +1,40 @@
+.votefilm{
+    margin-top: 10px;
+    width: 400px;
+    border: 1px solid lightgray;
+    height: 100px;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    opacity: 0.85;
+    &:hover{
+        opacity: 1;
+    }
+    img{
+        margin-top: 5px;
+        width: 150px;
+        height: 90px;
+        object-fit: cover;
+        margin-left: 5px;
+        border-radius: 5px;
+    }
+    .rating{
+        position: absolute;
+        margin-top: 73px;
+        margin-left: 3px;
+    }
+    .name-film-rating{
+        position: absolute;
+        margin-top: 23px;
+        margin-left: 15px;
+        font-size: 18px;
+        &:hover{
+            color: lightgray;
+        }
+        .time-update{
+            margin-top: 15px;
+            font-size: 14px;
+            color: gray;
+        }
+    }
+}
