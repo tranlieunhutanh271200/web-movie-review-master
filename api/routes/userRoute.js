@@ -19,5 +19,7 @@ router.get("/find/:id", verifyToken, userController.find);
 router.get("/", verifyToken, userController.getall);
 //GET USER STATS
 router.get("/stats", verifyToken, userController.stats);
+//ACTIVE EMAIL
+router.post("/activation", userController.activeEmail);
 
 module.exports = router;
