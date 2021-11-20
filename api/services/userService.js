@@ -38,7 +38,7 @@ class userService {
       ,{ $group: { _id: "$month", total: { $sum: 1 },},},]);
     }
     static async count(){
-      return await User.find({}).count();
+      return await User.find({}).countDocuments();
     }
 }
 module.exports = userService;
