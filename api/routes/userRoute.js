@@ -21,5 +21,7 @@ router.get("/", verifyToken, userController.getall);
 router.get("/stats", verifyToken, userController.stats);
 //ACTIVE EMAIL
 router.post("/activation", userController.activeEmail);
+//TOTAL USER
+router.get("/total", userController.total);
 
 module.exports = router;
