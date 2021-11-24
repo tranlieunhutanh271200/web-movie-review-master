@@ -23,5 +23,8 @@ router.get("/stats", verifyToken, userController.stats);
 router.post("/activation", userController.activeEmail);
 //TOTAL USER
 router.get("/total", userController.total);
-
+//FORGOT PASS
+router.post("/forgot", userController.forgot);
+//RESET PASS
+router.post("/reset", verifyToken, userController.reset);
 module.exports = router;

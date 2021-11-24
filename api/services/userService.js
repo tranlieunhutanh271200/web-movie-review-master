@@ -3,13 +3,6 @@ const {User, UserSchema} = require("../models/user");
 
 class userService {
     static async registration(data) {
-        // const userData = new User({
-        //     firstname: data.firstname,
-        //     lastname: data.lastname,
-        //     email: data.email,
-        //     dob: data.dob,
-        //     password: data.password,
-        // });
         return await User(data).save();
       }
 
@@ -19,6 +12,10 @@ class userService {
     static async updateUser(id, data) {
       console.log(id, data);
       return await User.findByIdAndUpdate(id, { $set: data }, {new: true});
+    }
+    static async updatePassword(id, data){
+      console.log(id, data)
+      return await User.findByIdAndUpdate(id, {$set: {"password":data}}, {new:true})
     }
     static async deleteUser(id) {
       console.log(id);

@@ -17,7 +17,7 @@ const oauth2Client = new OAuth2(
     OAUTH_PLAYGROUND
 )
 
-const sendEmail = async (to, firstName, lastName, url) => {
+const sendEmail = async (to, firstName, lastName, url, txt) => {
     console.log(to , url)
     oauth2Client.setCredentials({
         refresh_token: MAILING_SERVICE_REFRESH_TOKEN
@@ -46,7 +46,7 @@ const sendEmail = async (to, firstName, lastName, url) => {
             Just click the button below to validate your email address.
             </p>
             
-            <a href=${url} style="background: crimson; text-decoration: none; color: white; padding: 10px 20px; margin: 10px 0; display: inline-block;">Verify your Email!</a>
+            <a href=${url} style="background: crimson; text-decoration: none; color: white; padding: 10px 20px; margin: 10px 0; display: inline-block;">${txt}</a>
             </div>
         `
     }

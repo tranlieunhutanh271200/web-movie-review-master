@@ -8,6 +8,7 @@ const activationToken = require("../middlewares/activationToken");
 const refreshToken = require("../middlewares/refreshToken");
 const accessToken = require("../middlewares/accessToken");
 const sendEmail = require("../utils/sendMail");
+const validateEmail = require("../utils/validation");
 
 const { CLIENT_URL } = process.env
 //REGISTER
@@ -50,7 +51,7 @@ exports.registration = async (req, res) => {
         console.log(tokenActivation);
 
         const url = `${CLIENT_URL}/user/activation/${tokenActivation}`;
-        sendEmail(req.body.email, req.body.firstname, req.body.lastname, url)
+        sendEmail(req.body.email, req.body.firstname, req.body.lastname, url, "Verify your Email")
         res.status(201).json("Your email has been sent. Please check your email");
       }
     }
@@ -58,7 +59,6 @@ exports.registration = async (req, res) => {
     res.status(500).json(err);
   }
 }
-
 //ACTIVE EMAIL
 exports.activeEmail = async (req, res) => {
   try{
@@ -105,7 +105,7 @@ exports.login = async (req, res) => {
 
     const accessToken = jwt.sign(
       { id: userExists._id, isAdmin: userExists.isAdmin },
-      process.env.SECRET_KEY,
+      process.env.ACCESS_TOKEN_ACTION,
       { expiresIn: "10h" }
     );
     const { password, ...info } = userExists._doc;
@@ -114,7 +114,6 @@ exports.login = async (req, res) => {
     res.status(500).json(err)
   }
 }
-
 //UPDATE
 exports.update = async (req, res) => {
   if (req.userExists.id === req.params.id || req.userExists.isAdmin) {
@@ -137,7 +136,6 @@ exports.update = async (req, res) => {
     res.status(403).json("You can update only your account!")
   }
 }
-
 //DELETE
 exports.delete = async (req, res) => {
   if (req.userExists.id === req.params.id || req.userExists.isAdmin) {
@@ -156,7 +154,6 @@ exports.delete = async (req, res) => {
     res.status(403).json("You can delete only your account!")
   }
 }
-
 //FIND
 exports.find = async (req, res) => {
   if (req.userExists.id === req.params.id || req.userExists.isAdmin) {
@@ -176,7 +173,6 @@ exports.find = async (req, res) => {
     res.status(403).json("Only admin can find users")
   }
 }
-
 //GET ALL USER
 exports.getall = async (req, res) => {
   const query = req.query.new;
@@ -197,7 +193,6 @@ exports.getall = async (req, res) => {
     res.status(403).json("You are not allowed to see all users!")
   }
 }
-
 //GET USER STATS
 exports.stats = async (req, res) => {
   const today = new Date();
@@ -210,7 +205,6 @@ exports.stats = async (req, res) => {
     res.status(500).json(err);
   }
 }
-
 //COUNT USER
 exports.total = async (req, res) => {
   try {
@@ -220,11 +214,45 @@ exports.total = async (req, res) => {
     res.status(500).json(err)
   }
 }
-
-function validateEmail(email) {
-  const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return re.test(email);
+//FORGOT PASSWORD
+exports.forgot = async (req, res) => {
+  try {
+    const user = await userService.checkEmailExist(req.body.email);
+    //console.log(user)
+    if(!user) return res.status(201).json("Re-send the password. Please check your email!")
+    else{
+      const tokenAccess = accessToken({id: user._id});
+      const url =`${CLIENT_URL}/user/reset/${tokenAccess}`;
+      console.log(url);
+      sendEmail(req.body.email, user.firstname, user.lastname, url, "Reset your Password");
+      res.status(201).json("Re-send the password. Please check your email!")
+    }
+  } catch (err) {
+    res.status(500).json(err)
+  }
 }
+//RESET PASSWORD
+exports.reset = async (req, res) => {
+  try {
+    if(req.body.password == req.body.confirmPassword){
+      //console.log(req.body.password);
+      console.log(req.userExists.id);
+      const password =  CryptoJS.AES.encrypt(
+        req.body.password,
+        process.env.SECRET_KEY).toString();
+      await userService.updatePassword(req.userExists.id, password, {new: true});
+      res.status(201).json("Password successfully changed!");
+    } else {
+      res.status(400).json("Please confirm your new password!")
+    }
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
+// function validateEmail(email) {
+//   const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+//   return re.test(email);
+// }
 
 // const createrefreshToken = async (payload) => {
 //   return await jwt.sign(payload, process.env.REFRESH_TOKEN_ACTION, {
@@ -233,6 +261,7 @@ function validateEmail(email) {
 // };
 
 // const createaccessToken = async (payload) => {
+//   console.log( jwt.sign(payload, process.env.ACCESS_TOKEN_ACTION));
 //   return await jwt.sign(payload, process.env.ACCESS_TOKEN_ACTION, {
 //     expiresIn: "15m",
 //   });
