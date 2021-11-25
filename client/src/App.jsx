@@ -20,7 +20,7 @@ function App () {
     //   <Route  path="/HomeAdmin" element ={<HomeAdmin/>}/>
       
     // </Routes>
-    <MovieDetail/>
+    <Register/>
   )
 };
 

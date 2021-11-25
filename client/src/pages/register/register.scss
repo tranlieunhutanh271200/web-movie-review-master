@@ -1,23 +1,15 @@
-.register {
+.login {
   width: 100vw;
   height: 100vh;
   background: linear-gradient(
       to top,
       rgba(0, 0, 0, 0) 0%,
-      rgba(0, 0, 0, 1) 120%,
-  ),
+      rgba(0, 0, 0, 1) 120%
+    ),
     url("https://assets.nflxext.com/ffe/siteui/vlv3/45e6f443-8eff-4c7b-ba24-fbdc84c37718/92228060-c198-46ea-ad27-857697719f7e/VN-en-20210927-popsignuptwoweeks-perspective_alpha_website_large.jpg");
   background-size: cover;
   position: relative;
-  .link{
-    color: white;
-    text-decoration:none ;
 
-  }
-  .link:hover{
-    text-decoration:none ;
-    color:red;
-  }
   .top {
     .wrapper {
       padding: 20px 50px;
@@ -27,18 +19,6 @@
 
       .logo {
         height: 40px;
-      }
-
-      .loginButton {
-        cursor: pointer;
-        background-color: red;
-        border: none;
-        color: white;
-        border-radius: 5px;
-        padding: 5px 15px;
-        font-size: 16px;
-        font-weight: 500;
-        z-index: 100;
       }
     }
   }
@@ -55,43 +35,97 @@
     justify-content: center;
     color: white;
 
-    h1 {
-      font-size: 50px;
-    }
-
-    h2 {
-      margin: 20px;
-    }
-
-    p {
-      font-size: 20px;
-    }
-
-    .input {
-      width: 50%;
-      background-color: white;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 20px;
-      height: 50px;
+    form {
+      width: 300px;
+      height: 600px;
+      padding: 30px;
       border-radius: 5px;
+      background-color: var(--main-color);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
 
-      input{
-          flex: 9;
-          height: 100%;
-          border: none;
-          padding: 0 10px;
+      input {
+        height: 40px;
+        border-radius: 5px;
+        background-color: rgb(116, 116, 116);
+        color: white;
+        padding-left: 10px;
+
+        &::placeholder {
+          color: lightgray;
+        }
+        
       }
 
-      .registerButton{
-          flex: 3;
-          height: 100%;
-          background-color: red;
-          border: none;
+      .loginButton{
+        height: 40px;
+        border-radius: 5px;
+        background-color: rgb(255, 0, 0);
+        color: white;
+        border: none;
+        font-size: 18px;
+        font-weight: 500;
+        cursor: pointer;
+        &:hover{
+          background-color:rgb(156, 3, 3);
+        }
+      }
+      .loginGGButton{
+        height: 40px;
+        border-radius: 5px;
+        background-color: rgb(240, 60, 60);
+        color: white;
+        border: none;
+        font-size: 18px;
+        font-weight: 500;
+        cursor: pointer;
+        &:hover{
+          background-color:rgb(192, 52, 52);
+        }
+        
+      }
+      .line{
+        margin-bottom: 5px;
+      }
+      .loginFBButton {
+        height: 40px;
+        border-radius: 5px;
+        background-color: rgb(45, 98, 179);
+        color: white;
+        border: none;
+        font-size: 18px;
+        font-weight: 500;
+        cursor: pointer;
+        &:hover{
+          background-color:rgb(31, 59, 153);
+        }
+        .facebook-logo{
+          background: url(https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/1200px-Facebook_Logo_%282019%29.png) no-repeat;
+          background-size: 32px, 96px;
+        }
+        .facebook-text{
+          margin-left: 5px;
+          color: rgb(255, 255, 255);
+        }
+      }
+      
+      span {
+        color: lightgray;
+        b {
           color: white;
-          font-size: 22px;
-          cursor: pointer;
+          &:hover{
+            color: red;
+            cursor: pointer;
+          }
+        }
+      }
+      .validator{
+        color: red;
+        font-size: smaller;
+      }
+      .Muiinput {
+        margin-left: -50px;
       }
     }
   }
