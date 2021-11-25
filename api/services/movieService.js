@@ -1,6 +1,7 @@
 "use strict"
 
 const {Movie, MovieSchema} = require("../models/movie");
+const mongoose = require("mongoose")
 
 class movieService{
     static async addMovie(data) {
@@ -56,6 +57,18 @@ class movieService{
     static async checkExistCategoryandUpdate(title, data){
         //console.log(title, data)
         return await Movie.findOneAndUpdate({title}, {"$push": data}, {new: true});
+    }
+    static async getAllMoviebyGener(id) {
+        return await Movie.aggregate([
+            {$match: {"categoryItems.category" : mongoose.Types.ObjectId(id)}},
+            
+        ])
+    }
+    static async getAllMoviebyProduction(id) {
+        return await Movie.aggregate([
+            {$match: {"productionItems.production" : mongoose.Types.ObjectId(id)}},
+            
+        ])
     }
 }
 

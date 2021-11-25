@@ -418,3 +418,21 @@ exports.deleteItem = async (req, res) => {
     res.status(500).json(err);
   }
 }
+exports.getmoviebygerne = async (req, res) => {
+  try {
+    console.log(req.params.id)
+    const data = await movieService.getAllMoviebyGener(req.params.id);
+    res.status(200).json(data)
+  } catch (err) {
+    res.status(500).json(err);
+  }
+}
+exports.getmoviebyproduction = async (req, res) => {
+  try {
+    console.log(req.params.id)
+    const data = await movieService.getAllMoviebyProduction(req.params.id);
+    res.status(200).json(data)
+  } catch (err) {
+    res.status(500).json(err);
+  }
+}
