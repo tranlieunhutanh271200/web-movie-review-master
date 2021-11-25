@@ -249,6 +249,34 @@ exports.reset = async (req, res) => {
     res.status(500).json(err)
   }
 }
+//UPDATE PASSWORD
+exports.updatePassword = async (req, res) => {
+  try {
+    const user = await userService.getById(req.userExists.id);
+    //console.log(user.password);
+    const bytes = CryptoJS.AES.decrypt(user.password, process.env.SECRET_KEY);
+    const originalPassword = bytes.toString(CryptoJS.enc.Utf8);
+    //console.log(originalPassword);
+    if(originalPassword !== req.body.oldPassword){
+      res.status(400).json("Invalid Password!");
+    }
+    else{
+      if(req.body.newPassword == req.body.confirmPassword){
+        const password =  CryptoJS.AES.encrypt(
+          req.body.newPassword,
+          process.env.SECRET_KEY).toString();
+        await userService.updatePassword(req.userExists.id, password, {new: true});
+        res.status(201).json("Password successfully changed!");
+      }
+      else {
+        res.status(400).json("Please confirm your new password!");
+      }
+    }
+  } catch (err) {
+    //console.log(err)
+    res.status(500).json(err);
+  }
+}
 // function validateEmail(email) {
 //   const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 //   return re.test(email);
