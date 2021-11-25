@@ -1,5 +1,6 @@
 "use strict"
 
+const mongoose = require("mongoose");
 const {Review, ReviewSchema} = require("../models/Review");
 
 class reviewService{
@@ -39,6 +40,22 @@ class reviewService{
     static async getAlllimit2() {
         return await Review.find({}).limit(2);
       }
+
+    static async getRating(id) {
+        const a = await Review.findOne({movie: id});
+        //console.log("=========",a)
+        let list = [];
+        list = a.reviewItems;
+        //console.log("abc", list);
+        const valueRating = await (await this.getAverage(list)).toFixed(1);
+        //console.log("object", b)
+        return await valueRating;
+    }
+    static getAverage = async (arr) => {
+        const reducer = (total, reviewItems) => total + reviewItems.rating;
+        const sum = arr.reduce(reducer, 0);
+        return sum / arr.length;
+    }
 }
 
 module.exports = reviewService;

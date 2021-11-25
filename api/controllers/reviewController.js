@@ -175,3 +175,13 @@ exports.getall = async (req, res) => {
     res.status(403).json("You are not allowed to see all review!")
   }
 }
+//GET RATING MOVIE
+exports.getallrating = async (req, res) => {
+  try {
+    const data = await reviewService.getRating(req.params.id);
+    //console.log(data.reviewItems)
+    res.status(200).json(data);
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
