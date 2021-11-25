@@ -27,4 +27,6 @@ router.get("/total", userController.total);
 router.post("/forgot", userController.forgot);
 //RESET PASS
 router.post("/reset", verifyToken, userController.reset);
+//UPDATE PASS
+router.put("/updatePassword", verifyToken, userController.updatePassword);
 module.exports = router;
