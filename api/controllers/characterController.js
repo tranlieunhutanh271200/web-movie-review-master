@@ -135,3 +135,13 @@ exports.update = async (req, res) => {
     res.status(403).json("Only admin can change Movies")
   }
 }
+//GET MOVIE CAST
+exports.getmoviebycast = async (req, res) => {
+  try {
+    //console.log(req.params.id)
+    const data = await characterService.getAllMoviebyCast(req.body.cast);
+    res.status(200).json(data)
+  } catch (err) {
+    res.status(500).json(err);
+  }
+}
