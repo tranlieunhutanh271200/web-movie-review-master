@@ -70,6 +70,9 @@ class movieService{
             
         ])
     }
+    static async count(){
+        return await Movie.find({"status": true}).countDocuments();
+      }
 }
 
 module.exports = movieService;

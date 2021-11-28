@@ -49,8 +49,9 @@ function Home() {
       }
     );
   };
-console.log(url);
- console.log("image: ", image);
+
+  console.log("image: ", image);
+  console.log("url: ", url);
     return (
       <div>
       <Topbar/>

@@ -39,6 +39,9 @@ class castService{
     static async getAlllimit2() {
         return await Cast.find({"status": true}).limit(2);
       }
+    static async count(){
+        return await Cast.find({"status": true}).countDocuments();
+    }
 }
 
 module.exports = castService;
