@@ -2,8 +2,8 @@ import React from 'react';
 
 import "./adminHome.scss";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Navbar from '../../components/navbarAdmin/NavbarAdmin';
-import Footer from "../../components/footerAdmin/FooterAdmin"
+
+import Footer from '../../components/footerAdmin/FooterAdmin'
 import Topbar from '../../components/topbarAdmin/topbarAdmin';
 import Sidebar from '../../components/sidebarAdmin/SidebarAdmin';
 import MainAdmin from  '../../components/mainAdmin/MainAdmin';
@@ -12,6 +12,9 @@ import  storage  from "../../firebase";
 
 
 function Home() {
+
+
+
   const [image, setImage] = useState(null);
   const [url, setUrl] = useState("");
   const [progress, setProgress] = useState(0);
@@ -46,8 +49,8 @@ function Home() {
       }
     );
   };
-
-  console.log("image: ", image);
+console.log(url);
+ console.log("image: ", image);
     return (
       <div>
       <Topbar/>
