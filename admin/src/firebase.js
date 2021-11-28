@@ -1,13 +1,13 @@
-import firebase from 'firebase'
+import firebase from "firebase"
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBYU1eGzy5sycUaORgco62imxlXzzMlNwI",
-  authDomain: "netflix-5b946.firebaseapp.com",
-  projectId: "netflix-5b946",
-  storageBucket: "netflix-5b946.appspot.com",
-  messagingSenderId: "649515410380",
-  appId: "1:649515410380:web:135ee8455a13f47374b369",
-  measurementId: "G-HEJ98QETR9"
+  apiKey: "AIzaSyAmBpI8k6PewBCVxeqsRWDMZHv-OcLgyNY",
+  authDomain: "netfilxstorage.firebaseapp.com",
+  projectId: "netfilxstorage",
+  storageBucket: "netfilxstorage.appspot.com",
+  messagingSenderId: "488041424375",
+  appId: "1:488041424375:web:b9a63a3e6bff376d227af2",
+  measurementId: "G-C33H8DQD2V"
 };
 
   firebase.initializeApp(firebaseConfig);

@@ -436,3 +436,12 @@ exports.getmoviebyproduction = async (req, res) => {
     res.status(500).json(err);
   }
 }
+//COUNT USER
+exports.total = async (req, res) => {
+  try {
+    const data = await movieService.count();
+    res.status(200).json(data)
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
