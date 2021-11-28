@@ -1,13 +1,27 @@
-import firebase from "firebase"
+import firebase from "firebase/compat"
 
+// const firebaseConfig = {
+//   apiKey: "AIzaSyBYU1eGzy5sycUaORgco62imxlXzzMlNwI",
+//   authDomain: "netflix-5b946.firebaseapp.com",
+//   projectId: "netflix-5b946",
+//   storageBucket: "netflix-5b946.appspot.com",
+//   messagingSenderId: "649515410380",
+//   appId: "1:649515410380:web:135ee8455a13f47374b369",
+//   measurementId: "G-HEJ98QETR9"
+// };
+
+//   firebase.initializeApp(firebaseConfig);
+//   const storage = firebase.storage();
+
+//   export default storage;
 const firebaseConfig = {
-  apiKey: "AIzaSyAmBpI8k6PewBCVxeqsRWDMZHv-OcLgyNY",
-  authDomain: "netfilxstorage.firebaseapp.com",
-  projectId: "netfilxstorage",
-  storageBucket: "netfilxstorage.appspot.com",
-  messagingSenderId: "488041424375",
-  appId: "1:488041424375:web:b9a63a3e6bff376d227af2",
-  measurementId: "G-C33H8DQD2V"
+    apiKey: "AIzaSyBdnQBEqEdUErM51b3jZNg2OUZYu9lCTxs",
+    authDomain: "netflix-59bfe.firebaseapp.com",
+    projectId: "netflix-59bfe",
+    storageBucket: "netflix-59bfe.appspot.com",
+    messagingSenderId: "1058791407893",
+    appId: "1:1058791407893:web:37a8dd796e0b00878e691c",
+    measurementId: "G-CETDBNQFRJ"
 };
 
   firebase.initializeApp(firebaseConfig);
