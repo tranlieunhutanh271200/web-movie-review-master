@@ -48,6 +48,7 @@ function Home() {
   };
 
   console.log("image: ", image);
+  console.log("url: ", url);
     return (
       <div>
       <Topbar/>

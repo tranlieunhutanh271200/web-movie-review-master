@@ -19,5 +19,7 @@ router.put("/deleteItem/:id", verifyToken, movieController.deleteItem);
 router.get("/getmoviebygerne/:id", movieController.getmoviebygerne);
 //GET ALL MOVIE BY PRODUCTION
 router.get("/getmoviebyproduction/:id", movieController.getmoviebyproduction);
+//TOTAL MOVIE
+router.get("/total", movieController.total);
 
 module.exports = router;

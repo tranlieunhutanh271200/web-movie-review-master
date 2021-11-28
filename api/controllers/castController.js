@@ -106,3 +106,11 @@ exports.find = async (req, res) => {
       res.status(403).json("You are not allowed to see all casts!")
     }
   }
+  exports.total = async (req, res) => {
+    try {
+      const data = await castService.count();
+      res.status(200).json(data)
+    } catch (err) {
+      res.status(500).json(err)
+    }
+  }
