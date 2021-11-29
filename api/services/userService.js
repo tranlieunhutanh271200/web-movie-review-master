@@ -37,5 +37,19 @@ class userService {
     static async count(){
       return await User.find({"status": true}).countDocuments();
     }
+    static async getAllDeleted() {
+      return await User.find({"status": false});
+    }
+    static async getAllDeletedlimit2() {
+      return await User.find({"status": false}).limit(2);
+    }
+    static async recoverUser(id) {
+      console.log(id);
+      return await User.findByIdAndUpdate(id, { $set: {"status": true} }, {new: true});
+    }
+    static async removeUser(id) {
+      console.log(id);
+      return await User.findByIdAndRemove(id);
+    }
 }
 module.exports = userService;

@@ -73,6 +73,26 @@ class movieService{
     static async count(){
         return await Movie.find({"status": true}).countDocuments();
       }
+    static async getAllDeleted() {
+        return await Movie.find({"status": false}).
+        populate("productionItems.production","_id name founder foundingdate").
+        populate("categoryItems.category", "_id name").
+        populate("castItems.character", "_id name cast");;
+      }
+    static async getAllDeletedlimit2() {
+        return await Movie.find({"status": false}).limit(2).
+        populate("productionItems.production","_id name founder foundingdate").
+        populate("categoryItems.category", "_id name").
+        populate("castItems.character", "_id name cast");;
+      }
+    static async recover(id) {
+        console.log(id);
+        return await Movie.findByIdAndUpdate(id, { $set: {"status": true} }, {new: true});
+      }
+    static async remove(id) {
+        console.log(id);
+        return await Movie.findByIdAndRemove(id);
+      }
 }
 
 module.exports = movieService;
