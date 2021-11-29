@@ -29,4 +29,11 @@ router.post("/forgot", userController.forgot);
 router.post("/reset", verifyToken, userController.reset);
 //UPDATE PASS
 router.put("/updatePassword", verifyToken, userController.updatePassword);
+//GET ALL DELETED
+router.get("/deleted", verifyToken, userController.getalldeleted);
+//RECOVER
+router.put("/recover/:id", verifyToken, userController.recover);
+//REMOVE
+router.delete("/remove/:id", verifyToken, userController.remove);
+
 module.exports = router;
