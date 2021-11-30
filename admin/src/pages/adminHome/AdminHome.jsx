@@ -1,11 +1,8 @@
 import React from 'react';
 
 import "./adminHome.scss";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import Footer from '../../components/footerAdmin/FooterAdmin'
-import Topbar from '../../components/topbarAdmin/topbarAdmin';
-import Sidebar from '../../components/sidebarAdmin/SidebarAdmin';
+
 import MainAdmin from  '../../components/mainAdmin/MainAdmin';
 import { useState } from "react";
 import  storage  from "../../firebase";
@@ -53,16 +50,15 @@ function Home() {
   console.log("image: ", image);
   console.log("url: ", url);
     return (
-      <div>
-      <Topbar/>
-      <div className="container">
-      <Sidebar />
+     
+      <div className="home">
+      
       <MainAdmin />
       <progress value={progress} max="100" />
       <input type="file" onChange={handleChange} />
       <button onClick={handleUpload}>Upload</button>
       </div>
-      </div>
+     
   
        
      

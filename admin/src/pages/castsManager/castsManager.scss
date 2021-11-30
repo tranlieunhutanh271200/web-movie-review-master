@@ -1,14 +1,10 @@
-.castssList{
+.castssList {
     flex: 4;
     margin-top: 30px;
     background-color: whitesmoke;
 }
-.container{
-    display: flex;
-    margin-top: 10px;
-    background-color: rgb(251, 251, 255)
-  }
-.castssListItem{
+
+.castssListItem {
     display: flex;
     align-items: center;
 }
@@ -19,10 +15,9 @@
     border-radius: 50%;
     object-fit: cover;
     margin-right: 10px;
-    
-  }
+}
 
-.castssListEdit{
+.castssListEdit {
     border: none;
     border-radius: 10px;
     padding: 5px 10px;
@@ -32,7 +27,7 @@
     margin-right: 20px;
 }
 
-.castssListDelete{
+.castssListDelete {
     color: red;
     cursor: pointer;
 }

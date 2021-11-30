@@ -38,7 +38,7 @@ export default function Sidebar() {
                 Users
               </li>
             </Link>
-            <Link to="/casts" className="link">
+            <Link to="/Castss" className="link">
               <li className="ListItem">
                 <  Face className="Icon" />
                 Cast

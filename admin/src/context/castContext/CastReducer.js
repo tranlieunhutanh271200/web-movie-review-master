@@ -66,7 +66,6 @@ const CastReducer = (state, action) => {
       case "UPLOAD_CASTS_SUCCESS":
         
         return {
-          
           casts: state.casts.map(
             (cast) => cast._id === action.payload._id && action.payload
           ),
@@ -90,9 +89,11 @@ const CastReducer = (state, action) => {
           error: false,
         };
       case "DEL_CASTS_SUCCESS":
+      
+        const temp = state.casts.filter(item => item._id !== action.payload)
         
         return {
-          casts: action.payload,
+          casts: temp,
           isFetching: false,
           error: false,
         };

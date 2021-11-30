@@ -1,27 +1,29 @@
-.userList{
-    flex :4;
+.userList {
+    flex: 4;
     margin-top: 30px;
     background-color: whitesmoke;
 }
-.container{
+
+.container {
     display: flex;
     margin-top: 10px;
     background-color: rgb(251, 251, 255)
-  }
-  .userListUser {
+}
+
+.userListUser {
     display: flex;
     align-items: center;
-  }
-  
-  .userListImg {
+}
+
+.userListImg {
     width: 42px;
     height: 42px;
     border-radius: 50%;
     object-fit: cover;
     margin-right: 10px;
-  }
+}
 
-  .userListEdit{
+.userListEdit {
     border: none;
     border-radius: 10px;
     padding: 5px 10px;
@@ -31,7 +33,7 @@
     margin-right: 20px;
 }
 
-.userListDelete{
+.userListDelete {
     color: red;
     cursor: pointer;
 }

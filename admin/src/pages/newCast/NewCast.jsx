@@ -1,33 +1,44 @@
-import "./newCast.scss"
-import Topbar from '../../components/topbarAdmin/topbarAdmin';
-import Sidebar from '../../components/sidebarAdmin/SidebarAdmin';
-import Footer from "../../components/footerAdmin/FooterAdmin";
-import { useContext, useState } from "react";
+import "./newCast.scss";
+import axios from "axios";
+import { useContext, useState, useEffect } from "react";
 import storage from "../../firebase";
 import { createCasts } from "../../context/castContext/apiCalls";
 import { CastContext } from "../../context/castContext/CastContext";
 
-export default function Casts(){
+export default function Casts() {
   const [cast, setCast] = useState(null);
-  const [castPic, setPic] = useState("");
-  const [uploaded, setUploaded] = useState(0);
-
+  const [castPic, setPic] = useState(null);
   const { dispatch } = useContext(CastContext);
-  
+  const [progress, setProgress] = useState(0);
+//   const [country, setCountry] = useState([]);
+
+//   useEffect(() => {
+//     const getCountry = async () => {
+//       try {
+//         const res = await axios.get("/countries/get");
+//         setCountry(res.data);
+//       } catch (err) {
+//         console.log(err);
+//       }
+//     };
+//     getCountry();
+//   });
+// console.log(country);
+
   const handleChange = (e) => {
     const value = e.target.value;
-    
-    setCast({ ...cast, [e.target.name]:value ,castPic });
-  };
 
-  const handleUpload = (e) => { 
-    e.preventDefault();  
-    upload([
-      { file: castPic, label: "castPic" },
-    ]);
-    
-    
+    setCast({ ...cast, [e.target.name]: value, castPic });
   };
+  
+  
+
+
+  const handleUpload = (e) => {
+    e.preventDefault();
+    upload([{ file: castPic, label: "castPic" }]);
+  };
+  console.log(cast);
 
   const upload = (items) => {
     items.forEach((item) => {
@@ -46,88 +57,82 @@ export default function Casts(){
         () => {
           uploadTask.snapshot.ref.getDownloadURL().then((url) => {
             setPic(url);
-            console.log(url)
             });
             setUploaded((prev) => prev + 1);
           });
+     
         }
       );
-    
+    });
   };
 
- console.log(cast);
-  
   const handleSubmit = (e) => {
     e.preventDefault();
     createCasts(cast, dispatch);
   };
   
-  
-  return(
-    <div>
-    <Topbar/>
-      <div className="container">
-      <Sidebar />
-      <div className="newCast">
+
+
+  return (
+    <div className="newCast">
       <h1 className="addCastTitle">New Cast</h1>
       <form className="addCastForm">
         <div className="addCastItem">
           <label>Image</label>
-          <input 
-          type="file" 
-          name="castPic"
-          onChange={(e) => setPic(e.target.files[0])}
-          accept="image/png, image/jpg, image/jpeg"         
+          <input
+            type="file"
+            name="castPic"
+            onChange={(e) => setPic(e.target.files[0])}
+            accept="image/png, image/jpg, image/jpeg"
           />
-        </div>
+          
+          </div>
+          <progress value={progress} max="100" />
+           <button className="addCastButtonUpload" onClick={handleUpload}>Upload</button> 
+        
+       
         <div className="addCastItem">
           <label>Cast Name</label>
           <input 
           type="text" 
-         
-          name="name"
+          name="name" 
+          
+          
           onChange={handleChange} />
         </div>
         <div className="addCastItem">
-          <label>Bio</label>
-          <input 
-          type="text" 
-          
-          name="bio" 
-          onChange={handleChange}/>
-        </div>
-        <div className="addCastItem">
-          <label>Data Of Birth</label>
-          <input type="date"  
-       
-          name="dob"
-          onChange={handleChange}/>
-        </div>   
-        <div className="addCastItem">
-          <label>Status</label>
+          <label>Country</label>
           <select 
-          name="status"
+          name="country"
            
            onChange={handleChange}>
-            <option value="True">True</option>
-            <option value="False">False</option>
+            <option value="USA">USA</option>
+            <option value="VIETNAM">VIETNAM</option>
           </select>
           
+          
+        </div> 
+        <div className="addCastItem">
+          <label>Data Of Birth</label>
+          <input 
+          type="date"
+           name="dob" 
+           onChange={handleChange} />
         </div>
-        {uploaded === 1 ? (
-          <button className="addCastButton" onClick={handleSubmit} >
-            Create
-          </button>
-        ) : (
-          <button className="addCastButton" onClick={handleUpload}>
-            Upload
-          </button>
-        )}
+        <div className="addCastItem">
+          <label>Bio</label>
+        </div>
+        <div className="addCastItemBio">
+          <textarea rows="4" cols="50" name="bio" onChange={handleChange} />
+        </div>
+       
+         
+        <button className="addCastButton" onClick={handleSubmit}>Create </button>
+         
+        
+        
       </form>
 
-      </div>
-      </div>
-      <Footer/>
     </div>
   );
 }

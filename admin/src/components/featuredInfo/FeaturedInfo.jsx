@@ -30,6 +30,7 @@ export default function FeaturedInfo() {
       }
     };
     getmovieTotal();
+    
   });
   useEffect(() => {
     const getcastTotal = async () => {

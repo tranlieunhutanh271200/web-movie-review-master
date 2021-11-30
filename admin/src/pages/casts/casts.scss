@@ -1,17 +1,14 @@
-.casts{  
-    flex: 4;   
+.casts {
+    flex: 4;
 }
-.container{
-    display: flex;
-    margin-top: 10px;
-  }
-  .castTitleContainer {
+
+.castTitleContainer {
     display: flex;
     align-items: center;
     justify-content: space-between;
-  }
-  
-  .castAddButton {
+}
+
+.castAddButton {
     width: 80px;
     border: none;
     padding: 5px;
@@ -20,116 +17,109 @@
     border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
-  }
-  
-  .castTop {
-    
+}
+
+.castTop {
     flex: 1;
-  }
-  
-  
-  .castTopRight {
+}
+
+.castTopRight {
     padding: 20px;
     margin: 20px;
     -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
     box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
-  }
-  
-  .castInfoImg {
+}
+
+.castInfoImg {
     width: 100px;
     height: 100px;
     border-radius: 50%;
     object-fit: cover;
     margin-right: 20px;
-  }
-  
-  .castInfoTop {
+}
+
+.castInfoTop {
     display: flex;
     align-items: center;
-  }
-  
-  .castName {
+}
+
+.castName {
     font-weight: 600;
-  }
-  
-  .castInfoBottom {
+}
+
+.castInfoBottom {
     margin-top: 10px;
-    
     font-size: larger;
-    
-  }
-  
-  .castInfoItem {
-    
+}
+
+.castInfoItem {
     display: flex;
     margin-bottom: 10px;
-    
-  }
-  .castInfoKey {
+}
+
+.castInfoKey {
     width: 200px;
     font-weight: 600;
-  }
- 
+}
 
-  
-  .castBottom {
+.castBottom {
     padding: 20px;
     margin: 20px;
     -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.466);
     box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
-  }
-  
-  .castForm {
+}
+
+.castForm {
     display: flex;
     justify-content: space-between;
-  }
-  
-  .castFormLeft {
+}
+
+.castFormLeft {
     display: flex;
     flex-direction: column;
-  }
-  
-  .castFormLeft > label {
+}
+
+.castFormLeft>label {
     margin-bottom: 10px;
     color: gray;
-  }
-  
-  .castFormLeft > input {
+}
+
+.castFormLeft>input {
     margin-bottom: 10px;
     border: none;
     padding: 5px;
     border-bottom: 1px solid gray;
-  }
-  
-  .castFormLeft >select{
+}
+
+.castFormLeft>select {
     margin-bottom: 10px;
-  }
-  
-  .castUploadImg{
+}
+
+.castUploadImg {
     width: 100px;
     height: 100px;
     border-radius: 10px;
     object-fit: cover;
     margin-right: 20px;
-  }
-  
-  .castFormRight{
+}
+
+.castFormRight {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-  }
-  
-  .castUpload{
+}
+
+.castUpload {
     display: flex;
     align-items: center;
-  }
-  
-  .castButton{
+}
+
+.castButton {
     border: none;
     padding: 5px;
     border-radius: 5px;
     background-color: darkblue;
-    color:white;
+    color: white;
     font-weight: 600;
     cursor: pointer;
-  }
+}

@@ -65,4 +65,3 @@ exports.get = async (req, res) => {
     //   res.status(403).json("Only admin can get country")
     // }
   }
-  

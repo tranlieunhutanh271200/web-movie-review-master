@@ -436,7 +436,7 @@ exports.getmoviebyproduction = async (req, res) => {
     res.status(500).json(err);
   }
 }
-//COUNT USER
+//COUNT Movie
 exports.total = async (req, res) => {
   try {
     const data = await movieService.count();
@@ -500,4 +500,3 @@ exports.remove = async (req, res) => {
   else {
     res.status(403).json("Only admin can remove movie!")
   }
-}
