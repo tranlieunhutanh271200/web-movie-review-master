@@ -114,7 +114,6 @@ exports.find = async (req, res) => {
       res.status(500).json(err)
     }
 }
-  }
 //GET ALL DELETED
 exports.getalldeleted = async (req, res) => {
   const query = req.query.new;
