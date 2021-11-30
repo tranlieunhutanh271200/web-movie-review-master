@@ -500,3 +500,4 @@ exports.remove = async (req, res) => {
   else {
     res.status(403).json("Only admin can remove movie!")
   }
+}
