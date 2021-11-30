@@ -1,37 +1,43 @@
-.newCast{  
+.newCast {
     flex: 4;
-   
 }
-.container{
-    display: flex;
+
+.addCastForm {
     margin-top: 10px;
-  }
-  .addCastForm {
-    margin-top: 10px;
-  }
-  
-  .addCastItem {
-    width: 250px;
+    margin: 0 auto;
+}
+
+.addCastItem {
     display: flex;
     flex-direction: column;
     margin-bottom: 10px;
-  }
-  
-  .addCastItem > label {
+}
+
+.addCastItem>label {
     color: gray;
     font-weight: 600;
     margin-bottom: 10px;
-  }
-  
-  .addCastItem > input {
+}
+
+.addCastItem>input {
+    width: 250px;
     padding: 10px;
-  }
-  
-  .addCastItem > select {
+}
+.addCastItem>select{
+    width: 250px;
     padding: 10px;
-  }
-  
-  .addCastButton {
+}
+.addCastItemBio>textarea {
+    width: 1000px;
+    height: 200px;
+    padding: 10px;
+}
+
+.addCastItem>select {
+    padding: 10px;
+}
+
+.addCastButton {
     margin-top: 10px;
     padding: 7px 10px;
     border: none;
@@ -40,4 +46,16 @@
     color: white;
     font-weight: 600;
     cursor: pointer;
-  }
+}
+
+.addCastButtonUpload {
+    margin-bottom: 10px;
+    width: auto;
+    padding: 7px 10px;
+    border: none;
+    border-radius: 10px;
+    background-color: darkblue;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+}

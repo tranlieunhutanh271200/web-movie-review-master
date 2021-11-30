@@ -38,26 +38,26 @@ const UserReducer = (state, action) => {
           isFetching: false,
           error: true,
         };
-    //   case "UPLOAD_USERS_START":
-    //     return {
-    //       ...state,
-    //       isFetching: true,
-    //       error: false,
-    //     };
-    //   case "UPLOAD_USERS_SUCCESS":
-    //     return {
-    //       movies: state.Users.map(
-    //         (User) => User._id === action.payload._id && action.payload
-    //       ),
-    //       isFetching: false,
-    //       error: false,
-    //     };
-    //   case "UPLOAD_USERS_FAILURE":
-    //     return {
-    //       ...state,
-    //       isFetching: false,
-    //       error: true,
-    //     };
+      case "UPLOAD_USERS_START":
+        return {
+          ...state,
+          isFetching: true,
+          error: false,
+        };
+      case "UPLOAD_USERS_SUCCESS":
+        return {
+          movies: state.Users.map(
+            (User) => User._id === action.payload._id && action.payload
+          ),
+          isFetching: false,
+          error: false,
+        };
+      case "UPLOAD_USERS_FAILURE":
+        return {
+          ...state,
+          isFetching: false,
+          error: true,
+        };
       case "DELETE_USERS_START":
         return {
           ...state,

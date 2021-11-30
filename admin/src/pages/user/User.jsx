@@ -1,33 +1,22 @@
-import "./user.scss"
-import Topbar from '../../components/topbarAdmin/topbarAdmin';
-import Sidebar from '../../components/sidebarAdmin/SidebarAdmin';
-import Footer from "../../components/footerAdmin/FooterAdmin";
+import "./user.scss";
 import {
-    CalendarToday,
-    LocationSearching,
-    MailOutline,
-    PermIdentity,
-    PhoneAndroid,
-    Publish,
-  } from "@material-ui/icons";
+  CalendarToday,
+  LocationSearching,
+  MailOutline,
+  PermIdentity,
+  PhoneAndroid,
+  
+} from "@material-ui/icons";
 import { Link, useLocation } from "react-router-dom";
 
-export default function UserManager(){
+export default function UserManager() {
   const location = useLocation();
-  const user= location.user;
-  
+  const user = location.user;
 
-    return(
-        <div>
-        <Topbar/>
-      <div className="container">
-            <Sidebar />  
-            <div className="user">
-            <div className="userTitleContainer">
+  return (
+    <div className="user">
+      <div className="userTitleContainer">
         <h1 className="userTitle">Detail User</h1>
-        <Link to="/UpdateUser/:userId">
-          <button className="userAddButton">Update</button>
-        </Link>
       </div>
       <div className="userContainer">
         <div className="userShow">
@@ -67,15 +56,7 @@ export default function UserManager(){
             </div>
           </div>
         </div>
-      
-          
-       
       </div>
-      
-       </div>
-      
-       </div>            
-      <Footer/>
-        </div>
-    )
+    </div>
+  );
 }
