@@ -17,6 +17,12 @@ import { useContext } from "react";
 function App() {
   const { user } = useContext(AuthContext);
   console.log(user);
+//   return  (
+//     <Routes>
+          
+//     <Route exact path="/" element ={<HomeAdmin/>}/>
+//     <Route  path="/Login" element ={<Login/>}/>
+//    <Route  path="/Users" element ={<UserManager/>}/>
 
   return (
     <Router>

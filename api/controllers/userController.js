@@ -277,6 +277,62 @@ exports.updatePassword = async (req, res) => {
     res.status(500).json(err);
   }
 }
+//GET ALL DELETED
+exports.getalldeleted = async (req, res) => {
+  const query = req.query.new;
+  if (req.userExists.isAdmin) {
+    //console.log(req.userExists.isAdmin)
+    try {
+      const findAllUser = query ? await userService.getAllDeletedlimit2() : await userService.getAllDeleted();
+      if (!findAllUser) {
+        res.status(403).json("Sorry! We don't have any users here!")
+      }
+      //const { password, ...info } = findAllUser._doc;
+      res.status(200).json(findAllUser);
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  }
+  else {
+    res.status(403).json("You are not allowed to see all users!")
+  }
+}
+//RECOVER
+exports.recover = async (req, res) => {
+  if (req.userExists.isAdmin) {
+    console.log(req.userExists.isAdmin)
+    try {
+      const restoredUser = await userService.recoverUser(req.params.id);
+      if (!restoredUser) {
+        res.status(403).json("User not found!")
+      }
+      res.status(200).json("User has been restored...");
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  }
+  else {
+    res.status(403).json("Only admin can restore account!")
+  }
+}
+//PERMANENTLY DELETE
+exports.remove = async (req, res) => {
+  if (req.userExists.isAdmin) {
+    console.log(req.userExists.isAdmin)
+    try {
+      const removedUser = await userService.removeUser(req.params.id);
+      if (!removedUser) {
+        res.status(403).json("User not found!")
+      }
+      res.status(200).json("User has been removed...");
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  }
+  else {
+    res.status(403).json("Only admin can remove account!")
+  }
+}
 // function validateEmail(email) {
 //   const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 //   return re.test(email);

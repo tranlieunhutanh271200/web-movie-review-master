@@ -445,3 +445,58 @@ exports.total = async (req, res) => {
     res.status(500).json(err)
   }
 }
+//GET ALL DELETED
+exports.getalldeleted = async (req, res) => {
+  const query = req.query.new;
+  if (req.userExists.isAdmin) {
+    //console.log(req.userExists.isAdmin)
+    try {
+      const findAllUser = query ? await movieService.getAllDeletedlimit2() : await movieService.getAllDeleted();
+      if (!findAllUser) {
+        res.status(403).json("Sorry! We don't have any users here!")
+      }
+      //const { password, ...info } = findAllUser._doc;
+      res.status(200).json(findAllUser);
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  }
+  else {
+    res.status(403).json("You are not allowed to see all users!")
+  }
+}
+//RECOVER
+exports.recover = async (req, res) => {
+  if (req.userExists.isAdmin) {
+    console.log(req.userExists.isAdmin)
+    try {
+      const restoredUser = await movieService.recover(req.params.id);
+      if (!restoredUser) {
+        res.status(403).json("Movie not found!")
+      }
+      res.status(200).json("Movie has been restored...");
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  }
+  else {
+    res.status(403).json("Only admin can restore movie!")
+  }
+}
+//PERMANENTLY DELETE
+exports.remove = async (req, res) => {
+  if (req.userExists.isAdmin) {
+    console.log(req.userExists.isAdmin)
+    try {
+      const removedUser = await movieService.remove(req.params.id);
+      if (!removedUser) {
+        res.status(403).json("Movie not found!")
+      }
+      res.status(200).json("Movie has been removed...");
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  }
+  else {
+    res.status(403).json("Only admin can remove movie!")
+  }

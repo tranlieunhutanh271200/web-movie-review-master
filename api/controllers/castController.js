@@ -113,4 +113,79 @@ exports.find = async (req, res) => {
     } catch (err) {
       res.status(500).json(err)
     }
+}
   }
+//GET ALL DELETED
+exports.getalldeleted = async (req, res) => {
+  const query = req.query.new;
+  if (req.userExists.isAdmin) {
+    //console.log(req.userExists.isAdmin)
+    try {
+      const findAllCast = query ? await castService.getAllDeletedlimit2() : await castService.getAllDeleted();
+      if (!findAllCast) {
+        res.status(403).json("Sorry! We don't have any casts here!")
+      }
+      //const { password, ...info } = findAllUser._doc;
+      res.status(200).json(findAllCast);
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  }
+  else {
+    res.status(403).json("You are not allowed to see all casts!")
+  }
+}
+//RECOVER
+exports.recover = async (req, res) => {
+  if (req.userExists.isAdmin) {
+    console.log(req.userExists.isAdmin)
+    try {
+      const restoredCast = await castService.recoverUser(req.params.id);
+      if (!restoredCast) {
+        res.status(403).json("Cast not found!")
+      }
+      res.status(200).json("Cast has been restored...");
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  }
+  else {
+    res.status(403).json("Only admin can restore cast!")
+  }
+}
+//RECOVER
+exports.recover = async (req, res) => {
+  if (req.userExists.isAdmin) {
+    console.log(req.userExists.isAdmin)
+    try {
+      const restoredCast = await castService.recoverUser(req.params.id);
+      if (!restoredCast) {
+        res.status(403).json("Cast not found!")
+      }
+      res.status(200).json("Cast has been restored...");
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  }
+  else {
+    res.status(403).json("Only admin can restore casts!")
+  }
+}
+//PERMANENTLY DELETE
+exports.remove = async (req, res) => {
+  if (req.userExists.isAdmin) {
+    console.log(req.userExists.isAdmin)
+    try {
+      const removedCast = await castService.removeUser(req.params.id);
+      if (!removedCast) {
+        res.status(403).json("Cast not found!")
+      }
+      res.status(200).json("Cast has been removed...");
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  }
+  else {
+    res.status(403).json("Only admin can remove casts!")
+  }
+}

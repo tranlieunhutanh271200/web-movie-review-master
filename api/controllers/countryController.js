@@ -47,7 +47,6 @@ exports.get = async (req, res) => {
     //   res.status(403).json("Only admin can get country")
     // }
   }
-  
   exports.getall = async (req, res) => {
     //if(req.userExists.id === req.params.id || req.userExists.isAdmin){
       //console.log(req.userExists.isAdmin)

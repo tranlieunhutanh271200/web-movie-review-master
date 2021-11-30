@@ -14,7 +14,14 @@ router.put("/delete/:id", verifyToken, castController.delete);
 router.get("/find/:id", verifyToken, castController.find);
 //GET ALL
 router.get("/", verifyToken, castController.getall);
-
+//TOTAL CAST
+router.get("/total", castController.total);
+//GET ALL DELETED
+router.get("/deleted", verifyToken, castController.getalldeleted);
+//RECOVER
+router.put("/recover/:id", verifyToken, castController.recover);
+//REMOVE
+router.delete("/remove/:id", verifyToken, castController.remove);
 
 
 
