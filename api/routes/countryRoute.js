@@ -5,6 +5,8 @@ const countryController = require("../controllers/countryController");
 //ADD
 router.post("/add", countryController.addCountry);
 //GET
-router.post("/get", countryController.get);
+router.get("/get", countryController.get);
+//GET
+router.get("/", countryController.getall);
 
 module.exports = router;
