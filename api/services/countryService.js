@@ -15,6 +15,9 @@ class countryService{
     static async getById(id){
         return await Country.findById( id );
     }
+    static async getAll(id){
+        return await Country.find({});
+    }
 }
 
 module.exports = countryService;
