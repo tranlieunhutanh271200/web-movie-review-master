@@ -97,7 +97,7 @@ export default function Register() {
       // Call API Sign Up
   }
     return (
-      <div className="login">
+      <div className="register">
         <div className="top">
           <div className="wrapper">
             <img
@@ -163,9 +163,9 @@ export default function Register() {
             <input type="password" placeholder="Confirm Password" onChange={onChangeConfirmpass}/>
             <p className = "validator">{validationMsg.confirmpass}</p>
             <hr className="line"/>
-            <button className="loginButton" type="button" onClick = {onSubmitSigup}>Sign Up</button>
+            <button className="registerButton" type="button" onClick = {onSubmitSigup}>Sign Up</button>
             <span>
-                Do you have an account? <b className="signup-btn">Sign login now.</b>
+                Do you have an account? <b className="signup-btn">Sign register now.</b>
             </span>
             <hr className="line"/>
             
