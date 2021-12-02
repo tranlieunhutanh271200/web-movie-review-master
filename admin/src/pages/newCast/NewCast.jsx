@@ -57,8 +57,6 @@ export default function Casts() {
         () => {
           uploadTask.snapshot.ref.getDownloadURL().then((url) => {
             setPic(url);
-            });
-            setUploaded((prev) => prev + 1);
           });
      
         }
