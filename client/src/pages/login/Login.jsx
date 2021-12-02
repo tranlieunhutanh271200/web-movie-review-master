@@ -50,9 +50,14 @@ export default function Login() {
       <div className="container">
         <form>
           <h1>Sign In</h1>
+          <span>
+                Email or phone number
+            </span>
           <input type="email" placeholder="Email or phone number" onChange={onChangeEmail} />
           <p className = "validator">{validationMsg.email}</p>
-          
+          <span>
+                Password:
+            </span>
           <input type="password" placeholder="Password" onChange = {onChangePass} />
           <p className = "validator">{validationMsg.pass}</p>
           <button className="loginButton" type="button" onClick={onSubmitSigin}>Sign In</button>
