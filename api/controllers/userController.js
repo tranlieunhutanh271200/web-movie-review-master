@@ -35,7 +35,7 @@ exports.registration = async (req, res) => {
         msg: "Password must be at least 6 characters.",
       });
     } else if (!validateEmail(req.body.email)) {
-      res.status(400).json({ msg: "Invalid email!" })
+      res.status(400).json({ success: false, msg: "Invalid email!" })
     } else {
       const userExists = await userService.checkEmailExist(req.body.email);
       if (userExists) {
@@ -47,16 +47,16 @@ exports.registration = async (req, res) => {
         //const user = await userService.registration(newUser);
         //const user = await newUser.save();
         //res.status(201).json(user);
-        const tokenActivation = activationToken(newUser);
+        const tokenActivation = activationToken(newUser);   
         console.log(tokenActivation);
 
         const url = `${CLIENT_URL}/user/activation/${tokenActivation}`;
         sendEmail(req.body.email, req.body.firstname, req.body.lastname, url, "Verify your Email")
-        res.status(201).json("Your email has been sent. Please check your email");
+        res.status(201).json({success: true, msg: "Your email has been sent. Please check your email"});
       }
     }
   } catch (err) {
-    res.status(500).json(err);
+    res.status(500).json({success: true, msg: err});
   }
 }
 //ACTIVE EMAIL
@@ -70,7 +70,7 @@ exports.activeEmail = async (req, res) => {
     const newUser = {firstname, lastname, email, dob, password}
 
     const check = await userService.registration(newUser);
-    res.status(201).json("Activation Successfully!");
+    res.status(201).json({success: true, msg: "Activation Successfully!"});
   }catch (err){
     res.status(500).json(err);
   }
@@ -94,13 +94,13 @@ exports.login = async (req, res) => {
     const userExists = await userService.checkEmailExist(req.body.email);
 
     if (!userExists) {
-      res.status(401).json("Wrong password or username!");
+      res.status(401).json({success: false, msg: "Wrong password or username!"});
     }
     const bytes = CryptoJS.AES.decrypt(userExists.password, process.env.SECRET_KEY);
     const originalPassword = bytes.toString(CryptoJS.enc.Utf8);
 
     if (originalPassword !== req.body.password) {
-      res.status(401).json("Wrong password or username");
+      res.status(401).json({success: false, msg:"Wrong password or username"});
     }
 
     const accessToken = jwt.sign(
@@ -133,7 +133,7 @@ exports.update = async (req, res) => {
     }
   }
   else {
-    res.status(403).json("You can update only your account!")
+    res.status(403).json({success: false, msg:"You can update only your account!"})
   }
 }
 //DELETE
@@ -143,15 +143,15 @@ exports.delete = async (req, res) => {
     try {
       const deletedUser = await userService.deleteUser(req.params.id);
       if (!deletedUser) {
-        res.status(403).json("User not found!")
+        res.status(403).json({success: false, msg: "User not found!"})
       }
-      res.status(200).json("User has been deleted...");
+      res.status(200).json({success: true, msg: "User has been deleted..."});
     } catch (err) {
       res.status(500).json(err);
     }
   }
   else {
-    res.status(403).json("You can delete only your account!")
+    res.status(403).json({success: false, msg:"You can delete only your account!"})
   }
 }
 //FIND
@@ -163,8 +163,8 @@ exports.find = async (req, res) => {
       if (!findUser) {
         res.status(403).json("User not found!")
       }
-      const { password, ...info } = findUser._doc;
-      res.status(200).json(info);
+      //const { password, ...info } = findUser._doc;
+      res.status(200).json(findUser);
     } catch (err) {
       res.status(500).json(err);
     }
@@ -247,6 +247,90 @@ exports.reset = async (req, res) => {
     }
   } catch (err) {
     res.status(500).json(err)
+  }
+}
+//UPDATE PASSWORD
+exports.updatePassword = async (req, res) => {
+  try {
+    const user = await userService.getById(req.userExists.id);
+    //console.log(user.password);
+    const bytes = CryptoJS.AES.decrypt(user.password, process.env.SECRET_KEY);
+    const originalPassword = bytes.toString(CryptoJS.enc.Utf8);
+    //console.log(originalPassword);
+    if(originalPassword !== req.body.oldPassword){
+      res.status(400).json("Invalid Password!");
+    }
+    else{
+      if(req.body.newPassword == req.body.confirmPassword){
+        const password =  CryptoJS.AES.encrypt(
+          req.body.newPassword,
+          process.env.SECRET_KEY).toString();
+        await userService.updatePassword(req.userExists.id, password, {new: true});
+        res.status(201).json("Password successfully changed!");
+      }
+      else {
+        res.status(400).json("Please confirm your new password!");
+      }
+    }
+  } catch (err) {
+    //console.log(err)
+    res.status(500).json(err);
+  }
+}
+//GET ALL DELETED
+exports.getalldeleted = async (req, res) => {
+  const query = req.query.new;
+  if (req.userExists.isAdmin) {
+    //console.log(req.userExists.isAdmin)
+    try {
+      const findAllUser = query ? await userService.getAllDeletedlimit2() : await userService.getAllDeleted();
+      if (!findAllUser) {
+        res.status(403).json("Sorry! We don't have any users here!")
+      }
+      //const { password, ...info } = findAllUser._doc;
+      res.status(200).json(findAllUser);
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  }
+  else {
+    res.status(403).json("You are not allowed to see all users!")
+  }
+}
+//RECOVER
+exports.recover = async (req, res) => {
+  if (req.userExists.isAdmin) {
+    console.log(req.userExists.isAdmin)
+    try {
+      const restoredUser = await userService.recoverUser(req.params.id);
+      if (!restoredUser) {
+        res.status(403).json("User not found!")
+      }
+      res.status(200).json("User has been restored...");
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  }
+  else {
+    res.status(403).json("Only admin can restore account!")
+  }
+}
+//PERMANENTLY DELETE
+exports.remove = async (req, res) => {
+  if (req.userExists.isAdmin) {
+    console.log(req.userExists.isAdmin)
+    try {
+      const removedUser = await userService.removeUser(req.params.id);
+      if (!removedUser) {
+        res.status(403).json("User not found!")
+      }
+      res.status(200).json("User has been removed...");
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  }
+  else {
+    res.status(403).json("Only admin can remove account!")
   }
 }
 // function validateEmail(email) {
