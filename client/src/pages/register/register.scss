@@ -1,4 +1,4 @@
-.login {
+.register {
   width: 100vw;
   height: 100vh;
   background: linear-gradient(
@@ -58,7 +58,7 @@
         
       }
 
-      .loginButton{
+      .registerButton{
         height: 40px;
         border-radius: 5px;
         background-color: rgb(255, 0, 0);
@@ -71,7 +71,7 @@
           background-color:rgb(156, 3, 3);
         }
       }
-      .loginGGButton{
+      .registerGGButton{
         height: 40px;
         border-radius: 5px;
         background-color: rgb(240, 60, 60);
@@ -88,7 +88,7 @@
       .line{
         margin-bottom: 5px;
       }
-      .loginFBButton {
+      .registerFBButton {
         height: 40px;
         border-radius: 5px;
         background-color: rgb(45, 98, 179);

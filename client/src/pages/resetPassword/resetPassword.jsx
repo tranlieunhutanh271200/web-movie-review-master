@@ -54,7 +54,7 @@ export default function Resetpassword() {
     // Call API Sign Up
 }
   return (
-    <div className="login">
+    <div className="resetPass">
       <div className="top">
         <div className="wrapper">
           <img
@@ -82,7 +82,7 @@ export default function Resetpassword() {
             </span>
           <input type="code" placeholder="Enter verification code" onChange={onChangeCode} />
           <p className = "validator">{validationMsg.code}</p>
-          <button className="loginButton" type="button" onClick={onSubmitResetPass}>Confirm</button>
+          <button className="resetPassButton" type="button" onClick={onSubmitResetPass}>Confirm</button>
          
         
         </form>

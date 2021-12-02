@@ -46,7 +46,7 @@ export default function Email() {
       // Call API Sign Up
   }
   return (
-    <div className="register">
+    <div className="email">
       <div className="top">
         <div className="wrapper">
           <img
@@ -63,7 +63,7 @@ export default function Email() {
         
           <div className="input">
             <input type="email" placeholder="email address or phone number" onChange = {onChangeEmail}/>
-            <button className="registerButton" onClick={onSubmitContinue}>
+            <button className="emailButton" onClick={onSubmitContinue}>
               Continue
             </button>
       </div>
