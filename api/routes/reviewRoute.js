@@ -13,5 +13,7 @@ router.put("/delete", verifyToken, reviewController.delete);
 router.get("/find/:id", reviewController.find);
 //GET ALL
 router.get("/",verifyToken, reviewController.getall);
+//GET RATING
+router.get("/getallrating/:id", reviewController.getallrating);
 
 module.exports = router;

@@ -1,6 +1,7 @@
 "use strict"
 
 const {Movie, MovieSchema} = require("../models/movie");
+const mongoose = require("mongoose")
 
 class movieService{
     static async addMovie(data) {
@@ -28,10 +29,13 @@ class movieService{
         return await Movie.findByIdAndUpdate(id, { $set: {"status": false} }, {new: true});
     }
     static async getById(id) {
-        return await Movie.findById(id).
+        const movie = await Movie.findById(id).
         populate("productionItems.production","_id name founder foundingdate").
         populate("categoryItems.category", "_id name").
         populate("castItems.character", "_id name cast");
+        const {releaseDate, ...info} = movie._doc;
+        info.releaseDate = movie.releaseDate.getDate()+'-' + (movie.releaseDate.getMonth()+1) + '-'+movie.releaseDate.getFullYear();
+        return info;
       }
     static async getAll() {
         return await Movie.find({"status": true}).
@@ -57,6 +61,41 @@ class movieService{
         //console.log(title, data)
         return await Movie.findOneAndUpdate({title}, {"$push": data}, {new: true});
     }
+    static async getAllMoviebyGener(id) {
+        return await Movie.aggregate([
+            {$match: {"categoryItems.category" : mongoose.Types.ObjectId(id)}},
+            
+        ])
+    }
+    static async getAllMoviebyProduction(id) {
+        return await Movie.aggregate([
+            {$match: {"productionItems.production" : mongoose.Types.ObjectId(id)}},
+            
+        ])
+    }
+    static async count(){
+        return await Movie.find({"status": true}).countDocuments();
+      }
+    static async getAllDeleted() {
+        return await Movie.find({"status": false}).
+        populate("productionItems.production","_id name founder foundingdate").
+        populate("categoryItems.category", "_id name").
+        populate("castItems.character", "_id name cast");;
+      }
+    static async getAllDeletedlimit2() {
+        return await Movie.find({"status": false}).limit(2).
+        populate("productionItems.production","_id name founder foundingdate").
+        populate("categoryItems.category", "_id name").
+        populate("castItems.character", "_id name cast");;
+      }
+    static async recover(id) {
+        console.log(id);
+        return await Movie.findByIdAndUpdate(id, { $set: {"status": true} }, {new: true});
+      }
+    static async remove(id) {
+        console.log(id);
+        return await Movie.findByIdAndRemove(id);
+      }
 }
 
 module.exports = movieService;

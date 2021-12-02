@@ -47,4 +47,21 @@ exports.get = async (req, res) => {
     //   res.status(403).json("Only admin can get country")
     // }
   }
-  
+  exports.getall = async (req, res) => {
+    //if(req.userExists.id === req.params.id || req.userExists.isAdmin){
+      //console.log(req.userExists.isAdmin)
+      try {
+        const getCountry = await countryService.getAll();
+        // if(!findUser){
+        //   res.status(403).json("User not found!")
+        // }
+        //const { password, ...info } = findUser._doc;
+        res.status(200).json(getCountry);
+      }catch(err){
+        res.status(500).json(err);
+      }
+    // }
+    // else{
+    //   res.status(403).json("Only admin can get country")
+    // }
+  }

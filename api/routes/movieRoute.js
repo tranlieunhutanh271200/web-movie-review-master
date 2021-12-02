@@ -15,5 +15,17 @@ router.get("/find/:id", movieController.find);
 router.get("/", movieController.getall);
 //DELETE ITEM
 router.put("/deleteItem/:id", verifyToken, movieController.deleteItem);
+//GET ALL MOVIE BY GERNE
+router.get("/getmoviebygerne/:id", movieController.getmoviebygerne);
+//GET ALL MOVIE BY PRODUCTION
+router.get("/getmoviebyproduction/:id", movieController.getmoviebyproduction);
+//TOTAL MOVIE
+router.get("/total", movieController.total);
+//GET ALL DELETED
+router.get("/deleted", verifyToken, movieController.getalldeleted);
+//RECOVER
+router.put("/recover/:id", verifyToken, movieController.recover);
+//REMOVE
+router.delete("/remove/:id", verifyToken, movieController.remove);
 
 module.exports = router;

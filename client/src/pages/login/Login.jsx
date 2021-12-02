@@ -1,7 +1,9 @@
 import {Facebook} from "@material-ui/icons";
 import "./login.scss";
+
 import isEmpty from "validator/lib/isEmpty"
 import React, { useState } from "react";
+
 export default function Login() {
   var mailFormat = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})|([0-9]{10})+$/;
   const [email, setEmail] = useState('')
