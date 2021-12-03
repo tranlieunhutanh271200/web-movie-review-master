@@ -1,17 +1,27 @@
 import "./user.scss";
 import {
   CalendarToday,
-  LocationSearching,
   MailOutline,
   PermIdentity,
-  PhoneAndroid,
+  DateRange,
+  AddCircleOutline
   
 } from "@material-ui/icons";
+import { useContext, useEffect} from "react";
 import { Link, useLocation } from "react-router-dom";
+import { UserContext } from "../../context/userContext/UserContext";
+import { getUsersFind } from "../../context/userContext/apiCalls";
 
 export default function UserManager() {
+  const { users, dispatch } = useContext(UserContext);
   const location = useLocation();
-  const user = location.user;
+  const [path, userId] = location.pathname.split("/user/");
+  
+  
+  useEffect(() => {
+    getUsersFind(userId, dispatch);
+  }, [dispatch]);
+  console.log(users)
 
   return (
     <div className="user">
@@ -28,32 +38,33 @@ export default function UserManager() {
             />
             <div className="userShowTopTitle">
               <span className="userShowUsername"></span>
-              <span className="userShowUserTitle">Software Engineer</span>
+              <span className="userShowUserTitle">{users.lastname} {users.firstname}</span>
             </div>
           </div>
           <div className="userShowBottom">
             <span className="userShowTitle">Account Details</span>
             <div className="userShowInfo">
               <PermIdentity className="userShowIcon" />
-              <span className="userShowInfoTitle">annabeck99</span>
+              <span className="userShowInfoTitle">{users._id}</span>
             </div>
             <div className="userShowInfo">
               <CalendarToday className="userShowIcon" />
-              <span className="userShowInfoTitle">10.12.1999</span>
+              <span className="userShowInfoTitle">{users.dob}</span>
             </div>
             <span className="userShowTitle">Contact Details</span>
             <div className="userShowInfo">
-              <PhoneAndroid className="userShowIcon" />
-              <span className="userShowInfoTitle">+1 123 456 67</span>
-            </div>
-            <div className="userShowInfo">
               <MailOutline className="userShowIcon" />
-              <span className="userShowInfoTitle">annabeck99@gmail.com</span>
+              <span className="userShowInfoTitle">{users.email}</span>
             </div>
             <div className="userShowInfo">
-              <LocationSearching className="userShowIcon" />
-              <span className="userShowInfoTitle">New York | USA</span>
+              <AddCircleOutline className="userShowIcon" />
+              <span className="userShowInfoTitle">{users.createdAt}</span>
             </div>
+            <div className="userShowInfo">
+              <DateRange className="userShowIcon" />
+              <span className="userShowInfoTitle">{users.updatedAt}</span>
+            </div>
+           
           </div>
         </div>
       </div>

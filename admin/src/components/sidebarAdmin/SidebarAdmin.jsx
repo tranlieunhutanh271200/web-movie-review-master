@@ -10,7 +10,7 @@ import {
   DynamicFeed,
   ChatBubbleOutline,
   WorkOutline,
-  Report,
+  DeleteForever
 } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 
@@ -44,10 +44,12 @@ export default function Sidebar() {
                 Cast
               </li>
             </Link>
+            <Link to="/Movies" className="link">
             <li className="ListItem">
               <Movie className="Icon" />
               Movie
             </li>
+            </Link>
             <li className="ListItem">
               <BarChart className="Icon" />
               Reports
@@ -72,20 +74,26 @@ export default function Sidebar() {
           </ul>
         </div>
         <div className="Menu">
-          <h3 className="Title">Staff</h3>
+          <h3 className="Title">Track</h3>
           <ul className="List">
+          <Link to="" className="link">
             <li className="ListItem">
               <WorkOutline className="Icon" />
               Manage
             </li>
+            </Link>
+            <Link to="" className="link">
             <li className="ListItem">
               <Timeline className="Icon" />
-              Analytics
+              Cast
             </li>
+            </Link>
+            <Link to="/DeleteManager" className="link">
             <li className="ListItem">
-              <Report className="Icon" />
-              Reports
+              <DeleteForever className="Icon" />
+              Track
             </li>
+            </Link>
           </ul>
         </div>
       </div>

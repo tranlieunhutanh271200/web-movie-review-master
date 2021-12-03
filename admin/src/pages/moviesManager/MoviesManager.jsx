@@ -1,20 +1,20 @@
-import "./castsManager.scss";
+import "./moviesManager.scss";
 import { useContext, useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { DeleteOutline } from "@material-ui/icons";
 import { Link } from "react-router-dom";
-import { CastContext } from "../../context/castContext/CastContext";
-import { getCasts, DelCasts } from "../../context/castContext/apiCalls";
+import { MovieContext } from "../../context/movieContext/MovieContext";
+import { getMovies, DelMovies } from "../../context/movieContext/apiCalls";
 import Notification from "../../components/Alert/Notification"
 import ConfirmDialog from "../../components/Alert/ConfirmDialog";
 
 
-export default function CastsManager() {
-  const { casts, dispatch } = useContext(CastContext);
+export default function MoviesManager() {
+  const { movies, dispatch } = useContext(MovieContext);
   const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' });
   const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
   useEffect(() => {
-    getCasts(dispatch);
+    getMovies(dispatch);
   }, [dispatch]);
 
   const handleDelete = (id) => {
@@ -22,35 +22,36 @@ export default function CastsManager() {
       ...confirmDialog,
       isOpen: false
   })
-    DelCasts(id, dispatch);
+    DelMovies(id, dispatch);
     setNotify({
       isOpen: true,
       message: 'Deleted Successfully',
       type: 'error'
   })
   };
- 
 
+console.log(movies)
   const columns = [
     { field: "_id", headerName: "ID", width: 170 },
     {
-      field: "name",
-      headerName: "Cast Name",
-      width: 200,
+      field: "title",
+      headerName: "Tittle",
+      width: 240,
       renderCell: (params) => {
         return (
-          <div className="castssListItem">
-            <img className="castssListImg" src={params.row.castPic} alt="" />
-            {params.row.name}
+          <div className="moviessListItem">
+            <img className="moviessListImg" src={params.row.namePic} alt="" />
+            {params.row.title}
           </div>
         );
       },
     },
-
-    { field: "bio", headerName: "Bio", width: 160 },
-    { field: "dob", headerName: "Date Of Birth", width: 130 },
-    { field: "createdAt", headerName: "Create", width: 130 },
-    { field: "updatedAt", headerName: "Update", width: 130 },
+    { field: "desc", headerName: "Description", width: 180 },
+    { field: "site", headerName: "Site", width: 70 },
+    { field: "limit", headerName: "Limit", width: 70 },
+    { field: "rating", headerName: "Rate", width: 70 },
+    { field: "releaseDate", headerName: "Release", width: 110 },
+    
     {
       field: "action",
       headerName: "Action",
@@ -61,15 +62,15 @@ export default function CastsManager() {
             <Link
               to={
                 {
-                  pathname: "/cast/" + params.row._id,
+                  pathname: "/movie/" + params.row._id,
                 }
                 //pathname:"/casts/find/" + params.row._id
               }
             >
-              <button className="castssListEdit">Edit</button>
+              <button className="moviessListEdit">Details</button>
             </Link>
             <DeleteOutline
-              className="castssListDelete"
+              className="moviessListDelete"
               onClick={() => 
                 setConfirmDialog({
                   isOpen: true,
@@ -90,14 +91,14 @@ export default function CastsManager() {
 
   return (
     
-    <div className="castssList">
+    <div className="moviessList">
       <div className ="AddButton">
-      <Link to="/newCast">
-          <button className="castAddButton">Create</button>
+      <Link to="/newMovie">
+          <button className="movieAddButton">Create</button>
         </Link>
        </div>
       <DataGrid
-        rows={casts}
+        rows={movies}
         disableSelectionOnClick
         columns={columns}
         pageSize={8}

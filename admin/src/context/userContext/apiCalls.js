@@ -9,6 +9,15 @@ import {
     getUsersFailure,
     getUsersStart,
     getUsersSuccess,
+
+    getUsersFindFailure,
+    getUsersFindStart,
+    getUsersFindSuccess,
+
+
+    delUsersStart,
+    delUsersSuccess,
+    delUsersFailure,
 } from "./UserAction";
 
 export const getUser = async(dispatch) => {
@@ -27,6 +36,24 @@ export const getUser = async(dispatch) => {
     }
 };
 
+//find
+export const getUsersFind = async(id, dispatch) => {
+    dispatch(getUsersFindStart());
+    try {
+        const res = await axios.get("/users/find/" + id, {
+            headers: {
+                token: "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
+            },
+        });
+
+
+        dispatch(getUsersFindSuccess(res.data));
+
+
+    } catch (err) {
+        dispatch(getUsersFindFailure());
+    }
+};
 //update
 export const updateUsers = async(user, dispatch) => {
     dispatch(updateUsersStart());
@@ -45,6 +72,26 @@ export const updateUsers = async(user, dispatch) => {
         dispatch(updateUsersFailure());
     }
 };
+//Del
+export const DelUsers = async(id, dispatch) => {
+    dispatch(delUsersStart());
+    dispatch(delUsersSuccess(id));
+    try {
+
+        const res = await axios.put("/users/delete/" + id, id, {
+            headers: {
+                token: "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
+            },
+        });
+
+        dispatch(delUsersSuccess(res.data));
+
+    } catch (err) {
+
+        dispatch(delUsersFailure());
+    }
+};
+
 
 //delete
 export const deleteUser = async(id, dispatch) => {
