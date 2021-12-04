@@ -34,6 +34,6 @@ router.get("/deleted", verifyToken, userController.getalldeleted);
 //RECOVER
 router.put("/recover/:id", verifyToken, userController.recover);
 //REMOVE
-router.delete("/remove/:id", verifyToken, userController.remove);
+router.delete("/remove/:id",  userController.remove);
 
 module.exports = router;

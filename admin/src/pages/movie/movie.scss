@@ -1,14 +1,14 @@
- .user {
+ .movie {
      flex: 4;
  }
  
- .userTitleContainer {
+ .movieTitleContainer {
      display: flex;
      align-items: center;
      justify-content: space-between;
  }
  
- .userAddButton {
+ .movieAddButton {
      width: 80px;
      border: none;
      padding: 5px;
@@ -19,19 +19,22 @@
      font-size: 16px;
  }
  
- .userContainer {
+ .movieContainer {
      display: flex;
      margin-top: 20px;
  }
- 
- .userShow {
+ .movieContainers {
+    
+    margin-top: 20px;
+}
+ .movieShow {
      flex: 1;
      padding: 20px;
      -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
      box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
  }
  
- .userUpdate {
+ .movieUpdate {
      flex: 2;
      padding: 20px;
      -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
@@ -39,105 +42,123 @@
      margin-left: 20px;
  }
  
- .userShowTop {
-     display: flex;
+ .movieShowTop {
+    
      align-items: center;
-     justify-content: center;
  }
  
- .userShowImg {
-     width: 400px;
-     height: 250px;
-     border-radius: 5%;
-     object-fit:cover;
-     justify-content: center;
+ .movieShowImage {
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}
+ .movieShowImgName {
+    width: 650px;
+    height: 300px;
+    
+    object-fit:contain;
+    display: inline-block;
+   
+    
+}
+
+.movieShowTitleImage {
+    font-size: 18px;
+    font-weight: 600;
+    color: rgb(175, 170, 170);
+    justify-content: center;
+    display: flex;
+   
+}
+
+
+.movieShowImg {
+     width: 40px;
+     height: 40px;
+     border-radius: 50%;
+     object-fit: cover;
  }
  
- .userShowTopTitle {
-     margin-top: 10px;
+ .movieShowTopTitle {
      display: flex;
-     justify-content: center;
+     flex-direction: column;
      margin-left: 20px;
-     font-size: 25px;
  }
  
- .userShowUsername {
+ .movieShowmoviename {
      font-weight: 600;
-     display : flex ;
  }
  
- .userShowUserTitle {
+ .movieShowmovieTitle {
      font-weight: 300;
-     margin-left: 10px;
-     display : flex ;
  }
  
- .userShowBottom {
+ .movieShowBottom {
      margin-top: 20px;
  }
  
- .userShowTitle {
+ .movieShowTitle {
      font-size: 14px;
      font-weight: 600;
      color: rgb(175, 170, 170);
  }
  
- .userShowInfo {
+ .movieShowInfo {
      display: flex;
      align-items: center;
      margin: 20px 0px;
      color: #444;
  }
  
- .userShowIcon {
+ .movieShowIcon {
      font-size: 16px !important;
  }
  
- .userShowInfoTitle {
+ .movieShowInfoTitle {
      margin-left: 10px;
  }
  
- .userUpdateTitle {
+ .movieUpdateTitle {
      font-size: 24px;
      font-weight: 600;
  }
  
- .userUpdateForm {
+ .movieUpdateForm {
      display: flex;
      justify-content: space-between;
      margin-top: 20px;
  }
  
- .userUpdateItem {
+ .movieUpdateItem {
      display: flex;
      flex-direction: column;
      margin-top: 10px;
  }
  
- .userUpdateItem>label {
+ .movieUpdateItem>label {
      margin-bottom: 5px;
      font-size: 14px;
  }
  
- .userUpdateInput {
+ .movieUpdateInput {
      border: none;
      width: 250px;
      height: 30px;
      border-bottom: 1px solid gray;
  }
  
- .userUpdateRight {
+ .movieUpdateRight {
      display: flex;
      flex-direction: column;
      justify-content: space-between;
  }
  
- .userUpdateUpload {
+ .movieUpdateUpload {
      display: flex;
      align-items: center;
  }
  
- .userUpdateImg {
+ .movieUpdateImg {
      width: 100px;
      height: 100px;
      border-radius: 10px;
@@ -145,11 +166,11 @@
      margin-right: 20px;
  }
  
- .userUpdateIcon {
+ .movieUpdateIcon {
      cursor: pointer;
  }
  
- .userUpdateButton {
+ .movieUpdateButton {
      border-radius: 5px;
      border: none;
      padding: 5px;

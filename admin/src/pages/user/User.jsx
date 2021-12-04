@@ -26,23 +26,24 @@ export default function UserManager() {
   return (
     <div className="user">
       <div className="userTitleContainer">
-        <h1 className="userTitle">Detail User</h1>
+        <h1 className="userTitle">User Detail</h1>
       </div>
       <div className="userContainer">
         <div className="userShow">
           <div className="userShowTop">
             <img
-              src="https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+              src={users.profilePic}
               alt=""
               className="userShowImg"
             />
-            <div className="userShowTopTitle">
-              <span className="userShowUsername"></span>
-              <span className="userShowUserTitle">{users.lastname} {users.firstname}</span>
-            </div>
+           
           </div>
+          <div className="userShowTopTitle">
+              <span className="userShowUsername">{users.firstname}</span>
+              <span className="userShowUserTitle">{users.lastname} </span>
+            </div>
           <div className="userShowBottom">
-            <span className="userShowTitle">Account Details</span>
+            <span className="userShowTitle">Account Information</span>
             <div className="userShowInfo">
               <PermIdentity className="userShowIcon" />
               <span className="userShowInfoTitle">{users._id}</span>

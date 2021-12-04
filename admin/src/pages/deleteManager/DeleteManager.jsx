@@ -6,7 +6,9 @@ import Notification from "../../components/Alert/Notification"
 import ConfirmDialog from "../../components/Alert/ConfirmDialog";
 import ConfirmDialogOk from "../../components/Alert/ConfirmDialogOk";
 import { CastContext } from "../../context/castContext/CastContext";
+import Select from '@mui/material/Select';
 import { getCastsDelFindObject, deleteCasts, RestoreCasts } from "../../context/castContext/apiCalls";
+import { MenuItem } from "@mui/material";
 
 export default function DeleteManager() {
     const { casts, dispatch } = useContext(CastContext);
@@ -108,12 +110,14 @@ export default function DeleteManager() {
     <div className=" DeleteManager">
       <h1 className=" DeleteManagerTitle">Delete Manager</h1>
        <div className="DeleteManagerSelectObject">
-       
-          <select className="DeleteManagerSelectObject" onChange={handleObject} >
-            <option value="users">User</option>
-            <option value="casts">Cast</option>
-            <option value="movies">Movies</option>
-          </select>
+          <Select 
+           className="DeleteManagerSelectObject" 
+          onChange={handleObject} 
+         >
+            <MenuItem value="users">User</MenuItem>
+            <MenuItem value="casts">Cast</MenuItem>
+            <MenuItem value="movies">Movies</MenuItem>
+          </Select>
 
        </div>
       <form className=" DeleteManagerForm" type="form">

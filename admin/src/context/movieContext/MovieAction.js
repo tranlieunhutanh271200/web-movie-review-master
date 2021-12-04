@@ -44,13 +44,13 @@ export const createMoviesStart = () => ({
     type: "CREATE_MOVIES_START",
 });
 
-export const createMoviesSuccess = (Movies) => ({
-    type: "CREATE_MoviesS_SUCCESS",
-    payload: Movies,
+export const createMoviesSuccess = (Movie) => ({
+    type: "CREATE_MOVIES_SUCCESS",
+    payload: Movie,
 });
 
 export const createMoviesFailure = () => ({
-    type: "CREATE_MoviesS_FAILURE",
+    type: "CREATE_MOVIES_FAILURE",
 });
 
 export const updateMoviesStart = () => ({

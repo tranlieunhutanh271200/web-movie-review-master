@@ -39,7 +39,14 @@ export default function UserManager() {
   };
   const columns = [
     { field: "_id", headerName: "ID", width: 70 },
-    { field: "firstname", headerName: "FirstName", width: 130 },
+    { field: "firstname", headerName: "FirstName", width: 160,  renderCell: (params) => {
+      return (
+        <div className="userListItem">
+          <img className="userListImg" src={params.row.profilePic} alt="" />
+          {params.row.firstname}
+        </div>
+      );
+    }, },
     { field: "lastname", headerName: "LastName", width: 130 },
     { field: "email", headerName: "Email", width: 200 },
     { field: "dob", headerName: "Date Of Birth", type: "dateTime", width: 110 },
