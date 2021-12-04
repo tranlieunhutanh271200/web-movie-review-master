@@ -115,25 +115,26 @@ export default function Register() {
             </span>
             <input type="firstname" placeholder="Enter First Name" onChange={onChangeFirstname} />           
             <p className = "validator">{validationMsg.firstname}</p>
-            <hr className="line"/>
             <span>
                 Last Name:
             </span>
             <input type="lastname" placeholder="Enter Last Name" onChange={onChangeLastname}/>
             <p className = "validator">{validationMsg.lastname}</p>
-            <hr className="line"/>
             <span>
                 Email or Phone Number:
             </span>
             <input type="email" placeholder="Enter Email or phone number" onChange={onChangeEmail}/>
             <p className = "validator">{validationMsg.email}</p>
-            <hr className="line"/>
             <span>
                 Password:
             </span>
             <input type="password" placeholder="Enter Password" onChange={onChangePass}/>
             <p className = "validator">{validationMsg.pass}</p>
-            <hr className="line"/>
+            <span>
+                Confirm Password:
+            </span>
+            <input type="password" placeholder="Confirm Password" onChange={onChangeConfirmpass}/>
+            <p className = "validator">{validationMsg.confirmpass}</p>
             <span>
                 Date of birth:
             </span>
@@ -156,19 +157,10 @@ export default function Register() {
                 </Grid>
                 </MuiPickersUtilsProvider>
                 </div>
-            <hr className="line"/>
-            <span>
-                Confirm Password:
-            </span>
-            <input type="password" placeholder="Confirm Password" onChange={onChangeConfirmpass}/>
-            <p className = "validator">{validationMsg.confirmpass}</p>
-            <hr className="line"/>
             <button className="registerButton" type="button" onClick = {onSubmitSigup}>Sign Up</button>
             <span>
-                Do you have an account? <b className="signup-btn">Sign register now.</b>
-            </span>
-            <hr className="line"/>
-            
+                Do you have an account? <b className="signup-btn">Sign in now.</b>
+            </span>   
              </form>
         </div>
       </div>
