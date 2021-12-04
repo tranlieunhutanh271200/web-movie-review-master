@@ -9,8 +9,12 @@ const refreshToken = require("../middlewares/refreshToken");
 const accessToken = require("../middlewares/accessToken");
 const sendEmail = require("../utils/sendMail");
 const validateEmail = require("../utils/validation");
+const {google} = require('googleapis');
+const {OAuth2} = google.auth
 
+const client = new OAuth2(process.env.MAILING_SERVICE_CLIENT_ID)
 const { CLIENT_URL } = process.env
+
 //REGISTER
 exports.registration = async (req, res) => {
 
@@ -109,6 +113,12 @@ exports.login = async (req, res) => {
       { expiresIn: "10h" }
     );
     const { password, ...info } = userExists._doc;
+    const refresh_token = await refreshToken({id: userExists._id});
+    res.cookie('refreshtoken', refresh_token, {
+      httpOnly: true,
+      path: 'users/refresh_token',
+      maxAge: 30*24*60*60*1000
+    })
     res.status(200).json({ ...info, accessToken });
   } catch (err) {
     res.status(500).json(err)
@@ -336,7 +346,45 @@ exports.remove = async (req, res) => {
 //LOGIN GOOGLE
 exports.googleLogin = async (req, res) =>{
   try {
-    
+    const {tokenId} = req.body;
+    const verify = await client.verifyIdToken({idToken: tokenId, audience: process.env.MAILING_SERVICE_CLIENT_ID});
+    //console.log(verify);
+    const {email_verified, given_name, family_name, email, picture} = verify.payload;
+    const password = email + process.env.SECRET_KEY;
+    if(email_verified) {
+      const user = await userService.checkEmailExist(email);
+      console.log(user)
+      if(!user){
+        const newUser = {
+          firstname: given_name,
+          lastname: family_name,
+          email: email,
+          dob: Date.now(),
+          password: CryptoJS.AES.encrypt( password, process.env.SECRET_KEY).toString(),
+          profilePic: picture,
+        }
+        const useradd = await userService.registration(newUser);
+        console.log(useradd)
+        const refresh_token = await refreshToken({id: useradd._id});
+        res.cookie('refreshtoken', refresh_token, {
+          httpOnly: true,
+          path: 'users/refresh_token',
+          maxAge: 30*24*60*60*1000
+        })
+      }
+      if(user){
+        const refresh_token = await refreshToken({id: user._id});
+        res.cookie('refreshtoken', refresh_token, {
+          httpOnly: true,
+          path: 'users/refresh_token',
+          maxAge: 30*24*60*60*1000
+        })
+      }
+      res.status(200).json({msg: "Login success!"})
+    }
+    else{
+      res.status(400).json({msg: "Email verification failed!"})
+    }
   } catch (err) {
     return res.status(500).json({msg: err.message});
   }

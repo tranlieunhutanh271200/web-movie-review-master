@@ -4,6 +4,7 @@ import { login } from "../../context/authContext/apiCalls";
 import { AuthContext } from "../../context/authContext/AuthContext";
 import {showErrMsg, showSuccessMsg} from '../../components/notification/Notification'
 import { GoogleLogin } from 'react-google-login';
+import FacebookLogin from 'react-facebook-login';
 import isEmpty from "validator/lib/isEmpty"
 import React, { useState } from "react";
 import {dispatchLogin} from '../../redux/actions/authAction'
@@ -42,8 +43,21 @@ export default function Login() {
       setUser({...user, err: err.response.data.msg, success: ''})
     }
   }
-  const responseGoogle = (res) =>{
-    console.log(res);
+  const responseGoogle = async (response) =>{
+    console.log(response);
+    try {
+      const res = await axios.post('users/google_login', {tokenId: response.tokenId})
+      setUser({...user, err: '', success: res.data.msg});
+      localStorage.setItem('firstlogin', true);
+      dispatch(dispatchLogin(res.data));
+      history.push("/");
+    } catch (err) {
+      err.response.data.msg && 
+      setUser({...user, err: err.response.data.msg, success: ''})
+    }
+  }
+  const responseFacebook = async (response) =>{
+    console.log(response)
   }
   //console.log(user)
   return (
@@ -81,6 +95,11 @@ export default function Login() {
               onSuccess={responseGoogle}
               cookiePolicy={'single_host_origin'}
           />
+          <FacebookLogin
+            appId="891862731473180"
+            autoLoad={false}
+            fields="name,email,picture"
+            callback={responseFacebook} />
         </form>
       </div>
     </div>
