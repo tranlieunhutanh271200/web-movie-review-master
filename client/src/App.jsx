@@ -9,6 +9,9 @@ import CastDT from "./pages/castDt/CastDt";
 import News from "./pages/news/News";
 import NewDetail from "./pages/newDetail/NewDetail";
 import Navbar from "./components/navbar/Navbar";
+import Email from "./pages/email/email";
+import Resetpassword from "./pages/resetPassword/resetPassword";
+
 
 
 
@@ -18,9 +21,8 @@ function App () {
     //    <Route exact path="/" element ={<Home/>}/>
          
     //   <Route  path="/HomeAdmin" element ={<HomeAdmin/>}/>
-      
     // </Routes>
-    <MovieDetail/>
+    <Email/>
   )
 };
 
