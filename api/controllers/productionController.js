@@ -6,7 +6,7 @@ const productionService = require("../services/productionService");
 
 //ADD
 exports.addProduction = async (req, res) => {
-    if(req.userExists.isAdmin){
+   
     const newProduction = {
         name: req.body.name,
         founder: req.body.founder,
@@ -37,10 +37,8 @@ exports.addProduction = async (req, res) => {
     }catch(err){
         res.status(500).json(err);
     }
-}else{
-    res.status(403).json("Only admin can change Production")
 }
-}
+
 exports.update = async (req, res) => {
     if(req.userExists.isAdmin){
       if(req.body.password){

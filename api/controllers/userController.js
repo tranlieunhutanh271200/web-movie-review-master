@@ -317,8 +317,7 @@ exports.recover = async (req, res) => {
 }
 //PERMANENTLY DELETE
 exports.remove = async (req, res) => {
-  if (req.userExists.isAdmin) {
-    console.log(req.userExists.isAdmin)
+  
     try {
       const removedUser = await userService.removeUser(req.params.id);
       if (!removedUser) {
@@ -329,10 +328,8 @@ exports.remove = async (req, res) => {
       res.status(500).json(err);
     }
   }
-  else {
-    res.status(403).json("Only admin can remove account!")
-  }
-}
+  
+
 // function validateEmail(email) {
 //   const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 //   return re.test(email);

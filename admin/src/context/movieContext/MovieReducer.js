@@ -1,4 +1,4 @@
-const CastReducer = (state, action) => {
+const MovieReducer = (state, action) => {
     switch (action.type) {
         case "GET_MOVIES_START":
             return {
@@ -18,25 +18,25 @@ const CastReducer = (state, action) => {
                 isFetching: false,
                 error: true,
             };
-            //     //find
-            // case "GET_moviesFIND_START":
-            //     return {
-            //         movies: [],
-            //         isFetching: true,
-            //         error: false,
-            //     };
-            // case "GET_moviesFIND_SUCCESS":
-            //     return {
-            //         movies: action.payload,
-            //         isFetching: false,
-            //         error: false,
-            //     };
-            // case "GET_moviesFIND_FAILURE":
-            //     return {
-            //         movies: [],
-            //         isFetching: false,
-            //         error: true,
-            //     };
+            //find
+        case "GET_MoviesFIND_START":
+            return {
+                movies: [],
+                isFetching: true,
+                error: false,
+            };
+        case "GET_MoviesFIND_SUCCESS":
+            return {
+                movies: action.payload,
+                isFetching: false,
+                error: false,
+            };
+        case "GET_MoviesFIND_FAILURE":
+            return {
+                movies: [],
+                isFetching: false,
+                error: true,
+            };
             //     //get
             // case "GET_DEL_START":
             //     return {
@@ -147,4 +147,4 @@ const CastReducer = (state, action) => {
     }
 };
 
-export default CastReducer;
+export default MovieReducer;

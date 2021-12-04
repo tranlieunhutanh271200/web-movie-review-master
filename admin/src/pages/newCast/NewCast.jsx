@@ -15,24 +15,26 @@ export default function Casts() {
   const { dispatch } = useContext(CastContext);
   const [progress, setProgress] = useState(0);
   const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
-//   const [country, setCountry] = useState([]);
+  const [country, setCountry] = useState([]);
 
-//   useEffect(() => {
-//     const getCountry = async () => {
-//       try {
-//         const res = await axios.get("/countries/get");
-//         setCountry(res.data);
-//       } catch (err) {
-//         console.log(err);
-//       }
-//     };
-//     getCountry();
-//   });
-// console.log(country);
+  useEffect(() => {
+    const getCountry = async () => {
+      try {
+        const res = await axios.get("/countries/");
+        setCountry(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getCountry();
+
+  },[]);
+ 
+
+ 
 
   const handleChange = (e) => {
-    const value = e.target.value;
-
+    const value = e.target.value;   
     setCast({ ...cast, [e.target.name]: value, castPic });
   };
   
@@ -43,8 +45,8 @@ export default function Casts() {
     e.preventDefault();
     upload([{ file: castPic, label: "castPic" }]);
   };
-  console.log(cast);
-
+  
+console.log(cast)
   const upload = (items) => {
     items.forEach((item) => {
       const fileName = new Date().getTime() + item.label + item.file.name;
@@ -138,11 +140,20 @@ export default function Casts() {
         <div className="addCastItem">
           <label>Country</label>
           <select 
-          name="country"
-           
-           onChange={handleChange}>
-            <option value="USA">USA</option>
-            <option value="VIETNAM">VIETNAM</option>
+          name="country"      
+          onChange={handleChange}
+           >   
+           {
+             (()=>{
+               let val =[];
+                for (let i =0; i < country.length;i++)
+                {
+                  val.push(<option value = {country[i].id}> {country[i].name}</option>)
+                }
+                return val;
+             })()
+           }
+              {/* return <option value = {country[i].id}> {country[i].name}</option> */}
           </select>
           
           

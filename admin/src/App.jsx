@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import HomeAdmin from "./pages/adminHome/AdminHome";
 import UserManager from "./pages/userManager/UserManager";
 import User from "./pages/user/User";
+import Movie from "./pages/movie/Movie"
 import UpdateUser from "./pages/updateUser/UpdateUser";
 import Casts from "./pages/casts/Casts";
 import NewCast from "./pages/newCast/NewCast";
@@ -15,9 +16,12 @@ import DeleteManager from "./pages/deleteManager/DeleteManager";
 import MoviesManager from "./pages/moviesManager/MoviesManager";
 import NewMovie from "./pages/newMovie/NewMovie"
 import Login from "./pages/login/Login";
+import Category from "./pages/categoryManager/CategoryManager"
+import Producer from "./pages/producerManager/ProducerManager"
 import { AuthContext } from "./context/authContext/AuthContext";
 import { useContext } from "react";
 import { Delete } from "@material-ui/icons";
+import Country from "./pages/countryManager/CountryManager";
 
 function App() {
   const { user } = useContext(AuthContext);
@@ -49,7 +53,9 @@ function App() {
             <Route path="/User/:userId">
               <User />
             </Route>
-
+            <Route path="/Movie/:movieId">
+              <Movie />
+            </Route>
             <Route path="/UpdateUser/:userId">
               <UpdateUser />
             </Route>
@@ -77,6 +83,16 @@ function App() {
             </Route>
             <Route path="/DeleteManager">
               <DeleteManager />
+            </Route>
+
+            <Route path="/category">
+              <Category />
+            </Route>
+            <Route path="/producer">
+              <Producer />
+            </Route>
+            <Route path="/country">
+              <Country />
             </Route>
 
           </div>

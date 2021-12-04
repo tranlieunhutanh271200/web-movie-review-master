@@ -2,15 +2,15 @@ import "./sidebarAdmin.scss";
 import {
   Face,
   LineStyle,
-  Timeline,
   Movie,
   PermIdentity,
-  BarChart,
-  MailOutline,
-  DynamicFeed,
+  EmojiEmotions,
   ChatBubbleOutline,
   WorkOutline,
-  DeleteForever
+  DeleteForever,
+  Category,
+  MovieCreation,
+  Public
 } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 
@@ -50,31 +50,39 @@ export default function Sidebar() {
               Movie
             </li>
             </Link>
-            <li className="ListItem">
-              <BarChart className="Icon" />
-              Reports
-            </li>
           </ul>
         </div>
         <div className="Menu">
-          <h3 className="Title">Notifications</h3>
+          <h3 className="Title">Details</h3>
           <ul className="List">
+          <Link to="category" className="link">
             <li className="ListItem">
-              <MailOutline className="Icon" />
-              Mail
+              <Category className="Icon" />
+              Category
             </li>
+            </Link>
+            <Link to="/country" className="link">
             <li className="ListItem">
-              <DynamicFeed className="Icon" />
-              Feedback
+              <Public className="Icon" />
+              Country
             </li>
+            </Link>
+            <Link to="/character" className="link">
             <li className="ListItem">
-              <ChatBubbleOutline className="Icon" />
-              Messages
+              <EmojiEmotions className="Icon" />
+              Character
             </li>
+            </Link>
+            <Link to="/producer" className="link">
+            <li className="ListItem">
+              <MovieCreation className="Icon" />
+              Producer
+            </li>
+            </Link>
           </ul>
         </div>
         <div className="Menu">
-          <h3 className="Title">Track</h3>
+          <h3 className="Title">More</h3>
           <ul className="List">
           <Link to="" className="link">
             <li className="ListItem">
@@ -82,16 +90,11 @@ export default function Sidebar() {
               Manage
             </li>
             </Link>
-            <Link to="" className="link">
-            <li className="ListItem">
-              <Timeline className="Icon" />
-              Cast
-            </li>
-            </Link>
+           
             <Link to="/DeleteManager" className="link">
             <li className="ListItem">
               <DeleteForever className="Icon" />
-              Track
+              Trash
             </li>
             </Link>
           </ul>

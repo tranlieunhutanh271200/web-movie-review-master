@@ -29,8 +29,8 @@ export default function MoviesManager() {
       type: 'error'
   })
   };
-
 console.log(movies)
+
   const columns = [
     { field: "_id", headerName: "ID", width: 170 },
     {
@@ -62,7 +62,7 @@ console.log(movies)
             <Link
               to={
                 {
-                  pathname: "/movie/" + params.row._id,
+                  pathname: "/Movie/" + params.row._id,
                 }
                 //pathname:"/casts/find/" + params.row._id
               }
@@ -101,6 +101,7 @@ console.log(movies)
         rows={movies}
         disableSelectionOnClick
         columns={columns}
+        autoHeight
         pageSize={8}
         rowsPerPageOptions={[2]}
         checkboxSelection

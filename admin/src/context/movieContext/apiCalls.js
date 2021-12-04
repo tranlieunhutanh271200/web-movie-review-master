@@ -3,6 +3,7 @@ import {
     createMoviesFailure,
     createMoviesStart,
     createMoviesSuccess,
+
     // deleteMoviesFailure,
     // deleteMoviestart,
     //   deleteMoviesSuccess,
@@ -56,53 +57,41 @@ export const getMoviesFind = async(id, dispatch) => {
         });
 
         dispatch(getMoviesFindSuccess(res.data));
+        
 
     } catch (err) {
         dispatch(getMoviesFindFailure());
     }
 };
-//find del
-export const getMoviesDelFind = async(object, dispatch) => {
-    dispatch(getMoviesDelStart());
-    try {
 
-        const res = await axios.get("/" + object + "/deleted/", {
-            headers: {
-                token: "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
-            },
-        });
-
-        dispatch(getMoviesDelSuccess(res.data));
-
-
-    } catch (err) {
-        dispatch(getMoviesDelFailure());
-    }
-};
 
 //create
-export const createMovies = async(cast, dispatch) => {
+export const createMovies = async(movie, dispatch) => {
     dispatch(createMoviesStart());
+    console.log(movie)
     try {
-        const res = await axios.post("/Movies/add/", cast, {
+        const res = await axios.post("/movies/add/", movie, {
             headers: {
                 token: "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
             },
+            
         });
 
-
+console.log("test1")
         dispatch(createMoviesSuccess(res.data));
+        
     } catch (err) {
+        
         dispatch(createMoviesFailure());
     }
 };
 
 //update
-export const updateMovies = async(cast, dispatch) => {
+export const updateMovies = async(Movie, dispatch) => {
     dispatch(updateMoviesStart());
     try {
 
-        const res = await axios.put("/Movies/update/" + cast._id, cast, {
+        const res = await axios.put("/Movies/update/" + Movie._id, Movie, {
             headers: {
                 token: "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
             },

@@ -6,9 +6,7 @@ import storage from "../../firebase";
 import { Publish } from "@material-ui/icons";
 import { CastContext } from "../../context/castContext/CastContext";
 import { getCastsFind, updateCasts } from "../../context/castContext/apiCalls";
-import Notification from "../../components/Alert/Notification"
-
-
+import Notification from "../../components/Alert/Notification";
 
 import LinearProgress from "@mui/material/LinearProgress";
 import Box from "@mui/material/Box";
@@ -20,7 +18,11 @@ export default function Casts() {
   const [yasuo, setCast] = useState(null);
   const [castPic, setPic] = useState(null);
   const [progress, setProgress] = useState(0);
-  const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
+  const [notify, setNotify] = useState({
+    isOpen: false,
+    message: "",
+    type: "",
+  });
 
   useEffect(() => {
     getCastsFind(castId, dispatch);
@@ -41,11 +43,11 @@ export default function Casts() {
     updateCasts(yasuo, dispatch);
     setNotify({
       isOpen: true,
-      message: 'Update Information Successfully',
-      type: 'success'
-  })
+      message: "Update Information Successfully",
+      type: "success",
+    });
   };
-console.log(yasuo)
+  console.log(yasuo);
   const handleUpload = () => {
     const uploadTask = storage.ref(`images/${castPic.name}`).put(castPic);
     uploadTask.on(
@@ -55,22 +57,19 @@ console.log(yasuo)
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
         );
         setProgress(progress);
-        if (progress === 100)
-          {
-            setNotify({
-              isOpen: true,
-              message: 'Upload Image Successfully',
-              type: 'success'
-          })
-          }
-          else 
-          {
-            setNotify({
-              isOpen: true,
-              message: 'Uploading',
-              type: 'warning'
-          })
-          }
+        if (progress === 100) {
+          setNotify({
+            isOpen: true,
+            message: "Upload Image Successfully",
+            type: "success",
+          });
+        } else {
+          setNotify({
+            isOpen: true,
+            message: "Uploading",
+            type: "warning",
+          });
+        }
       },
       (error) => {
         console.log(error);
@@ -86,17 +85,15 @@ console.log(yasuo)
       }
     );
   };
-console.log(casts.dob)
+  console.log(casts.dob);
   return (
     <div className="casts">
       <div className="castTitleContainer">
         <h1 className="castTitle">Detail Cast</h1>
-        
-          <button
-           type="button"
-          className="castAddButton" 
-          onClick={handleUpdate}>Update</button>
-     
+
+        <button type="button" className="castAddButton" onClick={handleUpdate}>
+          Update
+        </button>
       </div>
       <div className="castTop">
         <div className="castTopRight">
@@ -112,24 +109,25 @@ console.log(casts.dob)
               onChange={handleChangee}
               style={{ display: "none" }}
             />
-           
           </div>
           <div className="castInfoItemLine">
-          <Box sx={{ width: "55%" }}>
-            <LinearProgress variant="determinate" value={progress} max="100" />
-          </Box>
-          <div className="castInfoItemButton">
-            
-            <button type="button" className="uploadButton"  onClick={handleUpload}>
-              Upload
-            </button>
-          
+            <Box sx={{ width: "55%" }}>
+              <LinearProgress
+                variant="determinate"
+                value={progress}
+                max="100"
+              />
+            </Box>
+            <div className="castInfoItemButton">
+              <button
+                type="button"
+                className="uploadButton"
+                onClick={handleUpload}
+              >
+                Upload
+              </button>
+            </div>
           </div>
-         
-          
-          
-          </div>
-          
 
           <div className="castInfoBottom">
             <div className="castInfoItem">
@@ -138,9 +136,9 @@ console.log(casts.dob)
             </div>
             <div className="castInfoItem">
               <span className="castInfoKey">Cast Name:</span>
-              
+
               <input
-              className="castInfoValue"
+                className="castInfoValue"
                 type="text"
                 placeholder={casts.name}
                 name="name"
@@ -149,24 +147,19 @@ console.log(casts.dob)
             </div>
             <div className="castInfoItem">
               <span className="castInfoKey">Date of Birth:</span>
-              <span
-               className="castInfoValue" 
-               type="%Y-%m-%d" 
-               format= "%Y-%m-%d">
+              <span className="castInfoValue" type="%Y-%m-%d" format="%Y-%m-%d">
                 {casts.dob}
               </span>
-              
+
               <input
-              className="castInfoValueDate"
-               type ="date"
+                className="castInfoValueDate"
+                type="date"
                 name="dob"
                 onChange={handleChange}
                 placeholder={casts.dob}
               />
-     
-              
             </div>
-            
+
             <div className="castInfoItem">
               <span className="castInfoKey">Created:</span>
               <span className="castInfoValue">{casts.createdAt}</span>
@@ -177,24 +170,20 @@ console.log(casts.dob)
             </div>
             <div className="castInfoItem">
               <span className="castInfoKey">Bio:</span>
-              
             </div>
-            
-            <textarea 
-            rows="4" 
-            cols="100" 
-            name="bio"
-            className="castInfoValue"
-            placeholder={casts.bio}
-            onChange={handleChange}
-              />
+
+            <textarea
+              rows="4"
+              cols="100"
+              name="bio"
+              className="castInfoValue"
+              placeholder={casts.bio}
+              onChange={handleChange}
+            />
           </div>
         </div>
       </div>
-      <Notification
-                notify={notify}
-                setNotify={setNotify}
-            />
+      <Notification notify={notify} setNotify={setNotify} />
     </div>
   );
 }
