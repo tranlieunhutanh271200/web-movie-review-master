@@ -1,0 +1,57 @@
+.newProducer {
+    flex: 4;
+  }
+  .addProducerTitle{
+      display: flex;
+      justify-content: center;
+      margin-right:100px
+  }
+  .addProducerForm {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .formLeft{
+ padding:10px;
+  }
+  .formRight{
+    margin-left: 50px;
+}
+.ProducerItem{
+    display:flex;
+    fontSize :100px;
+    
+}
+  .addProducerItem {
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
+  
+  .addProducerItem > label {
+    color: gray;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  
+  .addProducerItem > TextField {
+    padding: 10px;
+  }
+  
+  .addProducerItem > select {
+    padding: 10px;
+  }
+  
+  .addProducerButton {
+    height: 30px;
+    margin-top: 10px;
+    padding: 7px 10px;
+    border: none;
+    border-radius: 10px;
+    background-color: darkblue;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    align-self: center;
+  }

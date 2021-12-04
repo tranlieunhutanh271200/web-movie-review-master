@@ -34,8 +34,9 @@ router.get("/deleted", verifyToken, userController.getalldeleted);
 //RECOVER
 router.put("/recover/:id", verifyToken, userController.recover);
 //REMOVE
-router.delete("/remove/:id", verifyToken, userController.remove);
+router.delete("/remove/:id",  userController.remove);
 //SOCIAL LOGIN
 //LOGIN GOOGLE
 router.post('/google_login', userController.googleLogin)
+
 module.exports = router;

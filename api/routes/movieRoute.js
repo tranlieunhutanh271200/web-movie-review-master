@@ -26,6 +26,6 @@ router.get("/deleted", verifyToken, movieController.getalldeleted);
 //RECOVER
 router.put("/recover/:id", verifyToken, movieController.recover);
 //REMOVE
-router.delete("/remove/:id", verifyToken, movieController.remove);
+router.delete("/remove/:id",  movieController.remove);
 
 module.exports = router;

@@ -4,7 +4,7 @@ const verifyToken = require("../middlewares/verifyToken");
 const productionController = require("../controllers/productionController");
 
 //ADD
-router.post("/add", verifyToken, productionController.addProduction);
+router.post("/add",  productionController.addProduction);
 //UPDATE
 router.put("/update/:id", verifyToken, productionController.update);
 //DELETE
