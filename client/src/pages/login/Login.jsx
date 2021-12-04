@@ -57,7 +57,18 @@ export default function Login() {
     }
   }
   const responseFacebook = async (response) =>{
-    console.log(response)
+    console.log(response);
+    try {
+      const { accessToken, userID} = response
+      const res = await axios.post('users/facebook_login', {accessToken, userID})
+      setUser({...user, err: '', success: res.data.msg});
+      localStorage.setItem('firstlogin', true);
+      dispatch(dispatchLogin(res.data));
+      history.push("/");
+    } catch (err) {
+      err.response.data.msg && 
+      setUser({...user, err: err.response.data.msg, success: ''})
+    }
   }
   //console.log(user)
   return (
