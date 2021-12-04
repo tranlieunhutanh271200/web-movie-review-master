@@ -82,7 +82,6 @@ console.log(cast)
         () => {
           uploadTask.snapshot.ref.getDownloadURL().then((url) => {
             setPic(url);
-            });
           });
      
         }

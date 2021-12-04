@@ -22,13 +22,52 @@ class userService {
       return await User.findByIdAndUpdate(id, { $set: {"status": false} }, {new: true});
     }
     static async getById(id) {
-      return await User.findById(id);
+      const user = await User.findById(id);
+      const {dob, createdAt, updatedAt, password, ...info} = user._doc
+      info.dob = user.dob.getDate()+'-' + (user.dob.getMonth()+1) + '-'+user.dob.getFullYear();
+      info.createdAt = user.createdAt.getHours() + ":" + user.createdAt.getMinutes() + ":" + user.createdAt.getSeconds()+' '
+        +user.createdAt.getDate()+'-' + (user.createdAt.getMonth()+1) + '-'+user.createdAt.getFullYear();
+      info.updatedAt= user.updatedAt.getHours() + ":" + user.updatedAt.getMinutes() + ":" + user.updatedAt.getSeconds()+ ' ' + 
+        user.updatedAt.getDate()+'-' + (user.updatedAt.getMonth()+1) + '-'+user.updatedAt.getFullYear();
+      return info;
     }
     static async getAll() {
-      return await User.find({"status": true});
+      const users = await User.find({"status": true});
+      let newUsers = users.map((user) =>({
+        isAdmin: user.isAdmin,
+        status: user.status,
+        _id: user._id,
+        firstname: user.firstname,
+        lastname: user.lastname,
+        email: user.email,
+        profilePic: user.profilePic,
+        dob: user.dob.getDate()+'-' + (user.dob.getMonth()+1) + '-'+user.dob.getFullYear(),
+        createdAt: user.createdAt.getHours() + ":" + user.createdAt.getMinutes() + ":" + user.createdAt.getSeconds()+' '+user.createdAt.getDate()+'-' + (user.createdAt.getMonth()+1) + '-'
+        +user.createdAt.getFullYear(),
+        updatedAt:  user.updatedAt.getHours() + ":" + user.updatedAt.getMinutes() + ":" + user.updatedAt.getSeconds()+ ' ' + user.updatedAt.getDate()+'-' + (user.updatedAt.getMonth()+1) + '-'
+        +user.updatedAt.getFullYear(),
+        __v: user.__v
+      }))
+      return await newUsers;
     }
     static async getAlllimit2() {
-      return await User.find({"status": true}).limit(2);
+      const users = await User.find({"status": true}).limit(2);
+      let newUsers = users.map((user) =>({
+        isAdmin: user.isAdmin,
+        status: user.status,
+        _id: user._id,
+        firstname: user.firstname,
+        lastname: user.lastname,
+        email: user.email,
+        profilePic: user.profilePic,
+        dob: user.dob.getDate()+'-' + (user.dob.getMonth()+1) + '-'+user.dob.getFullYear(),
+        createdAt: user.createdAt.getHours() + ":" + user.createdAt.getMinutes() + ":" + user.createdAt.getSeconds()+' '+user.createdAt.getDate()+'-' + (user.createdAt.getMonth()+1) + '-'
+        +user.createdAt.getFullYear(),
+        updatedAt: user.updatedAt.getHours() + ":" + user.updatedAt.getMinutes() + ":" + user.updatedAt.getSeconds()+ ' ' + user.updatedAt.getDate()+'-' + (user.updatedAt.getMonth()+1) + '-'
+        +user.updatedAt.getFullYear(),
+        __v: user.__v
+      }))
+      return await newUsers;
     }
     static async aggregate(){
       return await User.aggregate ([{ $project: { month: { $month: "$createdAt" },},}
@@ -38,10 +77,42 @@ class userService {
       return await User.find({"status": true}).countDocuments();
     }
     static async getAllDeleted() {
-      return await User.find({"status": false});
+      const users = await User.find({"status": false});
+      let newUsers = users.map((user) =>({
+        isAdmin: user.isAdmin,
+        status: user.status,
+        _id: user._id,
+        firstname: user.firstname,
+        lastname: user.lastname,
+        email: user.email,
+        profilePic: user.profilePic,
+        dob: user.dob.getDate()+'-' + (user.dob.getMonth()+1) + '-'+user.dob.getFullYear(),
+        createdAt: user.createdAt.getHours() + ":" + user.createdAt.getMinutes() + ":" + user.createdAt.getSeconds()+' '+user.createdAt.getDate()+'-' + (user.createdAt.getMonth()+1) + '-'
+        +user.createdAt.getFullYear(),
+        updatedAt:  user.updatedAt.getHours() + ":" + user.updatedAt.getMinutes() + ":" + user.updatedAt.getSeconds()+ ' ' + user.updatedAt.getDate()+'-' + (user.updatedAt.getMonth()+1) + '-'
+        +user.updatedAt.getFullYear(),
+        __v: user.__v
+      }))
+      return newUsers
     }
     static async getAllDeletedlimit2() {
-      return await User.find({"status": false}).limit(2);
+      const users = await User.find({"status": false}).limit(2);
+      let newUsers = users.map((user) =>({
+        isAdmin: user.isAdmin,
+        status: user.status,
+        _id: user._id,
+        firstname: user.firstname,
+        lastname: user.lastname,
+        email: user.email,
+        profilePic: user.profilePic,
+        dob: user.dob.getDate()+'-' + (user.dob.getMonth()+1) + '-'+user.dob.getFullYear(),
+        createdAt: user.createdAt.getUTCHours() + ":" + user.createdAt.getUTCMinutes() + ":" + user.createdAt.getUTCSeconds()+' '+user.createdAt.getDate()+'-' + (user.createdAt.getMonth()+1) + '-'
+        +user.createdAt.getFullYear(),
+        updatedAt:  user.updatedAt.getUTCHours() + ":" + user.updatedAt.getUTCMinutes() + ":" + user.updatedAt.getUTCSeconds()+ ' ' + user.updatedAt.getDate()+'-' + (user.updatedAt.getMonth()+1) + '-'
+        +user.updatedAt.getFullYear(),
+        __v: user.__v
+      }))
+      return newUsers
     }
     static async recoverUser(id) {
       console.log(id);

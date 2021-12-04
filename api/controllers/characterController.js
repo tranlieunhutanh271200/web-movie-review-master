@@ -62,22 +62,22 @@ exports.delete = async (req, res) => {
   }
 //FIND
 exports.find = async (req, res) => {
-  if(req.userExists.isAdmin){
+  //if(req.userExists.isAdmin){
     //console.log(req.userExists.isAdmin)
     try {
       const findCharacter = await characterService.getById(req.params.id);
       if(!findCharacter){
         res.status(403).json("Character not found!")
       }
-      //const { password, ...info } = findUser._doc;
+      console.log(findCharacter.cast)
       res.status(200).json(findCharacter);
     }catch(err){
       res.status(500).json(err);
     }
-  }
-  else{
-    res.status(403).json("Only admin can find users")
-  }
+  //}
+  //else{
+    //res.status(403).json("Only admin can find users")
+  //}
 }
 //GET ALL
 exports.getall = async (req, res) => {
