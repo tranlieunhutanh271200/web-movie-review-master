@@ -6,6 +6,7 @@ import { CastContextProvider } from "./context/castContext/CastContext";
 import { AuthContextProvider } from "./context/authContext/AuthContext";
 import { CountryContextProvider } from "./context/countriesContext/CountryContext";
 import { UserContextProvider}  from "./context/userContext/UserContext";
+import { MovieContextProvider}  from "./context/movieContext/MovieContext";
 ReactDOM.render (
   
 <Router>
@@ -14,7 +15,11 @@ ReactDOM.render (
     <UserContextProvider>
     <CastContextProvider>
     <CountryContextProvider> 
-    <App />
+      <MovieContextProvider>
+
+      
+          <App />
+    </MovieContextProvider>
     </CountryContextProvider>
       </CastContextProvider>
       </UserContextProvider>

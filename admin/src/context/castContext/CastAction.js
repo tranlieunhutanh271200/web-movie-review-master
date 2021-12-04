@@ -25,6 +25,20 @@ export const getCastsFindSuccess = (Casts) => ({
 export const getCastsFindFailure = () => ({
     type: "GET_CASTSFIND_FAILURE",
 });
+//get delete
+export const getCastsDelStart = () => ({
+    type: "GET_DEL_START",
+});
+
+export const getCastsDelSuccess = (Casts) => ({
+    type: "GET_DEL_SUCCESS",
+    payload: Casts,
+});
+
+export const getCastsDelFailure = () => ({
+    type: "GET_DEL_FAILURE",
+});
+
 
 export const createCastsStart = () => ({
     type: "CREATE_Casts_START",
@@ -65,17 +79,29 @@ export const delCastsSuccess = (Casts) => ({
 export const delCastsFailure = () => ({
     type: "DEL_CASTS_FAILURE",
 });
+//Restore 
+export const delRestoreStart = () => ({
+    type: "RESTORE_START",
+});
 
+export const delRestoreSuccess = (Casts) => ({
+    type: "RESTORE_SUCCESS",
+    payload: Casts,
+});
 
-// export const deleteCastStart = () => ({
-//   type: "DELETE_CASTS_START",
-// });
+export const delRestoreFailure = () => ({
+    type: "RESTORE_FAILURE",
+});
+//Remove
+export const deleteCastStart = () => ({
+  type: "DELETE_CASTS_START",
+});
 
-// export const deleteCastsSuccess = (id) => ({
-//   type: "DELETE_CASTS_SUCCESS",
-//   payload: id,
-// });
+export const deleteCastsSuccess = (id) => ({
+  type: "DELETE_CASTS_SUCCESS",
+  payload: id,
+});
 
-// export const deleteCastsFailure = () => ({
-//   type: "DELETE_CASTS_FAILURE",
-// });
+export const deleteCastsFailure = () => ({
+  type: "DELETE_CASTS_FAILURE",
+});

@@ -3,9 +3,10 @@ import {
     createCastsFailure,
     createCastsStart,
     createCastsSuccess,
-    // deleteCastsFailure,
-    // deleteCastStart,
-    //   deleteCastsSuccess,
+    deleteCastsFailure,
+    deleteCastStart,
+    deleteCastsSuccess,
+
     getCastsFailure,
     getCastsStart,
     getCastsSuccess,
@@ -14,9 +15,19 @@ import {
     getCastsFindStart,
     getCastsFindSuccess,
 
+    getCastsDelFailure,
+    getCastsDelStart,
+    getCastsDelSuccess,
+
     delCastsStart,
     delCastsSuccess,
     delCastsFailure,
+
+    delRestoreStart,
+    delRestoreSuccess,
+    delRestoreFailure,
+
+
     updateCastsSuccess,
     updateCastsStart,
     updateCastsFailure
@@ -55,6 +66,26 @@ export const getCastsFind = async(id, dispatch) => {
         dispatch(getCastsFindFailure());
     }
 };
+
+//find del
+export const getCastsDelFindObject = async(object, dispatch) => {
+    dispatch(getCastsDelStart());
+    try {
+
+        const res = await axios.get("/" + object + "/deleted/", {
+            headers: {
+                token: "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
+            },
+        });
+
+        dispatch(getCastsDelSuccess(res.data));
+
+
+    } catch (err) {
+        dispatch(getCastsDelFailure());
+    }
+};
+
 //create
 export const createCasts = async(cast, dispatch) => {
     dispatch(createCastsStart());
@@ -109,24 +140,41 @@ export const DelCasts = async(id, dispatch) => {
         dispatch(delCastsFailure());
     }
 };
+//recover
+export const RestoreCasts = async(object, id, dispatch) => {
+    dispatch(delRestoreStart());
+    dispatch(delCastsSuccess(id));
+    try {
 
-// //delete
-// export const deleteCasts = async (id, dispatch) => {
-//   dispatch(deleteCastStart());
-//   try {
+        const res = await axios.put("/" + object + "/recover/" + id, id, {
+            headers: {
+                token: "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
+            },
+        });
 
-//      await axios.put("/casts/delete/" +id, {
-//         headers: {
-//           token: 
-//           "Bearer"+ JSON.parse(localStorage.getItem("user")).accessToken,
+        dispatch(delRestoreSuccess(res.data));
 
-//         },
+    } catch (err) {
 
-//       });
+        dispatch(delRestoreFailure());
+    }
+};
+//delete
+export const deleteCasts = async(object, id, dispatch) => {
+    dispatch(deleteCastStart());
 
-//     dispatch(deleteCastsSuccess(id));
-//   } catch (err) {
-//     dispatch(deleteCastsFailure());
-//   }
+    try {
+        
+        await axios.delete("/" + object + "/remove/" + id, id, {
+            headers: {
+                token: "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
 
-//};
+            },
+
+        });
+        dispatch(deleteCastsSuccess(id));
+    } catch (err) {
+        dispatch(deleteCastsFailure());
+    }
+
+};
