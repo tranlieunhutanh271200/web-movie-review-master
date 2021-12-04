@@ -9,8 +9,9 @@ const refreshToken = require("../middlewares/refreshToken");
 const accessToken = require("../middlewares/accessToken");
 const sendEmail = require("../utils/sendMail");
 const validateEmail = require("../utils/validation");
-const {google} = require('googleapis');
-const {OAuth2} = google.auth
+const { google } = require('googleapis');
+const { OAuth2 } = google.auth
+const fetch = require('node-fetch')
 
 const client = new OAuth2(process.env.MAILING_SERVICE_CLIENT_ID)
 const { CLIENT_URL } = process.env
@@ -51,31 +52,31 @@ exports.registration = async (req, res) => {
         //const user = await userService.registration(newUser);
         //const user = await newUser.save();
         //res.status(201).json(user);
-        const tokenActivation = await activationToken(newUser);   
+        const tokenActivation = await activationToken(newUser);
         console.log(tokenActivation);
 
         const url = `${CLIENT_URL}/user/activation/${tokenActivation}`;
         sendEmail(req.body.email, req.body.firstname, req.body.lastname, url, "Verify your Email")
-        res.status(201).json({success: true, msg: "Your email has been sent. Please check your email"});
+        res.status(201).json({ success: true, msg: "Your email has been sent. Please check your email" });
       }
     }
   } catch (err) {
-    res.status(500).json({success: true, msg: err});
+    res.status(500).json({ success: true, msg: err });
   }
 }
 //ACTIVE EMAIL
 exports.activeEmail = async (req, res) => {
-  try{
-    const {tokenActivation} = req.body
+  try {
+    const { tokenActivation } = req.body
     const user = jwt.verify(tokenActivation, process.env.ACTIVATION_TOKEN_ACTION);
     console.log(user);
-    const {firstname, lastname, email, dob, password} = user;
+    const { firstname, lastname, email, dob, password } = user;
 
-    const newUser = {firstname, lastname, email, dob, password}
+    const newUser = { firstname, lastname, email, dob, password }
 
     const check = await userService.registration(newUser);
-    res.status(201).json({success: true, msg: "Activation Successfully!"});
-  }catch (err){
+    res.status(201).json({ success: true, msg: "Activation Successfully!" });
+  } catch (err) {
     res.status(500).json(err);
   }
 }
@@ -98,13 +99,13 @@ exports.login = async (req, res) => {
     const userExists = await userService.checkEmailExist(req.body.email);
 
     if (!userExists) {
-      res.status(401).json({success: false, msg: "Wrong password or username!"});
+      res.status(401).json({ success: false, msg: "Wrong password or username!" });
     }
     const bytes = CryptoJS.AES.decrypt(userExists.password, process.env.SECRET_KEY);
     const originalPassword = bytes.toString(CryptoJS.enc.Utf8);
 
     if (originalPassword !== req.body.password) {
-      res.status(401).json({success: false, msg:"Wrong password or username"});
+      res.status(401).json({ success: false, msg: "Wrong password or username" });
     }
 
     const accessToken = jwt.sign(
@@ -113,11 +114,11 @@ exports.login = async (req, res) => {
       { expiresIn: "10h" }
     );
     const { password, ...info } = userExists._doc;
-    const refresh_token = await refreshToken({id: userExists._id});
+    const refresh_token = await refreshToken({ id: userExists._id });
     res.cookie('refreshtoken', refresh_token, {
       httpOnly: true,
       path: 'users/refresh_token',
-      maxAge: 30*24*60*60*1000
+      maxAge: 30 * 24 * 60 * 60 * 1000
     })
     res.status(200).json({ ...info, accessToken });
   } catch (err) {
@@ -143,7 +144,7 @@ exports.update = async (req, res) => {
     }
   }
   else {
-    res.status(403).json({success: false, msg:"You can update only your account!"})
+    res.status(403).json({ success: false, msg: "You can update only your account!" })
   }
 }
 //DELETE
@@ -153,15 +154,15 @@ exports.delete = async (req, res) => {
     try {
       const deletedUser = await userService.deleteUser(req.params.id);
       if (!deletedUser) {
-        res.status(403).json({success: false, msg: "User not found!"})
+        res.status(403).json({ success: false, msg: "User not found!" })
       }
-      res.status(200).json({success: true, msg: "User has been deleted..."});
+      res.status(200).json({ success: true, msg: "User has been deleted..." });
     } catch (err) {
       res.status(500).json(err);
     }
   }
   else {
-    res.status(403).json({success: false, msg:"You can delete only your account!"})
+    res.status(403).json({ success: false, msg: "You can delete only your account!" })
   }
 }
 //FIND
@@ -229,10 +230,10 @@ exports.forgot = async (req, res) => {
   try {
     const user = await userService.checkEmailExist(req.body.email);
     //console.log(user)
-    if(!user) return res.status(201).json("Re-send the password. Please check your email!")
-    else{
-      const tokenAccess = await accessToken({id: user._id});
-      const url =`${CLIENT_URL}/user/reset/${tokenAccess}`;
+    if (!user) return res.status(201).json("Re-send the password. Please check your email!")
+    else {
+      const tokenAccess = await accessToken({ id: user._id });
+      const url = `${CLIENT_URL}/user/reset/${tokenAccess}`;
       console.log(url);
       sendEmail(req.body.email, user.firstname, user.lastname, url, "Reset your Password");
       res.status(201).json("Re-send the password. Please check your email!")
@@ -244,13 +245,13 @@ exports.forgot = async (req, res) => {
 //RESET PASSWORD
 exports.reset = async (req, res) => {
   try {
-    if(req.body.password == req.body.confirmPassword){
+    if (req.body.password == req.body.confirmPassword) {
       //console.log(req.body.password);
       console.log(req.userExists.id);
-      const password =  CryptoJS.AES.encrypt(
+      const password = CryptoJS.AES.encrypt(
         req.body.password,
         process.env.SECRET_KEY).toString();
-      await userService.updatePassword(req.userExists.id, password, {new: true});
+      await userService.updatePassword(req.userExists.id, password, { new: true });
       res.status(201).json("Password successfully changed!");
     } else {
       res.status(400).json("Please confirm your new password!")
@@ -267,15 +268,15 @@ exports.updatePassword = async (req, res) => {
     const bytes = CryptoJS.AES.decrypt(user.password, process.env.SECRET_KEY);
     const originalPassword = bytes.toString(CryptoJS.enc.Utf8);
     //console.log(originalPassword);
-    if(originalPassword !== req.body.oldPassword){
+    if (originalPassword !== req.body.oldPassword) {
       res.status(400).json("Invalid Password!");
     }
-    else{
-      if(req.body.newPassword == req.body.confirmPassword){
-        const password =  CryptoJS.AES.encrypt(
+    else {
+      if (req.body.newPassword == req.body.confirmPassword) {
+        const password = CryptoJS.AES.encrypt(
           req.body.newPassword,
           process.env.SECRET_KEY).toString();
-        await userService.updatePassword(req.userExists.id, password, {new: true});
+        await userService.updatePassword(req.userExists.id, password, { new: true });
         res.status(201).json("Password successfully changed!");
       }
       else {
@@ -327,61 +328,105 @@ exports.recover = async (req, res) => {
 }
 //PERMANENTLY DELETE
 exports.remove = async (req, res) => {
-  
-    try {
-      const removedUser = await userService.removeUser(req.params.id);
-      if (!removedUser) {
-        res.status(403).json("User not found!")
-      }
-      res.status(200).json("User has been removed...");
-    } catch (err) {
-      res.status(500).json(err);
-    }
-  }
-//LOGIN GOOGLE
-exports.googleLogin = async (req, res) =>{
+
   try {
-    const {tokenId} = req.body;
-    const verify = await client.verifyIdToken({idToken: tokenId, audience: process.env.MAILING_SERVICE_CLIENT_ID});
+    const removedUser = await userService.removeUser(req.params.id);
+    if (!removedUser) {
+      res.status(403).json("User not found!")
+    }
+    res.status(200).json("User has been removed...");
+  } catch (err) {
+    res.status(500).json(err);
+  }
+}
+//LOGIN GOOGLE
+exports.googleLogin = async (req, res) => {
+  try {
+    const { tokenId } = req.body;
+    const verify = await client.verifyIdToken({ idToken: tokenId, audience: process.env.MAILING_SERVICE_CLIENT_ID });
     //console.log(verify);
-    const {email_verified, given_name, family_name, email, picture} = verify.payload;
+    const { email_verified, given_name, family_name, email, picture } = verify.payload;
     const password = email + process.env.SECRET_KEY;
-    if(email_verified) {
+    if (email_verified) {
       const user = await userService.checkEmailExist(email);
       console.log(user)
-      if(!user){
+      if (!user) {
         const newUser = {
           firstname: given_name,
           lastname: family_name,
           email: email,
           dob: Date.now(),
-          password: CryptoJS.AES.encrypt( password, process.env.SECRET_KEY).toString(),
+          password: CryptoJS.AES.encrypt(password, process.env.SECRET_KEY).toString(),
           profilePic: picture,
         }
         const useradd = await userService.registration(newUser);
         console.log(useradd)
-        const refresh_token = await refreshToken({id: useradd._id});
+        const refresh_token = await refreshToken({ id: useradd._id });
         res.cookie('refreshtoken', refresh_token, {
           httpOnly: true,
           path: 'users/refresh_token',
-          maxAge: 30*24*60*60*1000
+          maxAge: 30 * 24 * 60 * 60 * 1000
         })
       }
-      if(user){
-        const refresh_token = await refreshToken({id: user._id});
+      if (user) {
+        const refresh_token = await refreshToken({ id: user._id });
         res.cookie('refreshtoken', refresh_token, {
           httpOnly: true,
           path: 'users/refresh_token',
-          maxAge: 30*24*60*60*1000
+          maxAge: 30 * 24 * 60 * 60 * 1000
         })
       }
-      res.status(200).json({msg: "Login success!"})
+      res.status(200).json({ msg: "Login success!" })
     }
-    else{
-      res.status(400).json({msg: "Email verification failed!"})
+    else {
+      res.status(400).json({ msg: "Email verification failed!" })
     }
   } catch (err) {
-    return res.status(500).json({msg: err.message});
+    return res.status(500).json({ msg: err.message });
+  }
+}
+exports.facebooklogin = async (req, res) => {
+  try {
+    const { accessToken, userID } = req.body;
+    const URL = `https://graph.facebook.com/v4.0/${userID}/?fields=id,name,email,picture&access_token=${accessToken}`
+    const data = await fetch(URL).then(res => res.json()).then(res => { return res })
+
+    console.log(data)
+    //console.log(verify);
+    const { name, email, picture } = data;
+    //console.log(email)
+    const password = email + process.env.SECRET_KEY;
+    const user = await userService.checkEmailExist(email);
+    //console.log(user)
+    if (!user) {
+      const newUser = {
+        firstname: name,
+        lastname: ' ',
+        email: email,
+        dob: Date.now(),
+        password: CryptoJS.AES.encrypt(password, process.env.SECRET_KEY).toString(),
+        profilePic: picture.data.url,
+      }
+      const useradd = await userService.registration(newUser);
+      //console.log(useradd)
+      const refresh_token = await refreshToken({ id: useradd._id });
+      res.cookie('refreshtoken', refresh_token, {
+        httpOnly: true,
+        path: 'users/refresh_token',
+        maxAge: 30 * 24 * 60 * 60 * 1000
+      })
+    }
+    if (user) {
+      const refresh_token = await refreshToken({ id: user._id });
+      res.cookie('refreshtoken', refresh_token, {
+        httpOnly: true,
+        path: 'users/refresh_token',
+        maxAge: 30 * 24 * 60 * 60 * 1000
+      })
+    }
+    res.status(200).json({ msg: "Login success!" })
+  } catch (err) {
+    return res.status(500).json({ msg: err.message });
   }
 }
 // function validateEmail(email) {
