@@ -47,7 +47,7 @@ exports.registration = async (req, res) => {
         //const user = await userService.registration(newUser);
         //const user = await newUser.save();
         //res.status(201).json(user);
-        const tokenActivation = activationToken(newUser);   
+        const tokenActivation = await activationToken(newUser);   
         console.log(tokenActivation);
 
         const url = `${CLIENT_URL}/user/activation/${tokenActivation}`;
@@ -78,13 +78,13 @@ exports.activeEmail = async (req, res) => {
 //LOGIN
 exports.login = async (req, res) => {
   if (!req.body.password) {
-    return res.json({
+    return res.status(400).json({
       success: false,
       msg: "Please enter your password.",
     });
   }
   else if (!req.body.email) {
-    return res.json({
+    return res.status(400).json({
       success: false,
       msg: "Please enter your email.",
     });
@@ -221,7 +221,7 @@ exports.forgot = async (req, res) => {
     //console.log(user)
     if(!user) return res.status(201).json("Re-send the password. Please check your email!")
     else{
-      const tokenAccess = accessToken({id: user._id});
+      const tokenAccess = await accessToken({id: user._id});
       const url =`${CLIENT_URL}/user/reset/${tokenAccess}`;
       console.log(url);
       sendEmail(req.body.email, user.firstname, user.lastname, url, "Reset your Password");
@@ -331,6 +331,14 @@ exports.remove = async (req, res) => {
   }
   else {
     res.status(403).json("Only admin can remove account!")
+  }
+}
+//LOGIN GOOGLE
+exports.googleLogin = async (req, res) =>{
+  try {
+    
+  } catch (err) {
+    return res.status(500).json({msg: err.message});
   }
 }
 // function validateEmail(email) {
