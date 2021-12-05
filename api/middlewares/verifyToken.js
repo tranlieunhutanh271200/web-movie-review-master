@@ -8,13 +8,13 @@ function verifyToken(req, res, next){
     jwt.verify(token, process.env.ACCESS_TOKEN_ACTION, (err, userExists) => {
       if (err) 
         {
-          res.status(403).json("Token is not valid!");
+          res.status(403).json({ success: false, msg: "Token is not valid!" });
         }
       req.userExists = userExists;
       next();
     });
   } else {
-    return res.status(401).json("You are not authenticated!");
+    return res.status(401).json({ success: false, msg: "You are not authenticated!" });
   }
 }
 module.exports = verifyToken;

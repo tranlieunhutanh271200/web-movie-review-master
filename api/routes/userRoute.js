@@ -40,4 +40,6 @@ router.delete("/remove/:id",  userController.remove);
 router.post('/google_login', userController.googleLogin)
 //LOGIN FACEBOOK
 router.post('/facebook_login', userController.facebooklogin)
+//GET ACCESS TOKEN
+router.post('/refresh_token', userController.getAccessToken)
 module.exports = router;

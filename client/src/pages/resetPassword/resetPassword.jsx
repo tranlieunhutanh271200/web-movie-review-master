@@ -1,58 +1,40 @@
-import {Facebook} from "@material-ui/icons";
 import "./resetPassword.scss";
-import isEmpty from "validator/lib/isEmpty"
 import React, { useState } from "react";
-export default function Resetpassword() {
-  
-  const [pass, setPass] = useState('')
-  const [code, setCode] = useState('')
-  const [validationMsg, setValidationMsg]= useState('')
-  const [confirmpass, setConfirmpass] = useState('')
-  const onChangePass = (event) => {
-    const value = event.target.value
-    setPass(value)
-  }
-  const onChangeCode = (event) => {
-    const value = event.target.value
-    setCode(value)
-  }
-  const onChangeConfirmpass = (event) => {
-    const value = event.target.value
-    setConfirmpass(value)
-  }
-  const validateAll =()=>{
-    const msg = {}
-    
-    if (isEmpty(pass)){
-      msg.pass = "Please input your Password"
-    }
-    if (isEmpty(code)){
-      msg.code = "Please input verification code"
-    }
-    if (isEmpty(confirmpass)){
-        msg.confirmpass = "Please input your Confimr Password"
-      }
-      if (!isEmpty(pass) && !isEmpty(confirmpass)) {    
+import { showErrMsg, showSuccessMsg } from '../../components/notification/Notification'
+import { useParams } from 'react-router-dom'
+import axios from 'axios'
 
-        if (pass != confirmpass) {
-    
-    
-          msg.confirmpass = "Passwords don't match.";
-    
-        }
-        
-    
-    } 
-    
-  setValidationMsg(msg)
-    if (Object.keys(msg).length > 0) return false
-    return true
-  }
-  const onSubmitResetPass = () => {
-    const isValid = validateAll()
-    if (!isValid) return
-    // Call API Sign Up
+const initialState = {
+  password: '',
+  confirmPassword: '',
+  err: '',
+  success: ''
 }
+export default function Resetpassword() {
+  const [data, setData] = useState(initialState)
+    const {token} = useParams()
+    //console.log(token)
+
+    const {password, confirmPassword, err, success} = data
+
+    const handleChangeInput = e => {
+        const {name, value} = e.target
+        setData({...data, [name]:value, err: '', success: ''})
+    }
+    const handleResetPass = async () => {
+      try {
+        
+          const res = await axios.post('/users/reset', {password, confirmPassword}, {
+              headers: {token: "Bearer " + token}
+          })
+          console.log(res)
+          return setData({...data, err: "", success: res.data.msg})
+
+      } catch (err) {
+          err.response.data.msg && setData({...data, err: err.response.data.msg, success: ''})
+      }
+      
+  }
   return (
     <div className="resetPass">
       <div className="top">
@@ -62,6 +44,8 @@ export default function Resetpassword() {
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/2560px-Netflix_2015_logo.svg.png"
             alt=""
           />
+          {err && showErrMsg(err)}
+          {success && showSuccessMsg(success)}
         </div>
       </div>
       <div className="container">
@@ -70,22 +54,14 @@ export default function Resetpassword() {
           <span>
                 New Password
             </span>
-          <input type="password" placeholder="Enter new password" onChange={onChangePass} />
-          <p className = "validator">{validationMsg.pass}</p>
+          <input type="password" placeholder="Enter new password" id="password" value={password} name="password" onChange={handleChangeInput} />
           <span>
                 Confirm New Password
             </span>
-          <input type="password" placeholder="Password" onChange = {onChangeConfirmpass} />
-          <p className = "validator">{validationMsg.confirmpass}</p>
-          <span>
-          Verification code
-            </span>
-          <input type="code" placeholder="Enter verification code" onChange={onChangeCode} />
-          <p className = "validator">{validationMsg.code}</p>
-          <button className="resetPassButton" type="button" onClick={onSubmitResetPass}>Confirm</button>
-         
-        
+          <input type="password" placeholder="Password" id="confirmPassword" value={confirmPassword} name="confirmPassword" onChange = {handleChangeInput} />
+          <button className="resetPassButton" type="button" onClick={handleResetPass}>Confirm</button>
         </form>
+        
       </div>
     </div>
   );

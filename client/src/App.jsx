@@ -32,6 +32,9 @@ function App () {
         <Route exact path="/users/activation/:tokenActivation">
             <Login/>
         </Route>
+        <Route exact path="/users/reset/:token">
+            <Resetpassword/>
+        </Route>
       </Switch>
     </Router>
   )
