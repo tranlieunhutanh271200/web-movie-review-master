@@ -59,6 +59,7 @@
       }
 
       .registerButton{
+        margin-top: 20px;
         height: 40px;
         border-radius: 5px;
         background-color: rgb(255, 0, 0);
@@ -117,6 +118,24 @@
           &:hover{
             color: red;
             cursor: pointer;
+          }
+        }
+      }
+      .sign-up {
+        color: lightgray;
+        .forgot-btn{
+          color: white;
+          &:hover{
+            color: red;
+            cursor: pointer; 
+          }
+        }
+        .signup-btn {
+          color: white;
+          font-weight: bold;
+          &:hover{
+            color: red;
+            cursor: pointer; 
           }
         }
       }

@@ -1,6 +1,7 @@
 
 import { useRef } from "react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import isEmpty from "validator/lib/isEmpty"
 import "./email.scss";
 
@@ -54,17 +55,15 @@ export default function Email() {
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/2560px-Netflix_2015_logo.svg.png"
             alt=""
           />
-           <button className="loginButton">Sign In</button>
+           <button className="loginButton"><Link style={{ textDecoration: 'none', color: 'white' }} to="/login">Sign In</Link></button>
         </div>
       </div>
       <div className="container">
-        <h1>Recover account</h1>
-        <h2>Recover account Netflix</h2>
-        
+        <h1>Forgot password</h1>
           <div className="input">
-            <input type="email" placeholder="email address or phone number" onChange = {onChangeEmail}/>
+            <input type="email" placeholder="Enter your email" onChange = {onChangeEmail}/>
             <button className="emailButton" onClick={onSubmitContinue}>
-              Continue
+              Re-send email
             </button>
       </div>
       <span className = "validator">{validationMsg.email}</span>

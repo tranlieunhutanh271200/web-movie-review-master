@@ -3,9 +3,9 @@ import { showErrMsg, showSuccessMsg } from '../../components/notification/Notifi
 import { GoogleLogin } from 'react-google-login';
 import FacebookLogin from 'react-facebook-login';
 import isEmpty from "validator/lib/isEmpty"
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { dispatchLogin } from '../../redux/actions/authAction'
-import { useHistory, Link } from 'react-router-dom'
+import { useHistory, Link, useParams } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import axios from 'axios'
 
@@ -20,6 +20,25 @@ export default function Login() {
   const [user, setUser] = useState(initialState)
   const dispatch = useDispatch()
   const history = useHistory()
+  const {tokenActivation} = useParams()
+  const [erractive, setErr] = useState('')
+  const [successactive, setSuccess] = useState('')
+
+useEffect(() => {
+    if(tokenActivation){
+        const activationEmail = async () => {
+            try {
+              console.log(tokenActivation)
+                const res = await axios.post('/users/activation', {tokenActivation})
+                setSuccess(res.data.msg)
+            } catch (err) {
+                err.response.data.msg && setErr(err.response.data.msg)
+            }
+        }
+        activationEmail()
+    }
+},[tokenActivation])
+  //console.log(tokenActivation)
   const { email, password, err, success } = user
 
   const handleChangeInput = e => {
@@ -41,7 +60,7 @@ export default function Login() {
     }
   }
   const responseGoogle = async (response) => {
-    console.log(response);
+    //console.log(response);
     try {
       const res = await axios.post('users/google_login', { tokenId: response.tokenId })
       setUser({ ...user, err: '', success: res.data.msg });
@@ -54,7 +73,7 @@ export default function Login() {
     }
   }
   const responseFacebook = async (response) => {
-    console.log(response);
+    //console.log(response);
     try {
       const { accessToken, userID } = response
       const res = await axios.post('users/facebook_login', { accessToken, userID })
@@ -77,6 +96,8 @@ export default function Login() {
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/2560px-Netflix_2015_logo.svg.png"
             alt=""
           />
+          {erractive && showErrMsg(erractive)}
+          {successactive && showSuccessMsg(successactive)}
           {err && showErrMsg(err)}
           {success && showSuccessMsg(success)}
         </div>
@@ -94,7 +115,9 @@ export default function Login() {
           <input type="password" placeholder="Enter your password" id="password" value={password} name="password" onChange={handleChangeInput} />
           <button className="loginButton" type="button" onClick={handleSubmit}>Sign In</button>
           <span className="sign-up">
-            <Link to="/register"/>
+            <Link style={{ textDecoration: 'none' }} className="forgot-btn" to="/forgot_password">Forgot Password?</Link>
+          </span>
+          <span className="sign-up">
             New to Netflix? <Link style={{ textDecoration: 'none' }} className="signup-btn" to="/register">Sign up now.</Link>
           </span>
           <hr className="line" />

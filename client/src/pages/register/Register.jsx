@@ -4,98 +4,53 @@ import '@date-io/date-fns'
 import Grid  from "@material-ui/core/Grid";
 import DateFnsUtils from "@date-io/date-fns";
 import isEmpty from "validator/lib/isEmpty"
+import { Link } from 'react-router-dom'
 import{
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
   KeyboardDatePicker 
 }from '@material-ui/pickers'
+import {isMatch} from "../../components/validation/Validation"
+import { showErrMsg, showSuccessMsg } from '../../components/notification/Notification'
+import axios from 'axios'
+
+const initialState = {
+  firstname:'',
+  lastname: '',
+  email: '',
+  password: '',
+  cf_password: '',
+  dob:'',
+  err: '',
+  success: '',
+}
 
 export default function Register() {
-  var mailFormat = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})|([0-9]{10})+$/;
-  const [selectedDate, setSelectedDate] = React.useState(
-    new Date("2020-09-11T12:00:00")
-  )
-  const handleDateChange = (date) => {
-    setSelectedDate(date)
-  }
-  const [firstname, setFirstname] = useState('')
-  const [lastname, setLastname] = useState('')
-  const [email, setEmail] = useState('')
-  const [pass, setPass] = useState('')
-  // const [dob, setDob] = useState('')
-  const [confirmpass, setConfirmpass] = useState('')
-  const [validationMsg, setValidationMsg]= useState('')
-  const onChangeFirstname = (event) => {
-    const value = event.target.value
-    setFirstname(value)
-  }
-  const onChangeLastname = (event) => {
-    const value = event.target.value
-    setLastname(value)
-  }
-  const onChangePass = (event) => {
-    const value = event.target.value
-    setPass(value)
-  }
-  // const onChangeDob = (event) => {
-  //   const value = event.target.value
-  //   setDob(value)
-  // }
-  const onChangeEmail = (event) => {
-    const value = event.target.value
-    setEmail(value)
-  }
-  const onChangeConfirmpass = (event) => {
-    const value = event.target.value
-    setConfirmpass(value)
-  }
-  const validateAll =()=>{
-    
-    const msg = {}
-    if (isEmpty(firstname)){
-        msg.firstname = "Please input your First Name"
-        
-    }
-    if (isEmpty(lastname)){
-      msg.lastname = "Please input your Last Name"
-    }
-    if (isEmpty(email)){
-      msg.email = "Please input your Email or Phone number"
-    }
-    if (!isEmpty(email) && !mailFormat.test(email)) {
-      msg.email= "Please provide a valid Email or phone number ";
-    }
+  const [user, setUser] = useState(initialState);
+  // const [selectedDate, setSelectedDate] = React.useState(
+  //   new Date("2020-09-11T12:00:00")
+  // )
 
-    if (isEmpty(pass)){
-      msg.pass = "Please input your Password"
-    }
-    
-    // if (isEmpty(dob)){
-    //   msg.dob = "Please input your Date of bỉth"
-    // }
-    if (isEmpty(confirmpass)){
-      msg.confirmpass = "Please input your Confimr Password"
-    }
-    if (!isEmpty(pass) && !isEmpty(confirmpass)) {    
+  const { firstname, lastname, email, password, cf_password, dob, err, success } = user
 
-      if (pass != confirmpass) {
-  
-  
-        msg.confirmpass = "Passwords don't match.";
-  
-      }
-      
-  
+  const handleChangeInput = e => {
+    const { name, value } = e.target
+    setUser({ ...user, [name]: value, err: '', success: '' })
   }
-    setValidationMsg(msg)
-    if (Object.keys(msg).length > 0) return false
-    return true
+  const handleSubmit = async e => {
+    e.preventDefault()
+    if(!isMatch(password, cf_password))
+      return setUser({...user, err: "Password did not match.", success: ''})
+    try {
+      const res = await axios.post('/users/register', { firstname, lastname, email, password, dob })
+      console.log(res)
+      setUser({ ...user, err: '', success: res.data.msg })
+    } catch (err) {
+      err.response.data.msg &&
+        setUser({ ...user, err: err.response.data.msg, success: '' })
+    }
   }
-  const onSubmitSigup = () => {
-      const isValid = validateAll()
-      if (!isValid) return
-      // Call API Sign Up
-  }
+  console.log(user)
     return (
       <div className="register">
         <div className="top">
@@ -105,6 +60,8 @@ export default function Register() {
               src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/2560px-Netflix_2015_logo.svg.png"
               alt=""
             />
+            {err && showErrMsg(err)}
+            {success && showSuccessMsg(success)}
           </div>
         </div>
         <div className="container">
@@ -113,53 +70,30 @@ export default function Register() {
             <span>
                 First Name:
             </span>
-            <input type="firstname" placeholder="Enter First Name" onChange={onChangeFirstname} />           
-            <p className = "validator">{validationMsg.firstname}</p>
+            <input type="text" value={firstname} id="firstname" name="firstname" placeholder="Enter First Name" onChange={handleChangeInput} />           
             <span>
                 Last Name:
             </span>
-            <input type="lastname" placeholder="Enter Last Name" onChange={onChangeLastname}/>
-            <p className = "validator">{validationMsg.lastname}</p>
+            <input type="text" value={lastname} id="lastname" name="lastname" placeholder="Enter Last Name" onChange={handleChangeInput}/>
             <span>
-                Email or Phone Number:
+                Email:
             </span>
-            <input type="email" placeholder="Enter Email or phone number" onChange={onChangeEmail}/>
-            <p className = "validator">{validationMsg.email}</p>
-            <span>
-                Password:
-            </span>
-            <input type="password" placeholder="Enter Password" onChange={onChangePass}/>
-            <p className = "validator">{validationMsg.pass}</p>
-            <span>
-                Confirm Password:
-            </span>
-            <input type="password" placeholder="Confirm Password" onChange={onChangeConfirmpass}/>
-            <p className = "validator">{validationMsg.confirmpass}</p>
+            <input type="email" id="email" value={email} name="email" placeholder="Enter Email" onChange={handleChangeInput}/>
             <span>
                 Date of birth:
             </span>
-            <div className = "Muiinput">
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-              <Grid container justify ='space-around'>
-                <KeyboardDatePicker
-                  
-                  disableToolbar
-                  variant='inline'
-                  format='MM/dd/yyyy'
-                  margin='normal'
-                  id ='data-picker'
-                  value={selectedDate}
-                  onChange={handleDateChange}
-                  KeyboardButtonProps={{
-                    'aria-label': 'change date'
-                  }}
-                />
-                </Grid>
-                </MuiPickersUtilsProvider>
-                </div>
-            <button className="registerButton" type="button" onClick = {onSubmitSigup}>Sign Up</button>
+            <input type="date" id="dob" name="dob" onChange={handleChangeInput}></input>
             <span>
-                Do you have an account? <b className="signup-btn">Sign in now.</b>
+                Password:
+            </span>
+            <input type="password" value={password} id="password" name="password" placeholder="Enter Password" onChange={handleChangeInput}/>
+            <span>
+                Confirm Password:
+            </span>
+            <input type="password" value={cf_password} id="cf_password" name="cf_password" placeholder="Confirm Password" onChange={handleChangeInput}/>
+            <button className="registerButton" type="button" onClick = {handleSubmit}>Sign Up</button>
+            <span className="sign-up">
+                Do you have an account? <Link style={{ textDecoration: 'none' }} className="signup-btn" to="/login">Sign in now.</Link>
             </span>   
              </form>
         </div>
