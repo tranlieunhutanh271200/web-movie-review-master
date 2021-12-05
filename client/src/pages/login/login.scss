@@ -132,6 +132,13 @@
       }
       .sign-up {
         color: lightgray;
+        .forgot-btn{
+          color: white;
+          &:hover{
+            color: red;
+            cursor: pointer; 
+          }
+        }
         .signup-btn {
           color: white;
           font-weight: bold;

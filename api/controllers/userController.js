@@ -55,7 +55,7 @@ exports.registration = async (req, res) => {
         const tokenActivation = await activationToken(newUser);
         console.log(tokenActivation);
 
-        const url = `${CLIENT_URL}/user/activation/${tokenActivation}`;
+        const url = `${CLIENT_URL}/users/activation/${tokenActivation}`;
         sendEmail(req.body.email, req.body.firstname, req.body.lastname, url, "Verify your Email")
         res.status(201).json({ success: true, msg: "Your email has been sent. Please check your email" });
       }
@@ -77,7 +77,7 @@ exports.activeEmail = async (req, res) => {
     const check = await userService.registration(newUser);
     res.status(201).json({ success: true, msg: "Activation Successfully!" });
   } catch (err) {
-    res.status(500).json(err);
+    res.status(500).json({ success: false, msg: "Token Expired!"});
   }
 }
 //LOGIN
