@@ -5,7 +5,6 @@ import Home from "./pages/homepage/Home";
 import MovieDetail from "./pages/movieDetail/MovieDetail";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
-import Activation from "./pages/activation/Activation";
 import Watch from "./pages/watch/Watch";
 import CastDT from "./pages/castDt/CastDt";
 import News from "./pages/news/News";
