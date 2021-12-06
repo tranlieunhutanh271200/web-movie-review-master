@@ -1,20 +1,28 @@
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 import "./casts.scss";
 import { useEffect, useContext, useState } from "react";
-import  storage  from "../../firebase";
-import {  Publish } from "@material-ui/icons";
+import storage from "../../firebase";
+import { Publish } from "@material-ui/icons";
 import { CastContext } from "../../context/castContext/CastContext";
 import { getCastsFind, updateCasts } from "../../context/castContext/apiCalls";
+import Notification from "../../components/Alert/Notification";
+
+import LinearProgress from "@mui/material/LinearProgress";
+import Box from "@mui/material/Box";
 
 export default function Casts() {
   const { casts, dispatch } = useContext(CastContext);
   const location = useLocation();
   const [path, castId] = location.pathname.split("/cast/");
   const [yasuo, setCast] = useState(null);
-  const [url, setUrl] = useState("");
   const [castPic, setPic] = useState(null);
   const [progress, setProgress] = useState(0);
+  const [notify, setNotify] = useState({
+    isOpen: false,
+    message: "",
+    type: "",
+  });
 
   useEffect(() => {
     getCastsFind(castId, dispatch);
@@ -25,7 +33,7 @@ export default function Casts() {
 
     setCast({ ...yasuo, [e.target.name]: value, _id: castId, castPic });
   };
-  const handleChangee = e => {
+  const handleChangee = (e) => {
     if (e.target.files[0]) {
       setPic(e.target.files[0]);
     }
@@ -33,20 +41,37 @@ export default function Casts() {
   const handleUpdate = (e) => {
     e.preventDefault();
     updateCasts(yasuo, dispatch);
+    setNotify({
+      isOpen: true,
+      message: "Update Information Successfully",
+      type: "success",
+    });
   };
-
-
+  console.log(yasuo);
   const handleUpload = () => {
-    const uploadTask = storage.ref(`update/${castPic.name}`).put(castPic);
+    const uploadTask = storage.ref(`images/${castPic.name}`).put(castPic);
     uploadTask.on(
       "state_changed",
-      snapshot => {
+      (snapshot) => {
         const progress = Math.round(
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
         );
         setProgress(progress);
+        if (progress === 100) {
+          setNotify({
+            isOpen: true,
+            message: "Upload Image Successfully",
+            type: "success",
+          });
+        } else {
+          setNotify({
+            isOpen: true,
+            message: "Uploading",
+            type: "warning",
+          });
+        }
       },
-      error => {
+      (error) => {
         console.log(error);
       },
       () => {
@@ -54,31 +79,56 @@ export default function Casts() {
           .ref("images")
           .child(castPic.name)
           .getDownloadURL()
-          .then(url => {
-            setUrl(url);
+          .then((url) => {
+            setPic(url);
           });
       }
     );
   };
-  console.log(castPic);
-  console.log(yasuo)
-  console.log(url)
-
+  console.log(casts.dob);
   return (
     <div className="casts">
       <div className="castTitleContainer">
-        <h1 className="castTitle">Cast</h1>
+        <h1 className="castTitle">Detail Cast</h1>
 
-        <Link to="/newCast">
-          <button className="castAddButton">Create</button>
-        </Link>
+        <button type="button" className="castAddButton" onClick={handleUpdate}>
+          Update
+        </button>
       </div>
       <div className="castTop">
         <div className="castTopRight">
           <div className="castInfoTop">
             <img src={casts.castPic} alt="" className="castInfoImg" />
-            <span className="castName"></span>
+            <label for="file">
+              <Publish />
+            </label>
+            <input
+              type="file"
+              id="file"
+              name="castPic"
+              onChange={handleChangee}
+              style={{ display: "none" }}
+            />
           </div>
+          <div className="castInfoItemLine">
+            <Box sx={{ width: "55%" }}>
+              <LinearProgress
+                variant="determinate"
+                value={progress}
+                max="100"
+              />
+            </Box>
+            <div className="castInfoItemButton">
+              <button
+                type="button"
+                className="uploadButton"
+                onClick={handleUpload}
+              >
+                Upload
+              </button>
+            </div>
+          </div>
+
           <div className="castInfoBottom">
             <div className="castInfoItem">
               <span className="castInfoKey">Id:</span>
@@ -86,12 +136,30 @@ export default function Casts() {
             </div>
             <div className="castInfoItem">
               <span className="castInfoKey">Cast Name:</span>
-              <span className="castInfoValue">{casts.name}</span>
+
+              <input
+                className="castInfoValue"
+                type="text"
+                placeholder={casts.name}
+                name="name"
+                onChange={handleChange}
+              />
             </div>
             <div className="castInfoItem">
               <span className="castInfoKey">Date of Birth:</span>
-              <span className="castInfoValue">{casts.dob}</span>
+              <span className="castInfoValue" type="%Y-%m-%d" format="%Y-%m-%d">
+                {casts.dob}
+              </span>
+
+              <input
+                className="castInfoValueDate"
+                type="date"
+                name="dob"
+                onChange={handleChange}
+                placeholder={casts.dob}
+              />
             </div>
+
             <div className="castInfoItem">
               <span className="castInfoKey">Created:</span>
               <span className="castInfoValue">{casts.createdAt}</span>
@@ -103,60 +171,19 @@ export default function Casts() {
             <div className="castInfoItem">
               <span className="castInfoKey">Bio:</span>
             </div>
-            <span className="castInfoValue">{casts.bio}</span>
-          </div>
-        </div>
-      </div>
-      <div className="castBottom">
-        <form className="castForm">
-          <div className="castFormLeft">
-            <label>Cast Name</label>
-            <input
-              type="text"
-              placeholder={casts.name}
-              name="name"
-              onChange={handleChange}
-            />
 
-            <label>Date of Birth</label>
-            <input type="date" name="dob" onChange={handleChange} />
-            <label>Bio</label>
-            <input
-              type="text"
+            <textarea
+              rows="4"
+              cols="100"
               name="bio"
+              className="castInfoValue"
               placeholder={casts.bio}
               onChange={handleChange}
             />
           </div>
-          <div className="castFormRight">
-            <div className="castUpload">
-              <img src={casts.castPic} alt="" className="castUploadImg" />
-              <label for="file">
-                <Publish />
-              </label>
-              <input
-               type="file" 
-               id="file"
-               name="castPic"
-               onChange={handleChangee}
-               style={{ display: "none" }} />
-            </div>
-            <progress value={progress} max="100" />
-            <button 
-            type="button"
-             onClick={handleUpload}>
-           
-              Upload
-            </button>
-            <button 
-            type="button"
-            className="castButton" 
-            onClick={handleUpdate}>
-              Update
-            </button>
-          </div>
-        </form>
+        </div>
       </div>
+      <Notification notify={notify} setNotify={setNotify} />
     </div>
   );
 }

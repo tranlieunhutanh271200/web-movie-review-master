@@ -2,15 +2,15 @@ import "./sidebarAdmin.scss";
 import {
   Face,
   LineStyle,
-  Timeline,
   Movie,
   PermIdentity,
-  BarChart,
-  MailOutline,
-  DynamicFeed,
+  EmojiEmotions,
   ChatBubbleOutline,
   WorkOutline,
-  Report,
+  DeleteForever,
+  Category,
+  MovieCreation,
+  Public
 } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 
@@ -44,48 +44,59 @@ export default function Sidebar() {
                 Cast
               </li>
             </Link>
+            <Link to="/Movies" className="link">
             <li className="ListItem">
               <Movie className="Icon" />
               Movie
             </li>
-            <li className="ListItem">
-              <BarChart className="Icon" />
-              Reports
-            </li>
+            </Link>
           </ul>
         </div>
         <div className="Menu">
-          <h3 className="Title">Notifications</h3>
+          <h3 className="Title">Details</h3>
           <ul className="List">
+          <Link to="category" className="link">
             <li className="ListItem">
-              <MailOutline className="Icon" />
-              Mail
+              <Category className="Icon" />
+              Category
             </li>
+            </Link>
+            <Link to="/country" className="link">
             <li className="ListItem">
-              <DynamicFeed className="Icon" />
-              Feedback
+              <Public className="Icon" />
+              Country
             </li>
+            </Link>
+            <Link to="/character" className="link">
             <li className="ListItem">
-              <ChatBubbleOutline className="Icon" />
-              Messages
+              <EmojiEmotions className="Icon" />
+              Character
             </li>
+            </Link>
+            <Link to="/producer" className="link">
+            <li className="ListItem">
+              <MovieCreation className="Icon" />
+              Producer
+            </li>
+            </Link>
           </ul>
         </div>
         <div className="Menu">
-          <h3 className="Title">Staff</h3>
+          <h3 className="Title">More</h3>
           <ul className="List">
+          <Link to="" className="link">
             <li className="ListItem">
               <WorkOutline className="Icon" />
               Manage
             </li>
+            </Link>
+           
+            <Link to="/DeleteManager" className="link">
             <li className="ListItem">
-              <Timeline className="Icon" />
-              Analytics
+              <DeleteForever className="Icon" />
+              Trash
             </li>
-            <li className="ListItem">
-              <Report className="Icon" />
-              Reports
-            </li>
+            </Link>
           </ul>
         </div>
       </div>

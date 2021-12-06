@@ -1,0 +1,51 @@
+.moviessList {
+    flex: 4;
+    margin-top: 10px;
+    background-color: whitesmoke;
+}
+
+.moviessListItem {
+    display: flex;
+    align-items: center;
+}
+
+.moviessListImg {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+.moviessListEdit {
+    border: none;
+    border-radius: 10px;
+    padding: 5px 10px;
+    background-color: #3bb077;
+    color: white;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+.moviessListDelete {
+    color: red;
+    cursor: pointer;
+}
+
+.movieAddButton {
+    width: 80px;
+    border: none;
+    padding: 5px;
+    background-color: teal;
+    color: white;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.AddButton {
+    display: flex;
+    justify-content: end;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}

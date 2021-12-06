@@ -1,20 +1,33 @@
 import "./castsManager.scss";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { DeleteOutline } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import { CastContext } from "../../context/castContext/CastContext";
 import { getCasts, DelCasts } from "../../context/castContext/apiCalls";
+import Notification from "../../components/Alert/Notification"
+import ConfirmDialog from "../../components/Alert/ConfirmDialog";
+
 
 export default function CastsManager() {
   const { casts, dispatch } = useContext(CastContext);
-
+  const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' });
+  const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
   useEffect(() => {
     getCasts(dispatch);
   }, [dispatch]);
 
   const handleDelete = (id) => {
+    setConfirmDialog({
+      ...confirmDialog,
+      isOpen: false
+  })
     DelCasts(id, dispatch);
+    setNotify({
+      isOpen: true,
+      message: 'Deleted Successfully',
+      type: 'error'
+  })
   };
  
 
@@ -58,8 +71,15 @@ export default function CastsManager() {
             <DeleteOutline
               className="castssListDelete"
               onClick={() => 
-                
-                handleDelete(params.row._id)}
+                setConfirmDialog({
+                  isOpen: true,
+                  title: 'Are you sure to delete this cast?',
+                  subTitle: "You can check again in Trash",
+                  onConfirm: () => { handleDelete(params.row._id) }
+                //handleDelete(params.row._id)
+              })
+            }
+              
             />
           </>
         );
@@ -69,7 +89,13 @@ export default function CastsManager() {
   
 
   return (
+    
     <div className="castssList">
+      <div className ="AddButton">
+      <Link to="/newCast">
+          <button className="castAddButton">Create</button>
+        </Link>
+       </div>
       <DataGrid
         rows={casts}
         disableSelectionOnClick
@@ -79,6 +105,15 @@ export default function CastsManager() {
         checkboxSelection
         getRowId={(r) => r._id}
       />
+      <Notification
+                notify={notify}
+                setNotify={setNotify}
+            />
+      <ConfirmDialog
+                confirmDialog={confirmDialog}
+                setConfirmDialog={setConfirmDialog}
+            />
     </div>
+    
   );
 }

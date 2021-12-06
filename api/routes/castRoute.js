@@ -21,7 +21,7 @@ router.get("/deleted", verifyToken, castController.getalldeleted);
 //RECOVER
 router.put("/recover/:id", verifyToken, castController.recover);
 //REMOVE
-router.delete("/remove/:id", verifyToken, castController.remove);
+router.delete("/remove/:id", castController.remove);
 
 
 

@@ -1,49 +1,34 @@
-
 import { useRef } from "react";
 import { useState } from "react";
-import isEmpty from "validator/lib/isEmpty"
+import { Link } from "react-router-dom";
+import axios from 'axios'
 import "./email.scss";
+import { showErrMsg, showSuccessMsg } from '../../components/notification/Notification'
 
+const initialState = {
+  email: '',
+  password: '',
+  err: '',
+  success: '',
+}
 
 export default function Email() {
-  var mailFormat = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})|([0-9]{10})+$/;
-  const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
-  const [openModal, setOpenModal] = useState(false);
-  const [validationMsg, setValidationMsg]= useState('')
-  const onChangeEmail = (event) => {
-    const value = event.target.value
-    setEmail(value)
-  }
-  // const onChangePass = (event) => {
-  //   const value = event.target.value
-  //   setPassword(value)
-  // }
-  const validateAll =()=>{
-    
-    const msg = {}
-    if (isEmpty(email)){
-      msg.email = "Please input your Email or Phone number"
-    }
-    if (!isEmpty(email) && !mailFormat.test(email)) {
-      msg.email= "Please provide a valid Email or phone number ";
-    }
+  const [data, setData] = useState(initialState)
 
-    // if (isEmpty(password)){
-    //   msg.password = "Please input your Password"
-    // }
-    
-    // if (isEmpty(dob)){
-    //   msg.dob = "Please input your Date of bỉth"
-    // }
-    setValidationMsg(msg)
-    if (Object.keys(msg).length > 0) return false
-    return true
+  const { email, err, success } = data
+
+  const handleChangeInput = e => {
+    const { name, value } = e.target
+    setData({ ...data, [name]: value, err: '', success: '' })
   }
-  const onSubmitContinue = () => {
-      const isValid = validateAll()
-      if (!isValid) return
-      // Call API Sign Up
+  const forgotPassword = async () => {
+    try {
+      const res = await axios.post('/users/forgot', { email })
+      console.log(res)
+      return setData({ ...data, err: '', success: res.data.msg })
+    } catch (err) {
+      err.response.data.msg && setData({ ...data, err: err.response.data.msg, success: '' })
+    }
   }
   return (
     <div className="email">
@@ -54,23 +39,21 @@ export default function Email() {
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/2560px-Netflix_2015_logo.svg.png"
             alt=""
           />
-           <button className="loginButton">Sign In</button>
+          <button className="loginButton"><Link style={{ textDecoration: 'none', color: 'white' }} to="/login">Sign In</Link></button>
         </div>
       </div>
       <div className="container">
-        <h1>Recover account</h1>
-        <h2>Recover account Netflix</h2>
-        
-          <div className="input">
-            <input type="email" placeholder="email address or phone number" onChange = {onChangeEmail}/>
-            <button className="emailButton" onClick={onSubmitContinue}>
-              Continue
-            </button>
+        <h1>Forgot password</h1>
+        <h2>Enter your email below and submit to change password</h2>
+        <div className="input">
+          <input type="email" placeholder="Enter your email" id="email" value={email} name="email" onChange={handleChangeInput} />
+          <button className="emailButton" onClick={forgotPassword}>
+            Re-send email
+          </button>
+        </div>
       </div>
-      <span className = "validator">{validationMsg.email}</span>
-        
-        
-      </div>
+        {err && showErrMsg(err)}
+        {success && showSuccessMsg(success)}
     </div>
   );
 }

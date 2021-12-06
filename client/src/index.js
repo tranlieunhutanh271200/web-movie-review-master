@@ -2,12 +2,19 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import {BrowserRouter as Router} from 'react-router-dom';
+import { AuthContextProvider } from "./context/authContext/AuthContext";
+import DataProvider from "./redux/store"
 
-const element = (
+ReactDOM.render (
+  
   <Router>
-    <App />
-  </Router>
+  <React.StrictMode>
+    <DataProvider> 
+      <App />
+    </DataProvider>
+  </React.StrictMode>,
+    </Router>,
+     
+    
+    document.getElementById('root')
 );
-const container = document.getElementById('root');
-
-ReactDOM.render(element, container);

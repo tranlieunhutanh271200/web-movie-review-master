@@ -1,0 +1,181 @@
+ .movie {
+     flex: 4;
+ }
+ 
+ .movieTitleContainer {
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+ }
+ 
+ .movieAddButton {
+     width: 80px;
+     border: none;
+     padding: 5px;
+     background-color: teal;
+     border-radius: 5px;
+     cursor: pointer;
+     color: white;
+     font-size: 16px;
+ }
+ 
+ .movieContainer {
+     display: flex;
+     margin-top: 20px;
+ }
+ .movieContainers {
+    
+    margin-top: 20px;
+}
+ .movieShow {
+     flex: 1;
+     padding: 20px;
+     -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+     box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+ }
+ 
+ .movieUpdate {
+     flex: 2;
+     padding: 20px;
+     -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+     box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+     margin-left: 20px;
+ }
+ 
+ .movieShowTop {
+    
+     align-items: center;
+ }
+ 
+ .movieShowImage {
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}
+ .movieShowImgName {
+    width: 650px;
+    height: 300px;
+    
+    object-fit:contain;
+    display: inline-block;
+   
+    
+}
+
+.movieShowTitleImage {
+    font-size: 18px;
+    font-weight: 600;
+    color: rgb(175, 170, 170);
+    justify-content: center;
+    display: flex;
+   
+}
+
+
+.movieShowImg {
+     width: 40px;
+     height: 40px;
+     border-radius: 50%;
+     object-fit: cover;
+ }
+ 
+ .movieShowTopTitle {
+     display: flex;
+     flex-direction: column;
+     margin-left: 20px;
+ }
+ 
+ .movieShowmoviename {
+     font-weight: 600;
+ }
+ 
+ .movieShowmovieTitle {
+     font-weight: 300;
+ }
+ 
+ .movieShowBottom {
+     margin-top: 20px;
+ }
+ 
+ .movieShowTitle {
+     font-size: 14px;
+     font-weight: 600;
+     color: rgb(175, 170, 170);
+ }
+ 
+ .movieShowInfo {
+     display: flex;
+     align-items: center;
+     margin: 20px 0px;
+     color: #444;
+ }
+ 
+ .movieShowIcon {
+     font-size: 16px !important;
+ }
+ 
+ .movieShowInfoTitle {
+     margin-left: 10px;
+ }
+ 
+ .movieUpdateTitle {
+     font-size: 24px;
+     font-weight: 600;
+ }
+ 
+ .movieUpdateForm {
+     display: flex;
+     justify-content: space-between;
+     margin-top: 20px;
+ }
+ 
+ .movieUpdateItem {
+     display: flex;
+     flex-direction: column;
+     margin-top: 10px;
+ }
+ 
+ .movieUpdateItem>label {
+     margin-bottom: 5px;
+     font-size: 14px;
+ }
+ 
+ .movieUpdateInput {
+     border: none;
+     width: 250px;
+     height: 30px;
+     border-bottom: 1px solid gray;
+ }
+ 
+ .movieUpdateRight {
+     display: flex;
+     flex-direction: column;
+     justify-content: space-between;
+ }
+ 
+ .movieUpdateUpload {
+     display: flex;
+     align-items: center;
+ }
+ 
+ .movieUpdateImg {
+     width: 100px;
+     height: 100px;
+     border-radius: 10px;
+     object-fit: cover;
+     margin-right: 20px;
+ }
+ 
+ .movieUpdateIcon {
+     cursor: pointer;
+ }
+ 
+ .movieUpdateButton {
+     border-radius: 5px;
+     border: none;
+     padding: 5px;
+     cursor: pointer;
+     background-color: darkblue;
+     color: white;
+     font-weight: 600;
+ }
