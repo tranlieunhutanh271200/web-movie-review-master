@@ -71,7 +71,7 @@ const Navbar = () => {
                     </React.Fragment>  
                  ):(
                      <>
-                     <button className="loginButton"  onClick={() => setIsLogin(true)} >Sign In</button>
+                     <button className="loginButton"  to="/Login" onClick={() => setIsLogin(true)} >Sign In</button>
                      </>
                  )}
                 
