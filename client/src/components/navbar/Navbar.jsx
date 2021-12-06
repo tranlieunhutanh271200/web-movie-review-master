@@ -6,6 +6,7 @@ import { useHistory } from "react-router"
 import { 
   Link
 } from "react-router-dom";
+
 import Searchbar from "../Searchbar/Searchbar";
 
 const Navbar = () => {
