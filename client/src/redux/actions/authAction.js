@@ -1,8 +1,25 @@
 import ACTIONS from './index'
+import axios from 'axios'
 
-export const dispatchLogin = (user) => {
+export const dispatchLogin = () => {
     return {
-        type: ACTIONS.LOGIN,
-        payload: user
+        type: ACTIONS.LOGIN
+    }
+}
+
+export const fetchUser = async (token) => {
+    const res = await axios.get('/users/infor', {
+        headers: {token: "Bearer " + token}
+    })
+    return res
+}
+
+export const dispatchGetUser = (res) => {
+    return {
+        type: ACTIONS.GET_USER,
+        payload: {
+            user: res.data,
+            isAdmin: res.data.isAdmin
+        }
     }
 }

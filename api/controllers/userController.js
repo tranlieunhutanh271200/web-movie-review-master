@@ -124,7 +124,7 @@ exports.login = async (req, res) => {
           { expiresIn: "10h" }
         );
         const { password, ...info } = userExists._doc;
-        const refresh_token = await refreshToken({ id: userExists._id });
+        const refresh_token = await refreshToken({ id: userExists._id, isAdmin: userExists.isAdmin  });
         res.cookie('refreshtoken', refresh_token, {
           httpOnly: true,
           path: 'users/refresh_token',
@@ -380,7 +380,7 @@ exports.googleLogin = async (req, res) => {
     const password = email + process.env.SECRET_KEY;
     if (email_verified) {
       const user = await userService.checkEmailExist(email);
-      console.log(user)
+      //console.log(user)
       if (!user) {
         const newUser = {
           firstname: given_name,
@@ -391,8 +391,8 @@ exports.googleLogin = async (req, res) => {
           profilePic: picture,
         }
         const useradd = await userService.registration(newUser);
-        console.log(useradd)
-        const refresh_token = await refreshToken({ id: useradd._id });
+        //console.log(useradd)
+        const refresh_token = await refreshToken({ id: useradd._id, isAdmin: useradd.isAdmin });
         res.cookie('refreshtoken', refresh_token, {
           httpOnly: true,
           path: 'users/refresh_token',
@@ -400,7 +400,7 @@ exports.googleLogin = async (req, res) => {
         })
       }
       if (user) {
-        const refresh_token = await refreshToken({ id: user._id });
+        const refresh_token = await refreshToken({ id: user._id, isAdmin: user.isAdmin });
         res.cookie('refreshtoken', refresh_token, {
           httpOnly: true,
           path: 'users/refresh_token',
@@ -423,7 +423,7 @@ exports.facebooklogin = async (req, res) => {
     const URL = `https://graph.facebook.com/v4.0/${userID}/?fields=id,name,email,picture&access_token=${accessToken}`
     const data = await fetch(URL).then(res => res.json()).then(res => { return res })
 
-    console.log(data)
+    //console.log(data)
     //console.log(verify);
     const { name, email, picture } = data;
     //console.log(email)
@@ -441,7 +441,7 @@ exports.facebooklogin = async (req, res) => {
       }
       const useradd = await userService.registration(newUser);
       //console.log(useradd)
-      const refresh_token = await refreshToken({ id: useradd._id });
+      const refresh_token = await refreshToken({ id: useradd._id, isAdmin: useradd.isAdmin });
       res.cookie('refreshtoken', refresh_token, {
         httpOnly: true,
         path: 'users/refresh_token',
@@ -449,7 +449,7 @@ exports.facebooklogin = async (req, res) => {
       })
     }
     if (user) {
-      const refresh_token = await refreshToken({ id: user._id });
+      const refresh_token = await refreshToken({ id: user._id, isAdmin: user.isAdmin });
       res.cookie('refreshtoken', refresh_token, {
         httpOnly: true,
         path: 'users/refresh_token',
@@ -465,6 +465,7 @@ exports.facebooklogin = async (req, res) => {
 exports.getAccessToken = async (req, res) => {
   try {
       const rf_token = req.cookies.refreshtoken
+      console.log("Lala: ", rf_token)
       if(!rf_token) 
       {
         return res.status(400).json({msg: "Please login now!"})
@@ -476,6 +477,24 @@ exports.getAccessToken = async (req, res) => {
         res.json({access_token})
     })
       
+  } catch (err) {
+      return res.status(500).json({msg: err.message})
+  }
+}
+//GET USER INFO BY ACCESS TOKEN
+exports.getinfo = async (req , res) => {
+  try {
+    const user = await userService.getUser(req.userExists.id);
+    res.status(200).json(user);
+  } catch (err) {
+    res.status(500).json({msg: err.message});
+  }
+}
+//LOG OUT
+exports.logout = async (req, res) => {
+  try {
+      res.clearCookie('refreshtoken', {path: '/api/users'})
+      return res.status(200).json({msg: "Logged out."})
   } catch (err) {
       return res.status(500).json({msg: err.message})
   }
