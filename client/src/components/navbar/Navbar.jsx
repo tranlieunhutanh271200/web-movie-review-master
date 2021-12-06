@@ -7,6 +7,8 @@ import {
   Link
 } from "react-router-dom";
 
+import Searchbar from "../Searchbar/Searchbar";
+
 const Navbar = () => {
     const [isLogin, setIsLogin] = useState(false)
     const [isSignup, setIsSignup] = useState(false)
@@ -43,9 +45,9 @@ const Navbar = () => {
                         alt=""
                     />
                     <span><Link className="link" to="/">Home</Link></span>
-                    <span>Series</span>
-                    <span><Link className="link" to="/movieDetail">Movies</Link></span>
-                    <span><Link className="link" to="/new">New and Popular</Link></span>
+                    <span><Link className="link" to="/series">Series</Link></span>
+                    <span><Link className="link" to="/movies">Movies</Link></span>
+                    <span><Link className="link" to="/news">New and Popular</Link></span>
                     <span>Celebrity</span>
                     <span>Watch List</span>
 
@@ -53,7 +55,8 @@ const Navbar = () => {
                 </div>
                 
                 <div className="right">
-                <Search className="icon"/>
+                {/* <Search className="icon"/> */}
+                <Searchbar/>
                 {userName ?(
                    <React.Fragment>
                     {/* <span>Phuc Phan</span>
