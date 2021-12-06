@@ -19,6 +19,18 @@
     text-decoration:none ;
     color:red;
   }
+  .loginButton {
+    cursor: pointer;
+    background-color: red;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    padding: 5px 15px;
+    font-size: 16px;
+    font-weight: 500;
+    z-index: 100;
+   
+  }
 
   .container {
     padding: 0px 50px;
