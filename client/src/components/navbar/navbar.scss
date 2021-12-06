@@ -29,9 +29,19 @@
     font-size: 16px;
     font-weight: 500;
     z-index: 100;
-   
   }
-
+  .signupButton {
+    cursor: pointer;
+    background-color: rgb(253, 253, 253);
+    border: none;
+    color: rgb(75, 75, 75);
+    border-radius: 5px;
+    padding: 5px 15px;
+    font-size: 16px;
+    font-weight: 500;
+    z-index: 100;
+    margin-left: 30px;
+  }
   .container {
     padding: 0px 50px;
     display: flex;

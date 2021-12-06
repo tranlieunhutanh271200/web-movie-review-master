@@ -12,23 +12,32 @@ import NewDetail from "./pages/newDetail/NewDetail";
 import Navbar from "./components/navbar/Navbar";
 import Email from "./pages/email/email";
 import Resetpassword from "./pages/resetPassword/resetPassword";
-import { Movie } from "@material-ui/icons";
+import { useSelector } from 'react-redux'
 
 function App () {
-  const user = true;
+  const auth = useSelector(state => state.auth)
+  const { isLogged } = auth
   return  (
     <Router>
       <Switch>
       <Route exact path="/">
-            {user?<Home/>:<Redirect to="/login"/>}
+            <Home/>
         </Route>
-        <Route path="/login">
-        {!user ? <Login/>:<Redirect to="/"/>}
-        </Route>
+          <Route path="/login" component={isLogged ? Home : Login} exact />
         <Route path="/register">
-        {!user ? <Register/>:<Redirect to="/"/>}
+        {!isLogged ? <Register/>:<Redirect to="/"/>}
         </Route>
-        {user && (
+        <Route path="/forgot_password">
+            <Email/>
+        </Route>
+        <Route exact path="/users/activation/:tokenActivation">
+            <Login/>
+        </Route>
+        <Route exact path="/users/reset/:token">
+            <Resetpassword/>
+           
+        </Route>
+        {isLogged && (
           <>
         <Route path="/movies">
             <Home type="movies"/>
@@ -42,16 +51,7 @@ function App () {
         <Route path="/news">
             <News/>
         </Route>
-        <Route path="/forgot_password">
-            <Email/>
-        </Route>
-        <Route exact path="/users/activation/:tokenActivation">
-            <Login/>
-        </Route>
-        <Route exact path="/users/reset/:token">
-            <Resetpassword/>
-           
-        </Route>
+        
         
         </>
             )}

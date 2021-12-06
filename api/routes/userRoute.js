@@ -42,4 +42,9 @@ router.post('/google_login', userController.googleLogin)
 router.post('/facebook_login', userController.facebooklogin)
 //GET ACCESS TOKEN
 router.post('/refresh_token', userController.getAccessToken)
+//GET USER BY ACCESS TOKEN
+router.get('/infor', verifyToken, userController.getinfo)
+//LOG OUT
+router.get('/logout', userController.logout)
+
 module.exports = router;

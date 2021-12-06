@@ -122,5 +122,8 @@ class userService {
       console.log(id);
       return await User.findByIdAndRemove(id);
     }
+    static async getUser(id) {
+      return await User.findOne({_id: id}).select('-password');
+    }
 }
 module.exports = userService;
