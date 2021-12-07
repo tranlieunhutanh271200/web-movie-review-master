@@ -86,7 +86,8 @@ console.log(cast)
      
         }
       );
-    };
+    })
+   };
 
 
   const handleSubmit = (e) => {
