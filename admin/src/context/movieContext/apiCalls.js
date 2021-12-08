@@ -4,9 +4,7 @@ import {
     createMoviesStart,
     createMoviesSuccess,
 
-    // deleteMoviesFailure,
-    // deleteMoviestart,
-    //   deleteMoviesSuccess,
+    
 
     getMoviesFailure,
     getMoviesStart,
@@ -16,9 +14,7 @@ import {
     getMoviesFindStart,
     getMoviesFindSuccess,
 
-    getMoviesDelFailure,
-    getMoviesDelStart,
-    getMoviesDelSuccess,
+    
 
     delMoviesStart,
     delMoviesSuccess,
@@ -31,7 +27,7 @@ import {
 
 } from "./MovieAction";
 
-export const getMovies = async(dispatch) => {
+export const getMovies = async(dispatch,setNotify) => {
     dispatch(getMoviesStart());
     try {
 
@@ -40,14 +36,24 @@ export const getMovies = async(dispatch) => {
                 token: "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
             },
         });
+        setNotify({
+            isOpen: true,
+            message: "Loading Successfully",
+            type: "success",
+          });
         dispatch(getMoviesSuccess(res.data));
 
     } catch (err) {
+        setNotify({
+            isOpen: true,
+            message: "Loading Failed: " + err ,
+            type: "error",
+          });
         dispatch(getMoviesFailure());
     }
 };
 //find
-export const getMoviesFind = async(id, dispatch) => {
+export const getMoviesFind = async(id, dispatch,setNotify) => {
     dispatch(getMoviesFindStart());
     try {
         const res = await axios.get("/Movies/find/" + id, {
@@ -55,20 +61,29 @@ export const getMoviesFind = async(id, dispatch) => {
                 token: "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
             },
         });
-
+        setNotify({
+            isOpen: true,
+            message: "Loading Successfully",
+            type: "success",
+          });
         dispatch(getMoviesFindSuccess(res.data));
         
 
     } catch (err) {
+        setNotify({
+        isOpen: true,
+        message: "Loading Failed: " + err ,
+        type: "error",
+      });
         dispatch(getMoviesFindFailure());
     }
 };
 
 
 //create
-export const createMovies = async(movie, dispatch) => {
+export const createMovies = async(movie, dispatch,setNotify) => {
     dispatch(createMoviesStart());
-    console.log(movie)
+   
     try {
         const res = await axios.post("/movies/add/", movie, {
             headers: {
@@ -77,17 +92,25 @@ export const createMovies = async(movie, dispatch) => {
             
         });
 
-console.log("test1")
+        setNotify({
+            isOpen: true,
+            message: "Add New Movie Successfully",
+            type: "success",
+          });
         dispatch(createMoviesSuccess(res.data));
         
     } catch (err) {
-        
+        setNotify({
+            isOpen: true,
+            message: "Add New Movie Failed: "+err,
+            type: "error",
+          });
         dispatch(createMoviesFailure());
     }
 };
 
 //update
-export const updateMovies = async(Movie, dispatch) => {
+export const updateMovies = async(Movie, dispatch,setNotify) => {
     dispatch(updateMoviesStart());
     try {
 
@@ -96,16 +119,24 @@ export const updateMovies = async(Movie, dispatch) => {
                 token: "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
             },
         });
-
-        dispatch(updateMoviesSuccess(res.data));
+        setNotify({
+            isOpen: true,
+            message: "Update Successfully",
+            type: "success",
+          });
+        dispatch(updateMoviesSuccess());
 
     } catch (err) {
-
+        setNotify({
+            isOpen: true,
+            message: "Update Failed: "+err,
+            type: "error",
+          });
         dispatch(updateMoviesFailure());
     }
 };
 //Del
-export const DelMovies = async(id, dispatch) => {
+export const DelMovies = async(id, dispatch,setNotify) => {
     dispatch(delMoviesStart());
     dispatch(delMoviesSuccess(id));
     try {
@@ -115,32 +146,20 @@ export const DelMovies = async(id, dispatch) => {
                 token: "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
             },
         });
-
+        setNotify({
+            isOpen: true,
+            message: "Deleted Successfully",
+            type: "error",
+          });
         dispatch(delMoviesSuccess(res.data));
 
     } catch (err) {
-
+        setNotify({
+            isOpen: true,
+            message: "Deleted Successfully",
+            type: "warning",
+          });
         dispatch(delMoviesFailure());
     }
 };
 
-// //delete
-// export const deleteMovies = async (id, dispatch) => {
-//   dispatch(deleteMoviestart());
-//   try {
-
-//      await axios.put("/Movies/delete/" +id, {
-//         headers: {
-//           token: 
-//           "Bearer"+ JSON.parse(localStorage.getItem("user")).accessToken,
-
-//         },
-
-//       });
-
-//     dispatch(deleteMoviesSuccess(id));
-//   } catch (err) {
-//     dispatch(deleteMoviesFailure());
-//   }
-
-//};

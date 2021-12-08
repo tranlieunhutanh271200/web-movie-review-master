@@ -1,15 +1,15 @@
 import "./countryManager.scss";
 import Select from "@mui/material/Select";
-import { Cached, AddCircle, Delete } from "@material-ui/icons";
+import {  AddCircle } from "@material-ui/icons";
 import { TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Notification from "../../components/Alert/Notification";
-
+import ConfirmDialogAdd from "../../components/Alert/ConfirmDialogAdd";
 export default function Country() {
   const [countries, setCountries] = useState([]);
   const [Cont, setCont] = useState([]);
-  const [Country, setCountry] = useState([]);
+ 
   const [addCountry, setaddCountry] = useState([]);
 
   const [notify, setNotify] = useState({
@@ -17,7 +17,8 @@ export default function Country() {
     message: "",
     type: "",
   });
-
+  const [confirmDialogAdd, setConfirmDialogAdd] = useState({ isOpen: false, title: '', subTitle: '' });
+ 
   useEffect(() => {
     const getCountries = async () => {
       try {
@@ -51,40 +52,6 @@ export default function Country() {
     setCont(text);
   };
 
-  const handleChange = (e) => {
-    const value = e.target.value;
-    setCountry({ ...Country, _id: Cont, [e.target.name]: value });
-  };
-  const handleUpload = (e) => {
-    const updateCountries = async () => {
-      try {
-        const res = await axios.put(
-          "/Countries/update/" + Country._id,
-          Country,
-          {
-            headers: {
-              token:
-                "Bearer " +
-                JSON.parse(localStorage.getItem("user")).accessToken,
-            },
-          }
-        );
-        setNotify({
-          isOpen: true,
-          message: "Update Country Successfully",
-          type: "success",
-        });
-      } catch (err) {
-        setNotify({
-          isOpen: true,
-          message: "Update Country Failed: " + err,
-          type: "error",
-        });
-        console.log(err);
-      }
-    };
-    updateCountries();
-  };
 
   const handleChangee = (e) => {
     const value = e.target.value;
@@ -92,6 +59,10 @@ export default function Country() {
   };
 
   const handleAdd = (e) => {
+    setConfirmDialogAdd({
+      ...confirmDialogAdd,
+      isOpen: false
+  });
     const addCountries = async () => {
       try {
         const res = await axios.post("/Countries/add/", addCountry, {
@@ -116,37 +87,7 @@ export default function Country() {
     };
     addCountries();
   };
-  const handleDelete = (e) => {
-    const deleteCountries = async () => {
-      try {
-        const res = await axios.put(
-          "/Countries/delete/" + Cont,
-          Cont,
-          {
-            headers: {
-              token:
-                "Bearer " +
-                JSON.parse(localStorage.getItem("user")).accessToken,
-            },
-          }
-        );
-        setNotify({
-          isOpen: true,
-          message: "Delete Country Successfully",
-          type: "success",
-        });
-      } catch (err) {
-        setNotify({
-          isOpen: true,
-          message: "Delete Country Failed: " + err,
-          type: "error",
-        });
-        console.log(err);
-      }
-    };
-    deleteCountries();
-  };
-console.log(Cont)
+
   return (
     <div className="newList">
       <h1 className="addListTitle">Country Manager</h1>
@@ -162,24 +103,7 @@ console.log(Cont)
               value={Cont}
             />
           </div>
-          {/* <Delete className="ListItem" fontSize="large" type="button" onClick={handleDelete} />
-          <div className="addListItem">
-            <label>Change</label>
-
-            <TextField
-              type="text"
-              placeholder="New name for Country "
-              name="name"
-              onChange={handleChange}
-            />
-            <Cached
-              className="ListItem"
-              fontSize="large"
-              type="button"
-              onClick={handleUpload}
-            />
-          </div> */}
-
+      
           <div className="addListItem">
             <label>Add Country</label>
             <TextField
@@ -189,7 +113,18 @@ console.log(Cont)
               onChange={handleChangee}
             />
           </div>
-          <AddCircle className="ListItem" fontSize="large" type="button" onClick={handleAdd} />
+          <AddCircle className="ListItem" fontSize="large" type="button" 
+          
+          onClick= 
+          {() => 
+            setConfirmDialogAdd({
+              isOpen: true,
+              title: 'Are you sure to Add this Country?',
+              subTitle: "You can check again when Refresh",
+              onConfirm: ( handleAdd)
+          })
+        }
+        />
         </div>
         <div className="formRight">
           <div className="addListItem">
@@ -211,6 +146,10 @@ console.log(Cont)
         </div>
       </form>
       <Notification notify={notify} setNotify={setNotify} />
+      <ConfirmDialogAdd
+                confirmDialog={confirmDialogAdd}
+                setConfirmDialog={setConfirmDialogAdd}
+            />   
     </div>
   );
 }

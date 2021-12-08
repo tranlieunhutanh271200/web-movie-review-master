@@ -7,6 +7,7 @@ import { CastContext } from "../../context/castContext/CastContext";
 import LinearProgress from '@mui/material/LinearProgress';
 import Box from '@mui/material/Box';
 import Notification from "../../components/Alert/Notification"
+import ConfirmDialogAdd from "../../components/Alert/ConfirmDialogAdd";
 
 
 export default function Casts() {
@@ -16,7 +17,8 @@ export default function Casts() {
   const [progress, setProgress] = useState(0);
   const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
   const [country, setCountry] = useState([]);
-
+  const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' });
+ 
   useEffect(() => {
     const getCountry = async () => {
       try {
@@ -42,13 +44,18 @@ export default function Casts() {
 
 
   const handleUpload = (e) => {
+    setConfirmDialog({
+      ...confirmDialog,
+      isOpen: false
+  });
     e.preventDefault();
     upload([{ file: castPic, label: "castPic" }]);
   };
   
-console.log(cast)
+
   const upload = (items) => {
     items.forEach((item) => {
+      
       const fileName = new Date().getTime() + item.label + item.file.name;
       const uploadTask = storage.ref(`/CastImages/${fileName}`).put(item.file);
       uploadTask.on(
@@ -59,7 +66,7 @@ console.log(cast)
           console.log("Upload is " + progress + "% done");
           setProgress(progress);
           if (progress === 100)
-          {
+          {      
             setNotify({
               isOpen: true,
               message: 'Upload Image Successfully',
@@ -86,21 +93,24 @@ console.log(cast)
      
         }
       );
-    };
-
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    createCasts(cast, dispatch);
-    setNotify({
-      isOpen: true,
-      message: 'Created Successfully',
-      type: 'success'
-  })
+    })
   };
   
 
+  const handleSubmit = (e) => {
+    setConfirmDialog({
+      ...confirmDialog,
+      isOpen: false
+  });
+    e.preventDefault();
+    createCasts(cast, dispatch,setNotify);
+    
+  };
+  
 
+  const hide = (progress === 100 ? true : false);
+  
+  
   return (
     <div className="newCast">
       <h1 className="addCastTitle">New Cast</h1>
@@ -124,7 +134,35 @@ console.log(cast)
           </Box>
           
           </div>
-           <button className="addCastButtonUpload" onClick={handleUpload}>Upload</button> 
+          {hide === false ? (
+           <button
+            type="button"
+            className="addCastButtonUpload" 
+           onClick={() => 
+             setConfirmDialog({
+               isOpen: true,
+               title: 'Are you sure to Upload this Image for new Cast?',
+               subTitle: "You can't change it once confirmed",
+               onConfirm: ( handleUpload)
+           })
+         }
+           >Upload</button> 
+        ) : (
+          <button
+          disabled={hide}
+           type="button"
+          className="addCastButtonLock" 
+          onClick={() => 
+            setConfirmDialog({
+              isOpen: true,
+              title: 'Are you sure to Upload this Image for new Cast?',
+              subTitle: "You can't change it once confirmed",
+              onConfirm: ( handleUpload)
+          })
+        }
+          >Lock</button> 
+        )}
+          
         
        
         <div className="addCastItem">
@@ -171,7 +209,19 @@ console.log(cast)
           <textarea rows="4" cols="50" name="bio" onChange={handleChange} />
         </div>
 
-        <button className="addCastButton" onClick={handleSubmit}>Create </button>
+        <button 
+         type="button"
+        className="addCastButton" 
+        onClick= 
+        {() => 
+          setConfirmDialog({
+            isOpen: true,
+            title: 'Are you sure to Add this cast?',
+            subTitle: "You can check again in Menu",
+            onConfirm: ( handleSubmit)
+        })
+      }
+        >Create </button>
          
         
         
@@ -179,6 +229,10 @@ console.log(cast)
       <Notification
                 notify={notify}
                 setNotify={setNotify}
+            />
+            <ConfirmDialogAdd
+                confirmDialog={confirmDialog}
+                setConfirmDialog={setConfirmDialog}
             />
     </div>
     

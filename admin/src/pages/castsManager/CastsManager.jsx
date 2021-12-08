@@ -14,7 +14,7 @@ export default function CastsManager() {
   const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' });
   const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
   useEffect(() => {
-    getCasts(dispatch);
+    getCasts(dispatch, setNotify);
   }, [dispatch]);
 
   const handleDelete = (id) => {
@@ -22,12 +22,8 @@ export default function CastsManager() {
       ...confirmDialog,
       isOpen: false
   })
-    DelCasts(id, dispatch);
-    setNotify({
-      isOpen: true,
-      message: 'Deleted Successfully',
-      type: 'error'
-  })
+    DelCasts(id, dispatch, setNotify);
+    
   };
  
 
@@ -97,12 +93,13 @@ export default function CastsManager() {
         </Link>
        </div>
       <DataGrid
+      autoHeight
         rows={casts}
         disableSelectionOnClick
         columns={columns}
-        pageSize={8}
-        rowsPerPageOptions={[2]}
-        checkboxSelection
+        pageSize={10}
+        rowsPerPageOptions={[5]}
+        checkboxSelection2
         getRowId={(r) => r._id}
       />
       <Notification

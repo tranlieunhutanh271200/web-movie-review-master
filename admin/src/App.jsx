@@ -1,41 +1,36 @@
 import "./app.scss";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import HomeAdmin from "./pages/adminHome/AdminHome";
 import UserManager from "./pages/userManager/UserManager";
 import User from "./pages/user/User";
 import Movie from "./pages/movie/Movie"
-import UpdateUser from "./pages/updateUser/UpdateUser";
 import Casts from "./pages/casts/Casts";
 import NewCast from "./pages/newCast/NewCast";
 import CastsManager from "./pages/castsManager/CastsManager";
 import Footer from "./components/footerAdmin/FooterAdmin";
 import Topbar from "./components/topbarAdmin/topbarAdmin";
 import Sidebar from "./components/sidebarAdmin/SidebarAdmin";
-import CastsTrack from "./pages/castsTrack/CastsTrack";
 import DeleteManager from "./pages/deleteManager/DeleteManager";
 import MoviesManager from "./pages/moviesManager/MoviesManager";
+import CharacterManager from "./pages/characterManager/CharacterManager";
 import NewMovie from "./pages/newMovie/NewMovie"
+import UpdateMovies from "./pages/updateMovie/UpdateMovie";
 import Login from "./pages/login/Login";
 import Category from "./pages/categoryManager/CategoryManager"
 import Producer from "./pages/producerManager/ProducerManager"
 import { AuthContext } from "./context/authContext/AuthContext";
 import { useContext } from "react";
-import { Delete } from "@material-ui/icons";
 import Country from "./pages/countryManager/CountryManager";
 
 function App() {
   const { user } = useContext(AuthContext);
-  console.log(user);
-//   return  (
-//     <Routes>
-          
-//     <Route exact path="/" element ={<HomeAdmin/>}/>
-//     <Route  path="/Login" element ={<Login/>}/>
-//    <Route  path="/Users" element ={<UserManager/>}/>
+console.log(user);
 
   return (
     <Router>
       <Switch>
+      {/* <Route path="/login">{user ? <Redirect to="/" /> : <Login />}</Route> */}
+      {user && (
         <div>
           <Topbar />
           <div className="container">
@@ -43,7 +38,7 @@ function App() {
             <Route exact path="/">
               <HomeAdmin />
             </Route>
-            <Route path="/Login">
+            <Route path="/login">
               <Login />
             </Route>
             <Route path="/Users">
@@ -56,10 +51,7 @@ function App() {
             <Route path="/Movie/:movieId">
               <Movie />
             </Route>
-            <Route path="/UpdateUser/:userId">
-              <UpdateUser />
-            </Route>
-
+        
             <Route path="/Castss">
               <CastsManager />
             </Route>
@@ -77,10 +69,10 @@ function App() {
             <Route path="/newMovie">
               <NewMovie/>
             </Route>
-
-            <Route path="/CastsTrack">
-              <CastsTrack />
+            <Route path="/MovieUpdate/:movieId">
+              <UpdateMovies/>
             </Route>
+
             <Route path="/DeleteManager">
               <DeleteManager />
             </Route>
@@ -94,10 +86,13 @@ function App() {
             <Route path="/country">
               <Country />
             </Route>
-
+            <Route path="/character">
+              <CharacterManager />
+            </Route>
           </div>
           <Footer />
         </div>
+        )}
       </Switch>
     </Router>
   );

@@ -1,0 +1,68 @@
+.newCharacter {
+    flex: 4;
+  }
+  .addCharacterTitle{
+      display: flex;
+      justify-content: center;
+      margin-right:100px
+  }
+  .addCharacterForm {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .formLeft{
+ padding:10px;
+  }
+  .formRight{
+    margin-left: 50px;
+}
+.CharacterItem{
+    display:flex;
+    fontSize :100px;
+    
+}
+.CharacterItemDelete{
+  display:flex;
+  fontSize :100px;
+  margin-bottom: 20px;
+  
+}
+  .addCharacterItem {
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
+  .addCharacterItemList {
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
+  .addCharacterItem > label {
+    color: gray;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  
+  .addCharacterItem > TextField {
+    padding: 10px;
+  }
+  
+  .addCharacterItem > select {
+    padding: 10px;
+  }
+  
+  .addCharacterButton {
+    height: 30px;
+    margin-top: 10px;
+    padding: 7px 10px;
+    border: none;
+    border-radius: 10px;
+    background-color: darkblue;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    align-self: center;
+  }

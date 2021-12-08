@@ -13,8 +13,9 @@ export default function MoviesManager() {
   const { movies, dispatch } = useContext(MovieContext);
   const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' });
   const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
+
   useEffect(() => {
-    getMovies(dispatch);
+    getMovies(dispatch,setNotify);
   }, [dispatch]);
 
   const handleDelete = (id) => {
@@ -22,14 +23,9 @@ export default function MoviesManager() {
       ...confirmDialog,
       isOpen: false
   })
-    DelMovies(id, dispatch);
-    setNotify({
-      isOpen: true,
-      message: 'Deleted Successfully',
-      type: 'error'
-  })
+    DelMovies(id, dispatch,setNotify);
+   
   };
-console.log(movies)
 
   const columns = [
     { field: "_id", headerName: "ID", width: 170 },

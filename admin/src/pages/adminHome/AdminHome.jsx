@@ -47,16 +47,14 @@ function Home() {
     );
   };
 
-  console.log("image: ", image);
-  console.log("url: ", url);
     return (
      
       <div className="home">
       
       <MainAdmin />
-      <progress value={progress} max="100" />
+      {/* <progress value={progress} max="100" />
       <input type="file" onChange={handleChange} />
-      <button onClick={handleUpload}>Upload</button>
+      <button onClick={handleUpload}>Upload</button> */}
       </div>
      
   
