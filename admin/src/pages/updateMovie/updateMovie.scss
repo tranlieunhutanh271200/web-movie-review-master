@@ -1,22 +1,22 @@
-.newMovie {
+.newUpdateMovie {
     flex: 4;
   }
   
-  .addMovieForm {
+  .UpdateMovieForm {
     margin-top: 10px;
     display: flex;
     flex-wrap: wrap;
   }
   
-  .addMovieFormDes {
+  .UpdateMovieFormDes {
     margin-top: 10px;
     display: inline-block;
   }
-  .addMovieBar {
+  .UpdateMovieBar {
     margin-left: 20px;
   }
 
-  .addMovieItem {
+  .UpdateMovieItem {
     width: 250px;
     display: flex;
     flex-direction: column;
@@ -24,33 +24,33 @@
     padding: 20px;
   }
 
-  .addMovieItem > label {
+  .UpdateMovieItem > label {
     color: gray;
     font-weight: 600;
     margin-bottom: 10px;
   }
   
-  .addMovieItem > input {
+  .UpdateMovieItem > input {
     padding: 10px;
   }
-  .addMovieItem>textarea {
+  .UpdateMovieItem>textarea {
     width: 450px;
     height: 200px;
     
    
 }
-  .addMovieItem > select {
+  .UpdateMovieItem > select {
     padding: 10px;
   }
   
-  .addMovieButton {
+  .UpdateMovieButton {
     height: 30px;
     margin-top: 10px;
     padding: 7px 10px;
     border: none;
     border-radius: 10px;
-    background-color: darkblue;
-    color: white;
+    background-color: aquamarine;
+    color: green;
     font-weight: 600;
     cursor: pointer;
     align-self: center;

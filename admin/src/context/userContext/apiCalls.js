@@ -20,7 +20,8 @@ import {
     delUsersFailure,
 } from "./UserAction";
 
-export const getUser = async(dispatch) => {
+export const getUser = async(dispatch,setNotify) => {
+    const message = null
     dispatch(getUsersStart());
     try {
         const res = await axios.get("/users", {
@@ -28,16 +29,26 @@ export const getUser = async(dispatch) => {
                 token: "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
             },
         });
-
+        setNotify({
+            isOpen: true,
+            message: "Loading Successfully",
+            type: "success",
+          });
         dispatch(getUsersSuccess(res.data));
 
     } catch (err) {
+        setNotify({
+            isOpen: true,
+            message: "Loading Failed: " + err ,
+            type: "error",
+          });
+        
         dispatch(getUsersFailure());
     }
 };
 
 //find
-export const getUsersFind = async(id, dispatch) => {
+export const getUsersFind = async(id, dispatch,setNotify) => {
     dispatch(getUsersFindStart());
     try {
         const res = await axios.get("/users/find/" + id, {
@@ -46,11 +57,19 @@ export const getUsersFind = async(id, dispatch) => {
             },
         });
 
-
+        setNotify({
+            isOpen: true,
+            message: "Loading Successfully",
+            type: "success",
+          });
         dispatch(getUsersFindSuccess(res.data));
-
-
+    
     } catch (err) {
+        setNotify({
+            isOpen: true,
+            message: "Loading Failed: " + err ,
+            type: "error",
+          });
         dispatch(getUsersFindFailure());
     }
 };
@@ -73,7 +92,7 @@ export const updateUsers = async(user, dispatch) => {
     }
 };
 //Del
-export const DelUsers = async(id, dispatch) => {
+export const DelUsers = async(id, dispatch,setNotify) => {
     dispatch(delUsersStart());
     dispatch(delUsersSuccess(id));
     try {
@@ -83,11 +102,19 @@ export const DelUsers = async(id, dispatch) => {
                 token: "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
             },
         });
-
+        setNotify({
+            isOpen: true,
+            message: "Deleted Successfully",
+            type: "error",
+          });
         dispatch(delUsersSuccess(res.data));
 
     } catch (err) {
-
+        setNotify({
+            isOpen: true,
+            message: "Deleted Successfully",
+            type: "warning",
+          });
         dispatch(delUsersFailure());
     }
 };

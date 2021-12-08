@@ -7,19 +7,19 @@ import {
   AddCircleOutline
   
 } from "@material-ui/icons";
-import { useContext, useEffect} from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useContext, useEffect, useState} from "react";
+import { useLocation } from "react-router-dom";
 import { UserContext } from "../../context/userContext/UserContext";
 import { getUsersFind } from "../../context/userContext/apiCalls";
-
+import Notification from "../../components/Alert/Notification"
 export default function UserManager() {
   const { users, dispatch } = useContext(UserContext);
   const location = useLocation();
   const [path, userId] = location.pathname.split("/user/");
-  
+  const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
   
   useEffect(() => {
-    getUsersFind(userId, dispatch);
+    getUsersFind(userId, dispatch, setNotify);
   }, [dispatch]);
   console.log(users)
 
@@ -68,7 +68,12 @@ export default function UserManager() {
            
           </div>
         </div>
+        <Notification
+                notify={notify}
+                setNotify={setNotify}
+            />
       </div>
+     
     </div>
   );
 }

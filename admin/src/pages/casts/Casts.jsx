@@ -7,7 +7,7 @@ import { Publish } from "@material-ui/icons";
 import { CastContext } from "../../context/castContext/CastContext";
 import { getCastsFind, updateCasts } from "../../context/castContext/apiCalls";
 import Notification from "../../components/Alert/Notification";
-
+import ConfirmDialogUpdate from "../../components/Alert/ConfirmDialogUpdate";
 import LinearProgress from "@mui/material/LinearProgress";
 import Box from "@mui/material/Box";
 
@@ -23,9 +23,14 @@ export default function Casts() {
     message: "",
     type: "",
   });
+  const [confirmDialog, setConfirmDialog] = useState({
+    isOpen: false,
+    title: "",
+    subTitle: "",
+  });
 
   useEffect(() => {
-    getCastsFind(castId, dispatch);
+    getCastsFind(castId, dispatch, setNotify);
   }, [dispatch]);
 
   const handleChange = (e) => {
@@ -39,16 +44,19 @@ export default function Casts() {
     }
   };
   const handleUpdate = (e) => {
-    e.preventDefault();
-    updateCasts(yasuo, dispatch);
-    setNotify({
-      isOpen: true,
-      message: "Update Information Successfully",
-      type: "success",
+    setConfirmDialog({
+      ...confirmDialog,
+      isOpen: false,
     });
+    e.preventDefault();
+    updateCasts(yasuo, dispatch, setNotify);
   };
-  console.log(yasuo);
+
   const handleUpload = () => {
+    setConfirmDialog({
+      ...confirmDialog,
+      isOpen: false,
+    });
     const uploadTask = storage.ref(`images/${castPic.name}`).put(castPic);
     uploadTask.on(
       "state_changed",
@@ -85,13 +93,26 @@ export default function Casts() {
       }
     );
   };
-  console.log(casts.dob);
+
+  const hide = progress === 100 ? true : false;
+
   return (
     <div className="casts">
       <div className="castTitleContainer">
         <h1 className="castTitle">Detail Cast</h1>
 
-        <button type="button" className="castAddButton" onClick={handleUpdate}>
+        <button
+          type="button"
+          className="castAddButton"
+          onClick={() =>
+            setConfirmDialog({
+              isOpen: true,
+              title: "Are you sure to update this cast?",
+              subTitle: "You will back Menu",
+              onConfirm: handleUpdate,
+            })
+          }
+        >
           Update
         </button>
       </div>
@@ -106,6 +127,7 @@ export default function Casts() {
               type="file"
               id="file"
               name="castPic"
+              accept="image/png, image/jpg, image/jpeg"
               onChange={handleChangee}
               style={{ display: "none" }}
             />
@@ -119,13 +141,38 @@ export default function Casts() {
               />
             </Box>
             <div className="castInfoItemButton">
-              <button
-                type="button"
-                className="uploadButton"
-                onClick={handleUpload}
-              >
-                Upload
-              </button>
+              {hide === false ? (
+                <button
+                  type="button"
+                  className="uploadButton"
+                  onClick={() =>
+                    setConfirmDialog({
+                      isOpen: true,
+                      title: "Are you sure to Upload this Image for new Cast?",
+                      subTitle: "You can't change it once confirmed",
+                      onConfirm: handleUpload,
+                    })
+                  }
+                >
+                  Upload
+                </button>
+              ) : (
+                <button
+                  disabled={hide}
+                  type="button"
+                  className="addCastButtonLock"
+                  onClick={() =>
+                    setConfirmDialog({
+                      isOpen: true,
+                      title: "Are you sure to Upload this Image for new Cast?",
+                      subTitle: "You can't change it once confirmed",
+                      onConfirm: handleUpload,
+                    })
+                  }
+                >
+                  Lock
+                </button>
+              )}
             </div>
           </div>
 
@@ -147,16 +194,13 @@ export default function Casts() {
             </div>
             <div className="castInfoItem">
               <span className="castInfoKey">Date of Birth:</span>
-              <span className="castInfoValue" type="%Y-%m-%d" format="%Y-%m-%d">
-                {casts.dob}
-              </span>
+              <span className="castInfoValue">{casts.dob}</span>
 
               <input
                 className="castInfoValueDate"
                 type="date"
                 name="dob"
                 onChange={handleChange}
-                placeholder={casts.dob}
               />
             </div>
 
@@ -177,13 +221,17 @@ export default function Casts() {
               cols="100"
               name="bio"
               className="castInfoValue"
-              placeholder={casts.bio}
               onChange={handleChange}
+              defaultValue={casts.bio}
             />
           </div>
         </div>
       </div>
       <Notification notify={notify} setNotify={setNotify} />
+      <ConfirmDialogUpdate
+        confirmDialog={confirmDialog}
+        setConfirmDialog={setConfirmDialog}
+      />
     </div>
   );
 }

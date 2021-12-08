@@ -22,20 +22,18 @@ export default function UserManager() {
   });
 
   useEffect(() => {
-    getUser(dispatch);
-  }, [dispatch]);
+    getUser(dispatch,setNotify);
 
+
+  }, [dispatch]);
+  
   const handleDelete = (id) => {
     setConfirmDialog({
       ...confirmDialog,
       isOpen: false,
     });
-    DelUsers(id, dispatch);
-    setNotify({
-      isOpen: true,
-      message: "Deleted Successfully",
-      type: "error",
-    });
+    DelUsers(id, dispatch,setNotify);
+   
   };
   const columns = [
     { field: "_id", headerName: "ID", width: 70 },

@@ -5,7 +5,6 @@ import {
   Movie,
   PermIdentity,
   EmojiEmotions,
-  ChatBubbleOutline,
   WorkOutline,
   DeleteForever,
   Category,

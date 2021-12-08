@@ -1,5 +1,5 @@
 import "./deleteManager.scss";
-import { useEffect,useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { RestoreFromTrash, DeleteForever } from "@material-ui/icons";
 import Notification from "../../components/Alert/Notification"
@@ -21,26 +21,21 @@ export default function DeleteManager() {
         ...confirmDialog,
         isOpen: false
     })
-    deleteCasts(object,id, dispatch);
-      setNotify({
-        isOpen: true,
-        message: 'Deleted Successfully',
-        type: 'error'
-    })
+    deleteCasts(object,id, dispatch,setNotify);
+      
     };
 
     const handleRecover = (id) => {
-      setConfirmDialog({
-        ...confirmDialog,
+      setConfirmDialogOk({
+        ...confirmDialogOk,
         isOpen: false
     })
-    RestoreCasts(object,id, dispatch);
-      setNotify({
-        isOpen: true,
-        message: 'Recovered Successfully',
-        type: 'success'
-    })
+    RestoreCasts(object,id, dispatch,setNotify);
+      
     };
+    
+  
+    
     
   const columns = [
     { field: "_id", headerName: "ID", width: 250 },
@@ -49,7 +44,7 @@ export default function DeleteManager() {
     { field: "title", headerName: "Title", width: 150 },
     { field: "name", headerName: "Name", width: 150
     },
-    
+
     { field: "createdAt", headerName: "Create", width: 110 },
     { field: "updatedAt", headerName: "Update", width: 110 },
     {
@@ -96,15 +91,13 @@ export default function DeleteManager() {
   const handleObject = (e) => {
     const value = e.target.value;
     setObject(value);
-    getCastsDelFindObject(e.target.value,dispatch)
+    getCastsDelFindObject(e.target.value,dispatch,setNotify)
 
   };
 
  
   
-//   useEffect(() => {
-//     getCastsDelFind(Objects, dispatch);
-//   }, [dispatch]);
+
  
   return (
     <div className=" DeleteManager">

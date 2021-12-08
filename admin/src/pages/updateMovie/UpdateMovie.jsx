@@ -1,8 +1,8 @@
-import "./newMovie.scss";
-import axios from "axios";
-import { useContext, useState, useEffect } from "react";
+import "./updateMovie.scss";
+import { useContext, useState } from "react";
 import storage from "../../firebase";
-import { createMovies } from "../../context/movieContext/apiCalls";
+import { useLocation } from "react-router-dom";
+import { updateMovies } from "../../context/movieContext/apiCalls";
 import { MovieContext } from "../../context/movieContext/MovieContext";
 import LinearProgress from "@mui/material/LinearProgress";
 import Box from "@mui/material/Box";
@@ -12,14 +12,16 @@ import { MenuItem, TextField } from "@mui/material";
 import ConfirmDialogAdd from "../../components/Alert/ConfirmDialogAdd";
 
 
-export default function Movies() {
+export default function UpdateMovies() {
+  const location = useLocation();
+  const [path, movieId] = location.pathname.split("/MovieUpdate/");
+
   const [movie, setMovie] = useState(null);
   const [namePic, setnamePic] = useState(null);
   const [coverPic, setcoverPic] = useState(null);
-  const [img, setImg] = useState(null);
   const [trailer, setTrailer] = useState(null);
   const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' });
- 
+  
   const { dispatch } = useContext(MovieContext);
   const [progress, setProgress] = useState(0);
   const [uploaded, setUploaded] = useState(0);
@@ -29,112 +31,13 @@ export default function Movies() {
     message: "",
     type: "",
   });
-  const [country, setCountry] = useState([]);
-  const [categories, setCategory] = useState([]);
-  const [productions, setProd] = useState([]);
-  const [character, setChar] = useState([]);
-  const [cast, setCast] = useState([]);
-  const [castItem, setcastItem] = useState([]);
-  useEffect(() => {
-    const getCountry = async () => {
-      try {
-        const res = await axios.get("/countries/");
-        setCountry(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getCountry();
-
-    const getCategory = async () => {
-      try {
-        const res = await axios.get("/categories/", {
-          headers: {
-            token:
-              "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
-          },
-        });
-        setCategory(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getCategory();
-
-    const getChar = async () => {
-      try {
-        const res = await axios.get("/characters/", {
-          headers: {
-            token:
-              "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
-          },
-        });
-        setChar(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getChar();
-
-    const getProd = async () => {
-      try {
-        const res = await axios.get("/productions/", {
-          headers: {
-            token:
-              "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
-          },
-        });
-        setProd(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getProd();
-
-    const getCast = async () => {
-      try {
-        const res = await axios.get("/casts/", {
-          headers: {
-            token:
-              "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
-          },
-        });
-        setCast(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getCast();
-  }, []);
+  
+  
 
   const handleChange = (e) => {
     const value = e.target.value;
 
-    setMovie({ ...movie, [e.target.name]: value });
-  };
-
-  const handleChangeSelectCate = (e) => {
-    const category = e.target.value;
-    const key = e.target.name;
-
-    setMovie({ ...movie, [key]: { category } });
-  };
-  const handleChangeSelect = (e) => {
-    const character = e.target.value;
-    
-    setcastItem({ ...castItem,  [e.target.name]: character  });
-    // setMovie({ ...movie, [key]: {  [e.target.name]: character }    });
-  };
-  const handleChangeSelectCast = (e) => {
-    const namecast = e.target.value;
-
-    setcastItem({ ...castItem,  [e.target.name]: namecast  });
-  };
-  const handleChangeSelectProd = (e) => {
-    const production = e.target.value;
-    const key = e.target.name;
-
-    setMovie({ ...movie, [key]: { production }, castItems: castItem });
+    setMovie({ ...movie, [e.target.name]: value, _id: movieId });
   };
 
   
@@ -147,9 +50,7 @@ export default function Movies() {
     upload([
       { file: namePic, label: "namePic" },
       { file: coverPic, label: "coverPic" },
-      { file: img, label: "img" },
       { file: trailer, label: "trailer" },
-      
     ]);
   };
 
@@ -197,24 +98,24 @@ export default function Movies() {
       );
     });
   };
-
+console.log(movie)
   const handleSubmit = (e) => {
     setConfirmDialog({
       ...confirmDialog,
       isOpen: false
   });
     e.preventDefault();
-    createMovies(movie, dispatch,setNotify);
+    updateMovies(movie, dispatch,setNotify)
     
   };
 
 
   return (
-    <div className="newMovie">
-      <h1 className="addMovieTitle">New Movie</h1>
-      <form className="addMovieForm">
-        <div className="addMovieForm">
-          <div className="addMovieItem">
+    <div className="newUpdateMovie">
+      <h1 className="UpdateMovieTitle">Update Movie : {movieId} </h1>
+      <form className="UpdateMovieForm">
+        <div className="UpdateMovieForm">
+          <div className="UpdateMovieItem">
             <label>Name Image</label>
             <input
               type="file"
@@ -225,7 +126,7 @@ export default function Movies() {
             />
           
           </div>
-          <div className="addMovieItem">
+          <div className="UpdateMovieItem">
             <label>Thumbnail image</label>
             <input
               type="file"
@@ -236,18 +137,7 @@ export default function Movies() {
             />
            
           </div>
-          <div className="addMovieItem">
-            <label>Poster</label>
-            <input
-              type="file"
-              id="imgSm"
-              name="img"
-              accept="image/png, image/jpg, image/jpeg"
-              onChange={(e) => setImg(e.target.files[0])}
-            />
-           
-          </div>
-          <div className="addMovieItem">
+          <div className="UpdateMovieItem">
             <label>Trailer</label>
             <input
               type="file"
@@ -258,17 +148,17 @@ export default function Movies() {
           </div>
           <Box sx={{ width: "98%" }}>
               <LinearProgress
-              className="addMovieBar"
+              className="UpdateMovieBar"
                 variant="determinate"
                 value={progress}
                 max="100"
               />
             </Box>
         </div>
-        {uploaded === 4 ? (
+        {/* {uploaded === 3 ? (
           <button 
           type="button"
-          className="addMovieButton"
+          className="UpdateMovieButton"
           onClick= 
           {() => 
             setConfirmDialog({
@@ -279,12 +169,12 @@ export default function Movies() {
           })
         }
           >
-            Create
+            Update
           </button>
         ) : (
           <button 
           type="button"
-          className="addMovieButton" 
+          className="UpdateMovieButton" 
           onClick={() => 
             setConfirmDialog({
               isOpen: true,
@@ -296,11 +186,27 @@ export default function Movies() {
           >
             Upload
           </button>
-        )}
+        )} */}
+
+<button 
+          type="button"
+          className="UpdateMovieButton"
+          onClick= 
+          {() => 
+            setConfirmDialog({
+              isOpen: true,
+              title: 'Are you sure to Update this cast?',
+              subTitle: "You can check again in Menu",
+              onConfirm: ( handleSubmit)
+          })
+        }
+          >
+            Update
+          </button>
         
 
-        <div className="addMovieForm">
-          <div className="addMovieItem">
+        <div className="UpdateMovieForm">
+          <div className="UpdateMovieItem">
             <label>Title</label>
             <TextField
               type="text"
@@ -310,7 +216,7 @@ export default function Movies() {
             />
           </div>
 
-          <div className="addMovieItem">
+          <div className="UpdateMovieItem">
             <label>Age Limit</label>
             <TextField
               type="number"
@@ -320,12 +226,12 @@ export default function Movies() {
             />
           </div>
 
-          <div className="addMovieItem">
+          <div className="UpdateMovieItem">
             <label>ReleaseDate</label>
             <TextField type="date" name="releaseDate" onChange={handleChange} />
           </div>
 
-          <div className="addMovieItem">
+          <div className="UpdateMovieItem">
             <label>Site</label>
             <Select name="site" id="site" onChange={handleChange}>
               <MenuItem value="Cinema">Cinema</MenuItem>
@@ -337,7 +243,7 @@ export default function Movies() {
           
           
 
-          <div className="addMovieItem">         
+          {/* <div className="UpdateMovieItem">         
             <label>Country</label>
             <Select name="namecount" id="country" onChange={handleChange}>
               {(() => {
@@ -355,7 +261,7 @@ export default function Movies() {
             </Select>
           </div>
 
-          <div className="addMovieItem">
+          <div className="UpdateMovieItem">
             <label>Category</label>
             <Select
               name="categoryItems"
@@ -378,7 +284,7 @@ export default function Movies() {
             </Select>
           </div>
 
-          <div className="addMovieItem">
+          <div className="UpdateMovieItem">
             <label>Producers</label>
             <Select
               name="productionItems"
@@ -398,11 +304,11 @@ export default function Movies() {
                 return valPro;
               })()}
             </Select>
-          </div>
+          </div> */}
         
         </div>
-        <div className="addMovieForm">
-        <div className="addMovieItem">
+        <div className="UpdateMovieForm">
+        {/* <div className="UpdateMovieItem">
             <label>Cast</label>
             <Select
               name="namecast"
@@ -420,7 +326,7 @@ export default function Movies() {
               })()}
             </Select>
             </div>
-          <div className="addMovieItem">
+          <div className="UpdateMovieItem">
             <label>Character</label>
             <Select
               name="character"
@@ -438,9 +344,9 @@ export default function Movies() {
               })()}
             </Select>
             
-          </div>
-          <div className = "addMovieForm">
-          <div className="addMovieItem">
+          </div> */}
+          <div className = "UpdateMovieForm">
+          <div className="UpdateMovieItem">
             <label>Description</label>
             <textarea rows="4" cols="50" name="desc" onChange={handleChange} />
           </div>

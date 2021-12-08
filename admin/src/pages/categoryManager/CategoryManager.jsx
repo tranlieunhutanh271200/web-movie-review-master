@@ -2,9 +2,12 @@ import "./categoryManager.scss";
 import Select from "@mui/material/Select";
 import { Cached, AddCircle, Delete } from "@material-ui/icons";
 import { TextField } from "@mui/material";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import Notification from "../../components/Alert/Notification";
+import ConfirmDialog from "../../components/Alert/ConfirmDialog";
+import ConfirmDialogUpdate from "../../components/Alert/ConfirmDialogUpdate";
+import ConfirmDialogAdd from "../../components/Alert/ConfirmDialogAdd";
 
 export default function NewList() {
   const [categories, setCategories] = useState([]);
@@ -16,7 +19,10 @@ export default function NewList() {
     message: "",
     type: "",
   });
-
+  const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' });
+  const [confirmDialogUp, setConfirmDialogUp] = useState({ isOpen: false, title: '', subTitle: '' });
+  const [confirmDialogAdd, setConfirmDialogAdd] = useState({ isOpen: false, title: '', subTitle: '' });
+ 
   useEffect(() => {
     const getCategories = async () => {
       try {
@@ -55,6 +61,10 @@ export default function NewList() {
     setCategory({ ...category, _id: cate, [e.target.name]: value });
   };
   const handleUpload = (e) => {
+    setConfirmDialogUp({
+      ...confirmDialogUp,
+      isOpen: false
+  });
     const updateCategories = async () => {
       try {
         const res = await axios.put(
@@ -91,6 +101,10 @@ export default function NewList() {
   };
 
   const handleAdd = (e) => {
+    setConfirmDialogAdd({
+      ...confirmDialogAdd,
+      isOpen: false
+  });
     const addCategories = async () => {
       try {
         const res = await axios.post("/categories/add/", addcategory, {
@@ -116,6 +130,10 @@ export default function NewList() {
     addCategories();
   };
   const handleDelete = (e) => {
+    setConfirmDialog({
+      ...confirmDialog,
+      isOpen: false
+  });
     const deleteCategories = async () => {
       try {
         const res = await axios.put(
@@ -145,7 +163,7 @@ export default function NewList() {
     };
     deleteCategories();
   };
-console.log(cate)
+
   return (
     <div className="newList">
       <h1 className="addListTitle">Genre Manager</h1>
@@ -161,7 +179,17 @@ console.log(cate)
               value={cate}
             />
           </div>
-          <Delete className="ListItem" fontSize="large" type="button" onClick={handleDelete} />
+          <Delete className="ListItem" fontSize="large" type="button" 
+          onClick= 
+          {() => 
+            setConfirmDialog({
+              isOpen: true,
+              title: 'Are you sure to Delete this Genre?',
+              subTitle: "You can check again when Refresh",
+              onConfirm: ( handleDelete)
+          })
+        }
+           />
           <div className="addListItem">
             <label>Change</label>
 
@@ -175,7 +203,15 @@ console.log(cate)
               className="ListItem"
               fontSize="large"
               type="button"
-              onClick={handleUpload}
+              onClick= 
+              {() => 
+                setConfirmDialogUp({
+                  isOpen: true,
+                  title: 'Are you sure to Update this Genre?',
+                  subTitle: "You can check again when Refresh",
+                  onConfirm: ( handleUpload)
+              })
+            }
             />
           </div>
 
@@ -183,13 +219,23 @@ console.log(cate)
             <label>Add Genre</label>
             <TextField
               type="text"
-              placeholder="action"
+            
               placeholder="Add Category "
               name="name"
               onChange={handleChangee}
             />
           </div>
-          <AddCircle className="ListItem" fontSize="large" type="button" onClick={handleAdd} />
+          <AddCircle className="ListItem" fontSize="large" type="button" 
+          onClick= 
+          {() => 
+            setConfirmDialogAdd({
+              isOpen: true,
+              title: 'Are you sure to Add this Genre?',
+              subTitle: "You can check again when Refresh",
+              onConfirm: ( handleAdd)
+          })
+        }
+          />
         </div>
         <div className="formRight">
           <div className="addListItem">
@@ -211,6 +257,18 @@ console.log(cate)
         </div>
       </form>
       <Notification notify={notify} setNotify={setNotify} />
+      <ConfirmDialog
+                confirmDialog={confirmDialog}
+                setConfirmDialog={setConfirmDialog}
+            />
+      <ConfirmDialogUpdate
+                confirmDialog={confirmDialogUp}
+                setConfirmDialog={setConfirmDialogUp}
+            /> 
+       <ConfirmDialogAdd
+                confirmDialog={confirmDialogAdd}
+                setConfirmDialog={setConfirmDialogAdd}
+            />         
     </div>
   );
 }
