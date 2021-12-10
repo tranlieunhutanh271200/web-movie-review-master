@@ -83,7 +83,7 @@ export default function Sidebar() {
         <div className="Menu">
           <h3 className="Title">More</h3>
           <ul className="List">
-          <Link to="" className="link">
+          <Link to="/login" className="link">
             <li className="ListItem">
               <WorkOutline className="Icon" />
               Manage

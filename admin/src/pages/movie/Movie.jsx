@@ -1,4 +1,5 @@
 import "./movie.scss";
+import axios from "axios";
 import {
   Cached,
   CalendarToday,
@@ -30,9 +31,33 @@ export default function Movie() {
     message: "",
     type: "",
   });
-  useEffect(() => {
+const [rating, setRate] = useState(null);
+
+useEffect(() => {
+  const getRating = async () => { 
+  try {
+    const res = await axios.get("/reviews/getallrating/" + movieId);
+    setRate(res.data);
+    setNotify({
+        isOpen: true,
+        message: "Loading Rating Successfully",
+        type: "success",
+      });
+    ;
+} catch (err) {
+    setNotify({
+    isOpen: true,
+    message: "Loading Rating Failed: " + err ,
+    type: "error",
+  });
+}
+  }
+  getRating();
+}, []);
+
+useEffect(() => {
     getMoviesFind(movieId, dispatch, setNotify);
-  }, [dispatch]);
+  }, []);
 
   // console.log(movies.country === undefined ? 'rong' : movies.castItems[0].character.name)
  
@@ -156,7 +181,7 @@ export default function Movie() {
                 <div className="movieShowInfo">
                   <StarHalf className="movieShowIcon" />
                   <span className="movieShowInfoTitle">
-                    <b>Rating:</b> {movies.rating}
+                    <b>Rating:</b> {rating}
                   </span>
                 </div>
                 <div className="movieShowInfo">

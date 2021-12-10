@@ -140,7 +140,7 @@ export default function NewCharacter() {
     const value = e.target.value;
     setAddCha({ ...addCha, [e.target.name]: value });
   };
- 
+ console.log(addCha)
   const handleAdd = (e) => {
     setConfirmDialogAdd({
       ...confirmDialogAdd,
@@ -287,14 +287,15 @@ export default function NewCharacter() {
               autoComplete
               getOptionLabel={(option) => option}
               disableClearable
+            
               filterSelectedOptions={false}
               options={casts.map((option) => option.name)}
               renderInput={(params) => (
                 <TextField
-                  name="namecast"
-                  value={params}
+                  name="namecast"         
                   onChange={handleChangee}
-                  {...params}
+                  {...params} 
+                  value={params}
                   label="Search input"
                   InputProps={{
                     ...params.InputProps,

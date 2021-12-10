@@ -36,6 +36,7 @@ export default function Login() {
           onChange={(e) => setPassword(e.target.value)}
         />
         <button
+        type="button"
           className="loginButton"
           onClick={handleLogin}
           disabled={isFetching}

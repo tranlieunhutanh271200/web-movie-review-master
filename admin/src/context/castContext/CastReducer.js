@@ -83,14 +83,9 @@ const CastReducer = (state, action) => {
                 error: false,
             };
         case "UPLOAD_CASTS_SUCCESS":
-            const temps = state.casts.map(
-                (cast) => cast._id === action.payload._id && action.payload);
-            console.log(temps);
+  
             return {
-                casts: state.casts.map(
-                    (cast) => cast._id === action.payload._id && action.payload
-                ),
-
+                ...state,
                 isFetching: false,
                 error: false,
             };

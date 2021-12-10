@@ -31,7 +31,7 @@ export default function Casts() {
 
   useEffect(() => {
     getCastsFind(castId, dispatch, setNotify);
-  }, [dispatch]);
+  }, []);
 
   const handleChange = (e) => {
     const value = e.target.value;
