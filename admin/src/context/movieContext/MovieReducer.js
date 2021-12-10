@@ -85,9 +85,7 @@ const MovieReducer = (state, action) => {
         case "UPLOAD_MOVIES_SUCCESS":
 
             return {
-                movies: state.movies.map(
-                    (cast) => cast._id === action.payload._id && action.payload
-                ),
+                ...state,
 
                 isFetching: false,
                 error: false,

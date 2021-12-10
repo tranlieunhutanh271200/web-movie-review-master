@@ -12,8 +12,7 @@ export const MovieContext = createContext(INITIAL_STATE);
 export const MovieContextProvider = ({ children }) => {
     const [state, dispatch] = useReducer(MovieReducer, INITIAL_STATE);
 
-    return ( <
-        MovieContext.Provider value = {
+    return ( <MovieContext.Provider value = {
             {
                 movies: state.movies,
                 isFetching: state.isFetching,
@@ -21,7 +20,6 @@ export const MovieContextProvider = ({ children }) => {
                 dispatch,
             }
         } >
-        { children } <
-        /MovieContext.Provider>
+        { children } </MovieContext.Provider>
     );
 };

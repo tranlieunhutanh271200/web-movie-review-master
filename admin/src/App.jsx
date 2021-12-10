@@ -29,8 +29,8 @@ console.log(user);
   return (
     <Router>
       <Switch>
-      {/* <Route path="/login">{user ? <Redirect to="/" /> : <Login />}</Route> */}
-      {user && (
+       <Route path="/login">{user ? <Redirect to="/" /> : <Login />}</Route>
+      {/* {user && (  */}
         <div>
           <Topbar />
           <div className="container">
@@ -38,9 +38,7 @@ console.log(user);
             <Route exact path="/">
               <HomeAdmin />
             </Route>
-            <Route path="/login">
-              <Login />
-            </Route>
+      
             <Route path="/Users">
               <UserManager />
             </Route>
@@ -92,7 +90,7 @@ console.log(user);
           </div>
           <Footer />
         </div>
-        )}
+         {/* )}  */}
       </Switch>
     </Router>
   );
