@@ -95,7 +95,6 @@ export default function Casts() {
       );
     })
   };
-  
 
   const handleSubmit = (e) => {
     setConfirmDialog({
