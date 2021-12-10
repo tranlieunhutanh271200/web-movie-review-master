@@ -1,5 +1,5 @@
 import axios from "axios";
-import { loginFailure, loginStart, loginSuccess } from "./AuthAction";
+import { loginFailure, loginStart, loginSuccess ,logout} from "./AuthAction";
 
 export const login = async (user, dispatch,setNotify) => {
   dispatch(loginStart());
@@ -19,4 +19,15 @@ export const login = async (user, dispatch,setNotify) => {
     });
     dispatch(loginFailure());
   }
+};
+
+
+export const lout = async ( dispatch,setNotify) => {
+  setNotify({
+    isOpen: true,
+    message: "Logout Successfully" ,
+    type: "success",
+  });
+    dispatch(logout());
+    
 };

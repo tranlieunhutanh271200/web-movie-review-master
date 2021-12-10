@@ -24,13 +24,18 @@ import Country from "./pages/countryManager/CountryManager";
 
 function App() {
   const { user } = useContext(AuthContext);
+  
 console.log(user);
 
   return (
     <Router>
       <Switch>
-       <Route path="/login">{user ? <Redirect to="/" /> : <Login />}</Route>
-      {/* {user && (  */}
+       <Route path="/login">
+      {user === null ? <Login /> : <Redirect to="/" />}
+      </Route>   
+      {user === null && <Redirect to="/login" />} 
+      {user && (  <>
+
         <div>
           <Topbar />
           <div className="container">
@@ -42,6 +47,9 @@ console.log(user);
             <Route path="/Users">
               <UserManager />
             </Route>
+            <Route path="/LoginTest">
+              <Login />
+            </Route>
 
             <Route path="/User/:userId">
               <User />
@@ -49,7 +57,7 @@ console.log(user);
             <Route path="/Movie/:movieId">
               <Movie />
             </Route>
-        
+            
             <Route path="/Castss">
               <CastsManager />
             </Route>
@@ -90,8 +98,11 @@ console.log(user);
           </div>
           <Footer />
         </div>
-         {/* )}  */}
+        </>
+          )}  
+          
       </Switch>
+      
     </Router>
   );
 }
