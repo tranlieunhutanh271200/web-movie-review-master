@@ -37,6 +37,12 @@ function App () {
             <Resetpassword/>
            
         </Route>
+        <Route path ="/watch">
+          <Watch></Watch>
+        </Route>
+        <Route path ="/movies/:id">
+          <MovieDetail></MovieDetail>
+        </Route>
         {isLogged && (
           <>
         <Route path="/movies">
