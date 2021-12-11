@@ -1,15 +1,22 @@
 import { InfoOutlined, PlayArrow } from "@material-ui/icons"
 import { useState } from "react"
+import movieReducer from "../../redux/reducers/movieReducer"
 import { WatchTrailer } from "../watchTrailer/WatchTrailer"
+import { useSelector } from 'react-redux'
 import "./featured.scss"
+import {
+    Link
+} from "react-router-dom";
 
 export default function Featured({type}) {
     const [showWatchModal, setShowModalTrailer] = useState(false)
     const openModalTrailer =()=>{
         setShowModalTrailer(prev =>! prev)
     }
+    const movieFeatured = useSelector(state => state.movie)
+    const{movie} = movieFeatured
     return (
-        <div className="featured">
+        <div className="featured" >
             {type && (
                 <div className="category">
                     <span>{type === "movies" ? "Movies" : "Series"}</span>
@@ -31,29 +38,32 @@ export default function Featured({type}) {
                          </select>
                     </div>
             )}
-                {/* <img 
-                    src="https://filmdaily.co/wp-content/uploads/2021/09/venommmmm2_03.jpg"
-                    alt=""/> */}
+            <img 
+                src={movie.coverPic}
+                alt=""/>
             <div className="info">
                 
                 <img 
-                    src="https://upload.wikimedia.org/wikipedia/commons/e/e0/Venom_Let_There_Be_Carnage_logo.jpg.webp" 
+                    src= {movie.namePic} 
                     alt="" />
                 <span className="description">
-                Eddie Brock attempts to reignite his career by interviewing serial killer Cletus Kasady, who becomes the host of the symbiote Carnage and escapes prison after a failed execution.
+                {movie.desc}
                 </span>
                 <div className="buttons">
+                    <Link className="link" to="/watch">
                     <button className="play" 
                     // onClick={openModalTrailer}
                     >
                         <PlayArrow/>
-                        <span>Trailer</span>    
+                        <span>Trailer</span>   
                     </button>
-                    
+                    </Link>
+                    <Link className="link" to={{pathname: "/movies/" + movie._id}}>
                     <button className="more">
                         <InfoOutlined/>
                         <span>More</span>
                     </button>
+                    </Link>
                 </div>
                 <WatchTrailer showWatchModal={showWatchModal} setShowModalTrailer={setShowModalTrailer} className="watchtrailer"/>
             </div>           

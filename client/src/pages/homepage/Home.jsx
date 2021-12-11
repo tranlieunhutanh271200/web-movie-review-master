@@ -4,6 +4,7 @@ import List from "../../components/list/List"
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux'
 import {dispatchLogin, fetchUser, dispatchGetUser} from '../../redux/actions/authAction'
+import {fetchMovie, dispatchGetMovie} from '../../redux/actions/movieAction'
 import "./home.scss"
 import axios from 'axios';
 
@@ -34,6 +35,14 @@ const Home = ({type}) => {
       getUser()
     }
   },[token, dispatch])
+  useEffect(() => {
+      const getMovie = () => {
+        return fetchMovie("61b42a606bc815236804f9e9").then(res => {
+          dispatch(dispatchGetMovie(res))
+        })
+      }
+      getMovie()
+  },[dispatch])
     return (
         <div className="home">
             <Navbar/>

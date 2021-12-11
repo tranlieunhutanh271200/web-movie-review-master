@@ -10,7 +10,7 @@ const { Review, ReviewSchema } = require("../models/Review");
 //ADD
 exports.addReview = async (req, res) => {
   const reviews = await reviewService.checkExistMovie(req.body.movie)
-  //console.log(req.body.reviewItems.rating);
+  console.log(req.body);
   if (reviews) {
     const isReviewed = reviews.reviewItems.find(c => c.user == req.userExists.id);
     const isUser = req.userExists.id
